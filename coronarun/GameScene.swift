@@ -19,34 +19,77 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var characterSprite: SKSpriteNode = SKSpriteNode()
     var background: SKSpriteNode = SKSpriteNode()
     var platform: SKSpriteNode = SKSpriteNode()
+    var jumpButton: UIButton = UIButton()
+    var duckButton: UIButton = UIButton()
     var scoreLabel: SKSpriteNode = SKSpriteNode()
     var score: Int = 0
     var lives: Int = 1
     var gameOver: Bool = false
     var gameOverDisplay: SKLabelNode = SKLabelNode()
     var timer: Timer = Timer()
-    var completed: Bool = false;
+    var runAction: SKAction = SKAction()
+    
 
     override func didMove(to view: SKView) -> Void {
-        //self.physicsWorld.contactDelegate = self
+        self.physicsWorld.contactDelegate = self
         drawBackground()
         drawPlatform()
         drawCharacter()
+        addJumpDuckButton()
 }
     @objc func timerAction(){
        print("timer fired!")
     }
     
-    func pauseRunning(action: SKAction) -> Void{
+    func pauseRunning() -> Void{
         
-        let runAction = characterSprite.action(forKey: "running")
-        runAction!.speed = 0
+        let runningAction: SKAction? = characterSprite.action(forKey: "running")
+        
+        if let tmp = runningAction{
+            
+            characterSprite.removeAction(forKey: "running")
+            self.runAction = runningAction!
+        }
+        
     }
     
-    func resumeRunning(action: SKAction) -> Void{
+    func resumeRunning() -> Void{
         
-        let runAction = characterSprite.action(forKey: "running")
-        runAction!.speed = CGFloat(100)
+        characterSprite.run(runAction, withKey: "running")
+    }
+    
+    @objc func jumpResponse(sender: UIButton!) {
+        
+        jumpButton.isUserInteractionEnabled = false
+        pauseRunning()
+        jumpCharacter()
+        let seconds = 1.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
+        {
+            self.resumeRunning()
+            self.jumpButton.isUserInteractionEnabled = true
+        }
+    }
+    
+    func addJumpDuckButton() -> Void{
+        
+        let jumpBImage = UIImage(named: "up-arrow.png")
+        jumpButton.setImage(jumpBImage, for: .normal)
+        jumpButton.tintColor = UIColor.black
+        //jumpButton.frame = CGRect(x: self.frame.minX / 1.55, y: self.frame.minY / 14, width: 100, height: 100)
+        jumpButton.frame = CGRect(x: 50, y: 50, width: 100, height: 100)
+        jumpButton.addTarget(self, action: #selector(jumpResponse), for: .touchUpInside)
+        self.view!.addSubview(jumpButton)
+        
+        
+        /*
+        let duckBimage = UIImage(named: "down-arrow.png")
+        duckButton.setImage(duckBimage, for: .normal)
+        duckButton.tintColor = UIColor.black
+        duckButton.bounds = CGRect(x: self.frame.minX / 1.55, y: self.frame.minY / 4, width: 100, height: 100)
+        //duckButton.addTarget(self, action: #selector(duckResponse), forControlEvents: .touchDragInside)
+        self.view!.addSubview(duckButton)
+ */
     }
 
     func initializeGame() -> Void{
@@ -126,22 +169,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func drawCharacter() -> Void{
         
         let runAnimations:[SKTexture] = [SKTexture(imageNamed: "row-1-col-1.png"), SKTexture(imageNamed: "row-1-col-2.png"), SKTexture(imageNamed: "row-1-col-3.png"), SKTexture(imageNamed: "row-2-col-1.png"), SKTexture(imageNamed: "row-2-col-2.png"), SKTexture(imageNamed: "row-2-col-3.png")]
-
         
         let mainAnimated = SKAction.animate(with: runAnimations, timePerFrame: 0.25)
-        
         let mainRepeater = SKAction.repeatForever(mainAnimated)
-        
-        
         
         characterSprite = SKSpriteNode(imageNamed: "row-1-col-1.png")
         characterSprite.zPosition = 2;
         characterSprite.position = CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.70)
         
         self.addChild(characterSprite)
-
         characterSprite.run(mainRepeater, withKey: "running")
-                
+        
+        /*
         let seconds = 5.0
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
         {
@@ -149,12 +188,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             self.jumpCharacter()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds + 1)
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds + 1.0)
         {
             self.characterSprite.run(mainRepeater, withKey: "running")
         }
-        
-        
+ */
+
     }
     
     func jumpCharacter() -> Void{
@@ -179,8 +218,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 self.characterSprite.removeAction(forKey: "down")
                 self.characterSprite.texture = SKTexture(imageNamed: "row-1-col-1.png")
             }
-            self.completed = true;
-           
+            
         }
     }
     
