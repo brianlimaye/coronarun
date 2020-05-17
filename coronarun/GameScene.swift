@@ -11,16 +11,15 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate
 {
-    let playerSpeedPerFrame = 0.25;
-    let playerJumpPerFrame = 1.0;
+    let playerSpeedPerFrame = 0.25
+    let playerJumpPerFrame = 1.0
     let maxTimeMoving: CGFloat = 2
-    let bgAnimatedInSecs: TimeInterval = 3;
+    let bgAnimatedInSecs: TimeInterval = 3
+    let MIN_THRESHOLD_MS: Double = 1000
     
     var characterSprite: SKSpriteNode = SKSpriteNode()
     var background: SKSpriteNode = SKSpriteNode()
     var platform: SKSpriteNode = SKSpriteNode()
-    var jumpButton: UIButton = UIButton()
-    var duckButton: UIButton = UIButton()
     var scoreLabel: SKSpriteNode = SKSpriteNode()
     var score: Int = 0
     var lives: Int = 1
@@ -28,6 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var gameOverDisplay: SKLabelNode = SKLabelNode()
     var timer: Timer = Timer()
     var runAction: SKAction = SKAction()
+    var lastTime: Double = 0
     
 
     override func didMove(to view: SKView) -> Void {
@@ -35,11 +35,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         drawBackground()
         drawPlatform()
         drawCharacter()
-        addJumpDuckButton()
+        
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(jumpUp))
+        swipeUp.direction = .up
+        self.view?.addGestureRecognizer(swipeUp)
+
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
+        swipeDown.direction = .down
+        self.view?.addGestureRecognizer(swipeDown)
+        
 }
+
     @objc func timerAction(){
        print("timer fired!")
     }
+    
+    func isReady() -> Bool{
+        
+        var isReady: Bool = true
+        let currentTime = currentTimeInMilliSeconds()
+    
+        if((lastTime > 0) && (currentTime - lastTime) <= 1000)
+        {
+            isReady = false
+        }
+        lastTime = currentTime
+        return isReady
+    }
+    
+    
+    func currentTimeInMilliSeconds()-> Double
+
+    {
+        let currentDate = Date()
+
+        let since1970 = currentDate.timeIntervalSince1970
+
+        return (since1970 * 1000)
+    }
+    
+    
     
     func pauseRunning() -> Void{
         
@@ -58,38 +93,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.run(runAction, withKey: "running")
     }
     
-    @objc func jumpResponse(sender: UIButton!) {
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+
+            switch swipeGesture.direction {
+            case .right:
+                print("Swiped right")
+            case .down:
+                print("Swiped down")
+            case .left:
+                print("Swiped left")
+            case .up:
+                print("Swiped up")
+            default:
+                break
+            }
+        }
+    }
+    
+    @objc func jumpUp() {
         
-        jumpButton.isUserInteractionEnabled = false
+        if(!isReady())
+        {
+            print("Cooldown on button")
+            return
+        }
+        
+        print("jumpUp")
         pauseRunning()
         jumpCharacter()
         let seconds = 1.0
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
         {
             self.resumeRunning()
-            self.jumpButton.isUserInteractionEnabled = true
         }
     }
     
-    func addJumpDuckButton() -> Void{
+    @objc func jumpDown(sender: UIButton!) {
         
-        let jumpBImage = UIImage(named: "up-arrow.png")
-        jumpButton.setImage(jumpBImage, for: .normal)
-        jumpButton.tintColor = UIColor.black
-        //jumpButton.frame = CGRect(x: self.frame.minX / 1.55, y: self.frame.minY / 14, width: 100, height: 100)
-        jumpButton.frame = CGRect(x: 50, y: 50, width: 100, height: 100)
-        jumpButton.addTarget(self, action: #selector(jumpResponse), for: .touchUpInside)
-        self.view!.addSubview(jumpButton)
-        
-        
-        /*
-        let duckBimage = UIImage(named: "down-arrow.png")
-        duckButton.setImage(duckBimage, for: .normal)
-        duckButton.tintColor = UIColor.black
-        duckButton.bounds = CGRect(x: self.frame.minX / 1.55, y: self.frame.minY / 4, width: 100, height: 100)
-        //duckButton.addTarget(self, action: #selector(duckResponse), forControlEvents: .touchDragInside)
-        self.view!.addSubview(duckButton)
- */
+        print("jumpDown")
     }
 
     func initializeGame() -> Void{
