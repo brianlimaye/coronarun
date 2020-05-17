@@ -5,6 +5,8 @@
 //  Created by Brian Limaye on 5/13/20.
 //  Copyright © 2020 Brian Limaye. All rights reserved.
 //
+//To do-
+//1. Review all AppDelegate methods.
 
 import UIKit
 

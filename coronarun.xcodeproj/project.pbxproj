@@ -68,17 +68,17 @@
 		B42BF989246BC25100AD9292 /* coronarunUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coronarunUITests.swift; sourceTree = "<group>"; };
 		B42BF98B246BC25100AD9292 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B42BF999246BDC5500AD9292 /* resizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resizer.swift; sourceTree = "<group>"; };
-		B46F05FE24706F730002CCEB /* row-3-col-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-3-col-3.png"; path = "../../../GitHub/animation/row-3-col-3.png"; sourceTree = "<group>"; };
-		B46F05FF24706F730002CCEB /* row-1-col-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-1-col-2.png"; path = "../../../GitHub/animation/row-1-col-2.png"; sourceTree = "<group>"; };
-		B46F060024706F730002CCEB /* seamless-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "seamless-background.png"; path = "../../../GitHub/animation/seamless-background.png"; sourceTree = "<group>"; };
-		B46F060124706F730002CCEB /* row-2-col-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-2-col-2.png"; path = "../../../GitHub/animation/row-2-col-2.png"; sourceTree = "<group>"; };
-		B46F060224706F730002CCEB /* row-3-col-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-3-col-1.png"; path = "../../../GitHub/animation/row-3-col-1.png"; sourceTree = "<group>"; };
-		B46F060324706F730002CCEB /* row-3-col-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-3-col-2.png"; path = "../../../GitHub/animation/row-3-col-2.png"; sourceTree = "<group>"; };
-		B46F060424706F730002CCEB /* row-1-col-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-1-col-3.png"; path = "../../../GitHub/animation/row-1-col-3.png"; sourceTree = "<group>"; };
-		B46F060524706F730002CCEB /* row-1-col-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-1-col-1.png"; path = "../../../GitHub/animation/row-1-col-1.png"; sourceTree = "<group>"; };
-		B46F060624706F730002CCEB /* grounds.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grounds.png; path = ../../../GitHub/animation/grounds.png; sourceTree = "<group>"; };
-		B46F060724706F730002CCEB /* row-2-col-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-2-col-1.png"; path = "../../../GitHub/animation/row-2-col-1.png"; sourceTree = "<group>"; };
-		B46F060824706F730002CCEB /* row-2-col-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-2-col-3.png"; path = "../../../GitHub/animation/row-2-col-3.png"; sourceTree = "<group>"; };
+		B46F05FE24706F730002CCEB /* row-3-col-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-3-col-3.png"; path = "./animation/row-3-col-3.png"; sourceTree = "<group>"; };
+		B46F05FF24706F730002CCEB /* row-1-col-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-1-col-2.png"; path = "./animation/row-1-col-2.png"; sourceTree = "<group>"; };
+		B46F060024706F730002CCEB /* seamless-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "seamless-background.png"; path = "./animation/seamless-background.png"; sourceTree = "<group>"; };
+		B46F060124706F730002CCEB /* row-2-col-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-2-col-2.png"; path = "./animation/row-2-col-2.png"; sourceTree = "<group>"; };
+		B46F060224706F730002CCEB /* row-3-col-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-3-col-1.png"; path = "./animation/row-3-col-1.png"; sourceTree = "<group>"; };
+		B46F060324706F730002CCEB /* row-3-col-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-3-col-2.png"; path = "./animation/row-3-col-2.png"; sourceTree = "<group>"; };
+		B46F060424706F730002CCEB /* row-1-col-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-1-col-3.png"; path = "./animation/row-1-col-3.png"; sourceTree = "<group>"; };
+		B46F060524706F730002CCEB /* row-1-col-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-1-col-1.png"; path = "./animation/row-1-col-1.png"; sourceTree = "<group>"; };
+		B46F060624706F730002CCEB /* grounds.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grounds.png; path = ./animation/grounds.png; sourceTree = "<group>"; };
+		B46F060724706F730002CCEB /* row-2-col-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-2-col-1.png"; path = "./animation/row-2-col-1.png"; sourceTree = "<group>"; };
+		B46F060824706F730002CCEB /* row-2-col-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "row-2-col-3.png"; path = "./animation/row-2-col-3.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
