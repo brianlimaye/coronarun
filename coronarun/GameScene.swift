@@ -40,7 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         swipeUp.direction = .up
         self.view?.addGestureRecognizer(swipeUp)
 
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(jumpDown))
         swipeDown.direction = .down
         self.view?.addGestureRecognizer(swipeDown)
         
@@ -132,7 +132,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     @objc func jumpDown(sender: UIButton!) {
         
+        if(!isReady())
+        {
+            print("Cooldown on button")
+            return
+        }
         print("jumpDown")
+        pauseRunning()
+        duckCharacter()
+        let seconds = 1.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
+        {
+            self.resumeRunning()
+        }
     }
 
     func initializeGame() -> Void{
@@ -174,7 +186,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
             // Set background first
             background.zPosition = -2;
-}
+        }
     }
     
     func drawPlatform() -> Void{
@@ -261,13 +273,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 self.characterSprite.removeAction(forKey: "down")
                 self.characterSprite.texture = SKTexture(imageNamed: "row-1-col-1.png")
             }
-            
         }
     }
     
+    func duckCharacter() -> Void {
+        
+       let duckFrames:[SKTexture] = [SKTexture(imageNamed: "row-4-col-1.png")]
+        
+       characterSprite.texture = SKTexture(imageNamed: "row-4-col-1.png")
+    
+        let duckAnimation = SKAction.animate(with: duckFrames, timePerFrame: 0.25)
+        
+        let repeatDuck = SKAction.repeatForever(duckAnimation)
 
-    
-    
+        characterSprite.run(repeatDuck, withKey: "ducking")
+        
+        let seconds = 1.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
+        {
+            self.characterSprite.removeAction(forKey: "ducking")
+            self.characterSprite.texture = SKTexture(imageNamed: "row-1-col-1.png")
+        }
+    }
+
     /*
 func touchDown(atPoint pos : CGPoint) {
         if let n = self.spinnyNode?.copy() as! SKShapeNode? {
