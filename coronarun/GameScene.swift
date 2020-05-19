@@ -9,6 +9,14 @@
 import SpriteKit
 import GameplayKit
 
+struct ColliderType
+{
+    static let none: UInt32 = 0x1 << 0
+    static let character: UInt32 = 0x1 << 1
+    static let banana: UInt32 = 0x1 << 2
+    static let germs: UInt32 = 0x1 << 3
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate
 {
     let playerSpeedPerFrame = 0.25
@@ -20,31 +28,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var characterSprite: SKSpriteNode = SKSpriteNode()
     var background: SKSpriteNode = SKSpriteNode()
     var platform: SKSpriteNode = SKSpriteNode()
-    var scoreLabel: SKSpriteNode = SKSpriteNode()
+    //var scoreLabel: SKSpriteNode = SKSpriteNode()
+    var germCloud: SKSpriteNode = SKSpriteNode()
+    var bananaPeel: SKSpriteNode = SKSpriteNode()
     var score: Int = 0
     var lives: Int = 1
     var gameOver: Bool = false
-    var gameOverDisplay: SKLabelNode = SKLabelNode()
+    //var gameOverDisplay: SKLabelNode = SKLabelNode()
     var timer: Timer = Timer()
     var runAction: SKAction = SKAction()
     var lastTime: Double = 0
     
 
     override func didMove(to view: SKView) -> Void {
+        if(self.isPaused)
+        {
+            self.isPaused = false
+        }
+
         self.physicsWorld.contactDelegate = self
         drawBackground()
         drawPlatform()
         drawCharacter()
+        initObstaclePhysics()
+        drawGerm()
+        drawPeel()
+        checkPhysics()
         
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(jumpUp))
         swipeUp.direction = .up
         self.view?.addGestureRecognizer(swipeUp)
 
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(jumpDown))
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(slideDown))
         swipeDown.direction = .down
         self.view?.addGestureRecognizer(swipeDown)
         
 }
+
+    func didBegin(_ contact: SKPhysicsContact) {
+        print("yo")
+    }
 
     @objc func timerAction(){
        print("timer fired!")
@@ -63,9 +86,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         return isReady
     }
     
-    
     func currentTimeInMilliSeconds()-> Double
-
     {
         let currentDate = Date()
 
@@ -73,9 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
         return (since1970 * 1000)
     }
-    
-    
-    
+
     func pauseRunning() -> Void{
         
         let runningAction: SKAction? = characterSprite.action(forKey: "running")
@@ -123,14 +142,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         print("jumpUp")
         pauseRunning()
         jumpCharacter()
-        let seconds = 1.0
+        
+        let seconds = 0.9
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
         {
             self.resumeRunning()
         }
     }
     
-    @objc func jumpDown(sender: UIButton!) {
+    @objc func slideDown(sender: UIButton!) {
         
         if(!isReady())
         {
@@ -140,7 +160,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         print("jumpDown")
         pauseRunning()
         duckCharacter()
-        let seconds = 1.0
+        let seconds = 0.9
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
         {
             self.resumeRunning()
@@ -158,13 +178,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             )
         
             //drawBackground()
-            drawCharacter()
+            //drawCharacter()
     }
     
     func drawBackground() -> Void{
         
         let backgTexture = SKTexture(imageNamed: "seamless-background.png")
-        
+            
         let backgAnimation = SKAction.move(by: CGVector(dx: -backgTexture.size().width, dy: 0), duration: bgAnimatedInSecs)
         
         let backgShift = SKAction.move(by: CGVector(dx: backgTexture.size().width, dy: 0), duration: 0)
@@ -175,6 +195,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
         while i < maxTimeMoving {
             background = SKSpriteNode(texture: backgTexture)
+            background.name = "background"
             
             background.position = CGPoint(x: backgTexture.size().width * i, y: self.frame.midY)
             background.size.height = self.frame.height
@@ -208,6 +229,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             platform = SKSpriteNode(imageNamed: "grounds.png")
             
             platform.position = CGPoint(x: i * pfTexture.size().width, y: -(scene?.size.height)! / 2.73)
+            platform.name = "platform"
             platform.size.height = 400;
     
             platform.run(movePfForever, withKey: "platform")
@@ -216,8 +238,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             
             i += 1
 
-            // Set background first
-            background.zPosition = -1;
+            // Set platform first
+            platform.zPosition = -1;
         }
     }
     
@@ -229,10 +251,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let mainRepeater = SKAction.repeatForever(mainAnimated)
         
         characterSprite = SKSpriteNode(imageNamed: "row-1-col-1.png")
-        characterSprite.zPosition = 2;
+        characterSprite.name = "character"
         characterSprite.position = CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.70)
         
+        
+        //Physics Body
+        characterSprite.physicsBody = SKPhysicsBody(circleOfRadius: characterSprite.size.width / 2)
+        characterSprite.physicsBody?.affectedByGravity = false
+        characterSprite.physicsBody?.categoryBitMask = ColliderType.character
+        characterSprite.physicsBody?.collisionBitMask = ColliderType.banana | ColliderType.germs
+        characterSprite.physicsBody?.contactTestBitMask = ColliderType.banana | ColliderType.germs
+        characterSprite.physicsBody?.usesPreciseCollisionDetection = true
+        characterSprite.physicsBody?.isDynamic = false
+        
+        
+        
         self.addChild(characterSprite)
+        
+        characterSprite.zPosition = 2;
+
+        
+        
         characterSprite.run(mainRepeater, withKey: "running")
         
         /*
@@ -271,7 +310,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds){
                 
                 self.characterSprite.removeAction(forKey: "down")
-                self.characterSprite.texture = SKTexture(imageNamed: "row-1-col-1.png")
+                //self.characterSprite.texture = SKTexture(imageNamed: "row-1-col-1.png")
             }
         }
     }
@@ -292,7 +331,117 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
         {
             self.characterSprite.removeAction(forKey: "ducking")
-            self.characterSprite.texture = SKTexture(imageNamed: "row-1-col-1.png")
+            //self.characterSprite.texture = SKTexture(imageNamed: "row-1-col-1.png")
+        }
+    }
+    
+    func initObstaclePhysics() -> Void{
+        
+        
+        germCloud = SKSpriteNode(imageNamed: "Clipart-Email-10350186")
+        germCloud.size = CGSize(width: 200, height: 200)
+        germCloud.name = "germ"
+        germCloud.physicsBody = SKPhysicsBody(rectangleOf: germCloud.size)
+        germCloud.physicsBody?.affectedByGravity = false
+        germCloud.physicsBody?.categoryBitMask = ColliderType.germs
+        germCloud.physicsBody?.collisionBitMask = ColliderType.character
+        germCloud.physicsBody?.contactTestBitMask = ColliderType.character
+        germCloud.physicsBody?.isDynamic = true
+        
+        self.addChild(germCloud)
+        
+        bananaPeel = SKSpriteNode(imageNamed: "banana-peel-2504671_640.png")
+        bananaPeel.size = CGSize(width: 100, height: 100)
+        bananaPeel.name = "banana"
+        bananaPeel.physicsBody = SKPhysicsBody(circleOfRadius: bananaPeel.size.width / 2)
+        bananaPeel.physicsBody?.affectedByGravity = false
+        bananaPeel.physicsBody?.categoryBitMask = ColliderType.banana
+        bananaPeel.physicsBody?.collisionBitMask = ColliderType.character
+        bananaPeel.physicsBody?.contactTestBitMask = ColliderType.character
+        bananaPeel.physicsBody?.usesPreciseCollisionDetection = true
+        bananaPeel.physicsBody?.isDynamic = true
+        
+        self.addChild(bananaPeel)
+    }
+    
+    func drawGerm() -> Void {
+        
+        let germShift = SKAction.move(by: CGVector(dx: -self.frame.width * 2, dy: 0), duration: bgAnimatedInSecs)
+        let germReversion = SKAction.move(by: CGVector(dx: self.frame.width * 2, dy: 0), duration: 0)
+        //let germShift = SKAction.move(to: CGPoint(x: -self.frame.size.width, y: self.frame.minY / 3), duration: bgAnimatedInSecs)
+        
+        let germSequence = SKAction.sequence([germShift, germReversion])
+        let germAnimation = SKAction.repeatForever(germSequence)
+        
+        
+        germCloud.texture = SKTexture(imageNamed: "Clipart-Email-10350186")
+        germCloud.position = CGPoint(x: self.frame.size.width, y: (self.frame.minY / 2.65))
+        germCloud.zPosition = 3
+        
+        germCloud.run(germAnimation)
+    }
+    
+    func drawPeel() -> Void {
+        
+        let peelShift = SKAction.move(by: CGVector(dx: -self.frame.size.width * 2, dy: 0), duration: bgAnimatedInSecs / 2)
+        let peelReversion = SKAction.move(by: CGVector(dx: self.frame.size.width * 2, dy: 0), duration: 0)
+        
+        let peelSequence = SKAction.sequence([peelShift, peelReversion])
+        let peelAnimation = SKAction.repeatForever(peelSequence)
+        
+        //bananaPeel.texture = SKTexture(imageNamed: "banana-peel-2504671_640.png")
+        bananaPeel.size = CGSize(width: characterSprite.size.width, height: characterSprite.size.height)
+        bananaPeel.position = CGPoint(x: self.frame.size.width, y: self.frame.minX * 1.15)
+        bananaPeel.zPosition = 3
+                
+        bananaPeel.run(peelAnimation)
+    }
+    
+    func checkPhysics() {
+
+        // Create an array of all the nodes with physicsBodies
+        var physicsNodes = [SKNode]()
+
+        //Get all physics bodies
+        enumerateChildNodes(withName: "//.") { node, _ in
+            if let _ = node.physicsBody {
+                physicsNodes.append(node)
+            } else {
+                print("\(String(describing: node.name)) does not have a physics body so cannot collide or be involved in contacts.")
+            }
+        }
+
+        //For each node, check it's category against every other node's collion and contctTest bit mask
+        for node in physicsNodes {
+            let category = node.physicsBody!.categoryBitMask
+            // Identify the node by its category if the name is blank
+            let name = node.name != nil ? node.name! : "Category \(category)"
+
+            let collisionMask = node.physicsBody!.collisionBitMask
+            let contactMask = node.physicsBody!.contactTestBitMask
+
+            // If all bits of the collisonmask set, just say it collides with everything.
+            if collisionMask == UInt32.max {
+                print("\(name) collides with everything")
+            }
+
+            for otherNode in physicsNodes {
+                if (node.physicsBody?.isDynamic == false) {
+                print("This node \(name) is not dynamic")
+            }
+                if (node != otherNode) && (node.physicsBody?.isDynamic == true) {
+                    let otherCategory = otherNode.physicsBody!.categoryBitMask
+                    // Identify the node by its category if the name is blank
+                    let otherName = otherNode.name != nil ? otherNode.name! : "Category \(otherCategory)"
+
+                    // If the collisonmask and category match, they will collide
+                    if ((collisionMask & otherCategory) != 0) && (collisionMask != UInt32.max) {
+                        print("\(name) collides with \(otherName)")
+                    }
+                    // If the contactMAsk and category match, they will contact
+                    if (contactMask & otherCategory) != 0 {print("\(name) notifies when contacting \(otherName)")}
+                }
+            }
         }
     }
 
