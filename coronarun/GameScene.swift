@@ -38,6 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var timer: Timer = Timer()
     var runAction: SKAction = SKAction()
     var lastTime: Double = 0
+    var startedContact: Bool = false
     
 
     override func didMove(to view: SKView) -> Void {
@@ -51,7 +52,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         drawPlatform()
         drawCharacter()
         initObstaclePhysics()
-        drawGerm()
+        //drawGerm()
         drawPeel()
         checkPhysics()
         
@@ -66,7 +67,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 }
 
     func didBegin(_ contact: SKPhysicsContact) {
+        
+        startedContact = true
+        
         print("yo")
+        peelDieAnimation()
     }
 
     @objc func timerAction(){
@@ -132,7 +137,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     }
     
     @objc func jumpUp() {
-        
+                
         if(!isReady())
         {
             print("Cooldown on button")
@@ -141,17 +146,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         print("jumpUp")
         pauseRunning()
+        
         jumpCharacter()
         
-        let seconds = 0.9
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
+        if(!startedContact)
         {
-            self.resumeRunning()
+            let seconds = 0.9
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
+            {
+                self.resumeRunning()
+            }
         }
     }
     
     @objc func slideDown(sender: UIButton!) {
-        
+                
         if(!isReady())
         {
             print("Cooldown on button")
@@ -301,14 +310,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.texture = SKTexture(imageNamed: "row-3-col-1.png")
         characterSprite.run(upRepeater, withKey: "up")
         
+        
+        if(startedContact)
+        {
+            return
+        }
+        
         let seconds = 0.50
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
             
             self.characterSprite.texture = SKTexture(imageNamed: "row-3-col-2.png")
             self.characterSprite.removeAction(forKey: "up")
             self.characterSprite.run(downRepeater, withKey: "down")
+            
+            if(self.startedContact)
+            {
+                return
+            }
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds){
                 
+                if(self.startedContact)
+                {
+                    return
+                }
                 self.characterSprite.removeAction(forKey: "down")
                 //self.characterSprite.texture = SKTexture(imageNamed: "row-1-col-1.png")
             }
@@ -338,6 +362,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func initObstaclePhysics() -> Void{
         
         
+        /*
         germCloud = SKSpriteNode(imageNamed: "Clipart-Email-10350186")
         germCloud.size = CGSize(width: 200, height: 200)
         germCloud.name = "germ"
@@ -349,6 +374,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         germCloud.physicsBody?.isDynamic = true
         
         self.addChild(germCloud)
+ */
         
         bananaPeel = SKSpriteNode(imageNamed: "banana-peel-2504671_640.png")
         bananaPeel.size = CGSize(width: 100, height: 100)
@@ -374,7 +400,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let germAnimation = SKAction.repeatForever(germSequence)
         
         
-        germCloud.texture = SKTexture(imageNamed: "Clipart-Email-10350186")
+        //germCloud.texture = SKTexture(imageNamed: "Clipart-Email-10350186")
         germCloud.position = CGPoint(x: self.frame.size.width, y: (self.frame.minY / 2.65))
         germCloud.zPosition = 3
         
@@ -395,6 +421,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         bananaPeel.zPosition = 3
                 
         bananaPeel.run(peelAnimation)
+    }
+    
+    func peelDieAnimation() -> Void {
+        
+        bananaPeel.removeAllActions()
+        germCloud.removeAllActions()
+        characterSprite.removeAllActions()
+        
+        characterSprite.texture = SKTexture(imageNamed: "row-4-col-2.png")
+        
+        let bananaSlide = SKAction.move(to: CGPoint(x: self.frame.size.width * 2, y: self.frame.minX * 1.15), duration: 0.5)
+        let bananaSlideAnim = SKAction.repeat(bananaSlide, count: 1)
+        
+        let rotation = SKAction.rotate(byAngle: ((3 * CGFloat.pi) / 2), duration: 0.5)
+        let rotationBack = SKAction.rotate(byAngle: (-(3 * CGFloat.pi) / 2), duration: 0)
+        let fall = SKAction.move(to: CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.70), duration: 0.5)
+        
+        let fallAnim = SKAction.repeat(fall, count: 1)
+        let rotationAnim = SKAction.repeat(rotation, count: 1)
+        let rotationBackAnim = SKAction.repeat(rotationBack, count: 1)
+                
+        characterSprite.run(rotationAnim)
+        bananaPeel.run(bananaSlideAnim)
+        
+        let seconds = 0.5
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
+        {
+            
+            self.characterSprite.run(rotationBackAnim)
+            self.characterSprite.run(fallAnim)
+            self.characterSprite.texture = SKTexture(imageNamed: "row-4-col-3.png")
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
+            {
+                self.isPaused = true
+            }
+        }
     }
     
     func checkPhysics() {
