@@ -11,7 +11,7 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -19,9 +19,22 @@ class GameViewController: UIViewController {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "GameScene") {
                 // Set the scale mode to scale to fit the window
+                
                 scene.scaleMode = .aspectFill
-
-                // Present the scene
+                
+                /*
+                let leadingConstraint = view.leadingAnchor.constraint(equalTo: )
+                let trailingConstraint = landscapeView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+                let topConstraint = landscapeView.topAnchor.constraint(equalTo: self.view.topAnchor)
+                let bottomConstraint = landscapeView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50)
+                
+                initialConstraints.append(contentsOf: [leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
+                
+                //NSLayoutConstraint.activate(initialConstraints)
+                */
+                
+                // Present the scene.
+                
                 view.presentScene(scene)
             }
 

@@ -2,6 +2,21 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:coronarun.xcodeproj">
+      location = "group:../coronarun/animation/f1.png">
+   </FileRef>
+   <FileRef
+      location = "group:../coronarun/animation/f2.png">
+   </FileRef>
+   <FileRef
+      location = "group:../coronarun/animation/f3.png">
+   </FileRef>
+   <FileRef
+      location = "group:../coronarun/animation/f4.png">
+   </FileRef>
+   <FileRef
+      location = "group:../coronarun/animation/f5.png">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>
