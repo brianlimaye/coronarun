@@ -53,9 +53,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         drawBackground()
         drawPlatform()
         drawCharacter()
-        initObjectPhysics()
+        //initObjectPhysics()
         //drawGirl()
-        drawGerm()
+        //drawGerm()
         //drawPeel()
         //checkPhysics()
         
@@ -72,9 +72,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         startedContact = true
         print("yo")
-        //peelDieAnimation()
+        peelDieAnimation()
         //germDieAnimation()
-        girlDieAnimation()
+        //girlDieAnimation()
     }
 
     @objc func timerAction(){
@@ -277,14 +277,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func drawCharacter() -> Void{
         
-        let runAnimations:[SKTexture] = [SKTexture(imageNamed: "row-1-col-1.png"), SKTexture(imageNamed: "row-1-col-2.png"), SKTexture(imageNamed: "row-1-col-3.png"), SKTexture(imageNamed: "row-2-col-1.png"), SKTexture(imageNamed: "row-2-col-2.png"), SKTexture(imageNamed: "row-2-col-3.png")]
+        //let runAnimations:[SKTexture] = [SKTexture(imageNamed: "row-1-col-1.png"), SKTexture(imageNamed: "row-1-col-2.png"), SKTexture(imageNamed: "row-1-col-3.png"), SKTexture(imageNamed: "row-2-col-1.png"), SKTexture(imageNamed: "row-2-col-2.png"), SKTexture(imageNamed: "row-2-col-3.png")]
+        
+        //let lastFrame = SKTexture(imageNamed: "new11-removebg-preview.png")
+        //lastFrame.
+        
+        let runAnimations:[SKTexture] = [SKTexture(imageNamed: "updated6.png"), SKTexture(imageNamed: "updated7.png"), SKTexture(imageNamed: "updated8.png"), SKTexture(imageNamed: "updated9.png"), SKTexture(imageNamed: "updated10.png"), SKTexture(imageNamed: "updated11.png")]
         
         let mainAnimated = SKAction.animate(with: runAnimations, timePerFrame: 0.2)
         let mainRepeater = SKAction.repeatForever(mainAnimated)
         
-        characterSprite = SKSpriteNode(imageNamed: "row-1-col-1.png")
+        characterSprite = SKSpriteNode(imageNamed: "updated6.png")
         characterSprite.name = "character"
         characterSprite.position = CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.70)
+        characterSprite.size = CGSize(width: characterSprite.size.width / 2, height: characterSprite.size.height / 2)
         characterSprite.color = .black
         characterSprite.colorBlendFactor = 0.1
         
@@ -333,7 +339,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let upRepeater = SKAction.repeat(upAction, count: 1)
         let downRepeater = SKAction.repeat(downAction, count: 1)
         
-        characterSprite.texture = SKTexture(imageNamed: "row-3-col-1.png")
+        characterSprite.texture = SKTexture(imageNamed: "updated12.png")
         characterSprite.run(upRepeater, withKey: "up")
         
         
@@ -346,7 +352,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let seconds = 0.50
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
             
-            self.characterSprite.texture = SKTexture(imageNamed: "row-3-col-2.png")
+            self.characterSprite.texture = SKTexture(imageNamed: "updated13.png")
             self.characterSprite.removeAction(forKey: "up")
             self.characterSprite.run(downRepeater, withKey: "down")
             
@@ -354,7 +360,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             {
                 self.characterSprite.removeAction(forKey: "up")
                 self.characterSprite.removeAction(forKey: "down")
-                self.characterSprite.texture = SKTexture(imageNamed: "row-4-col-3.png")
+                self.characterSprite.texture = SKTexture(imageNamed: "updated13.png")
                 return
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds){
@@ -362,7 +368,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 if(self.startedContact)
                 {
                     self.characterSprite.removeAction(forKey: "down")
-                    self.characterSprite.texture = SKTexture(imageNamed: "row-4-col-3.png")
+                    self.characterSprite.texture = SKTexture(imageNamed: "updated13.png")
                     return
                 }
                 self.characterSprite.removeAction(forKey: "down")
@@ -373,7 +379,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func duckCharacter() -> Void {
         
-       let duckFrames:[SKTexture] = [SKTexture(imageNamed: "row-4-col-1.png")]
+       let duckFrames:[SKTexture] = [SKTexture(imageNamed: "updated5.png")]
                         
        let duckAnimation = SKAction.animate(with: duckFrames, timePerFrame: 0.25)
        let yShift = SKAction.move(to: CGPoint(x: characterSprite.position.x, y: characterSprite.position.y - 15), duration: 0.5)
@@ -403,6 +409,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func initObjectPhysics() -> Void{
         
         
+       /*
         //GermCloud
         germCloud = SKSpriteNode(imageNamed: "Clipart-Email-10350186")
         germCloud.size = CGSize(width: 200, height: 200)
@@ -416,7 +423,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         self.addChild(germCloud)
         
-        /*
+        */
         
         //BananaPeel
         bananaPeel = SKSpriteNode(imageNamed: "banana-peel-2504671_640.png")
@@ -433,6 +440,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         //Walking Girl
          
+        /*
         littleGirl = SKSpriteNode(imageNamed: "step1.png")
         littleGirl.name = "girl"
         littleGirl.size = CGSize(width: littleGirl.size.width / 1.1, height: characterSprite.size.height / 1.1)
@@ -509,7 +517,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.removeAllActions()
         littleGirl.removeAllActions()
         
-        characterSprite.texture = SKTexture(imageNamed: "row-4-col-2.png")
+        characterSprite.texture = SKTexture(imageNamed: "updated15.png")
         
         let bananaSlide = SKAction.move(to: CGPoint(x: self.frame.size.width * 2, y: self.frame.minX * 1.15), duration: 0.5)
         let bananaSlideAnim = SKAction.repeat(bananaSlide, count: 1)
@@ -531,7 +539,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             
             self.characterSprite.run(rotationBackAnim, withKey: "rotateback")
             self.characterSprite.run(fallAnim, withKey: "fall")
-            self.characterSprite.texture = SKTexture(imageNamed: "row-4-col-3.png")
+            self.characterSprite.texture = SKTexture(imageNamed: "updated16.png")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3)
             {
                 self.isPaused = true
@@ -557,7 +565,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let spinRepeater = SKAction.repeatForever(spinAnim)
         let eatRepeater = SKAction.repeatForever(eatAnim)
         
-        characterSprite.texture = SKTexture(imageNamed: "row-4-col-2.png")
+        characterSprite.texture = SKTexture(imageNamed: "updated15.png")
         
         characterSprite.run(spinRepeater, withKey: "spin")
         germCloud.run(eatRepeater, withKey: "eat")
@@ -581,11 +589,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.removeAllActions()
         littleGirl.removeAllActions()
         
-        characterSprite.texture = SKTexture(imageNamed: "row-4-col-2.png")
+        characterSprite.texture = SKTexture(imageNamed: "updated15.png")
         
         let rotateAnim = SKAction.rotate(byAngle: ((3 * CGFloat.pi) / 2), duration: 0.3)
         let reversionAnim = SKAction.rotate(byAngle: -((3 * CGFloat.pi) / 2), duration: 0)
-        let changeTexture = SKAction.setTexture(SKTexture(imageNamed: "row-4-col-3.png"))
+        let changeTexture = SKAction.setTexture(SKTexture(imageNamed: "updated16.png"))
         let fall = SKAction.move(to: CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.70), duration: 0.3)
 
         let fallAnim = SKAction.repeat(fall, count: 1)
