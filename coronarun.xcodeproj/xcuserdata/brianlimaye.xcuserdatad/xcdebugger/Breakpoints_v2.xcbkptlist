@@ -14,10 +14,88 @@
             filePath = "coronarun/GameScene.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
             landmarkName = "didMove(to:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FFD41B27-01AD-4009-A96F-2D2DFE8E5F69"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "coronarun/GameScene.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "ColliderType"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "FFD41B27-01AD-4009-A96F-2D2DFE8E5F69 - f7b5051ca0e17113"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "coronarun.GameScene.playerSpeedPerFrame.getter : Swift.Double"
+                  moduleName = "coronarun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianlimaye/Desktop/GitHub/brianlimaye/coronarun/coronarun/GameScene.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "30">
+               </Location>
+               <Location
+                  uuid = "FFD41B27-01AD-4009-A96F-2D2DFE8E5F69 - 7c60d3e98be7bb04"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "coronarun.GameScene.init(size: __C.CGSize) -&gt; coronarun.GameScene"
+                  moduleName = "coronarun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianlimaye/Desktop/GitHub/brianlimaye/coronarun/coronarun/GameScene.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "390">
+               </Location>
+               <Location
+                  uuid = "FFD41B27-01AD-4009-A96F-2D2DFE8E5F69 - b9de7983113a43cb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "coronarun.GameScene.init() -&gt; coronarun.GameScene"
+                  moduleName = "coronarun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianlimaye/Desktop/GitHub/brianlimaye/coronarun/coronarun/GameScene.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "357">
+               </Location>
+               <Location
+                  uuid = "FFD41B27-01AD-4009-A96F-2D2DFE8E5F69 - 6008a203a71f2608"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "coronarun.GameScene.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;coronarun.GameScene&gt;"
+                  moduleName = "coronarun"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/brianlimaye/Desktop/GitHub/brianlimaye/coronarun/coronarun/GameScene.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "23"
+                  endingLineNumber = "23"
+                  offsetFromSymbolStart = "470">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

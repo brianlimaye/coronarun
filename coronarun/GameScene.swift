@@ -5,6 +5,14 @@
 //  Created by Brian Limaye on 5/13/20.
 //  Copyright © 2020 Brian Limaye. All rights reserved.
 //
+//0. Implement the app delegate methods (ex. Hit home button after dying)
+//1. Add a replay button after dying.
+//2. Randomize objects
+//3. Implement time-based closing animation
+//4  Score board
+//5. Make sure it works on all devices
+//6. Make sure orientation is dynamic
+
 
 import SpriteKit
 import GameplayKit
@@ -55,18 +63,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         drawPlatform()
         drawCharacter()
         
-        let seconds = 5.0
-        /*
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
-        {
-            self.closingScene()
-        }
- */
-        //initObjectPhysics()
+        initObjectPhysics()
         //drawGirl()
-        //drawGerm()
+        drawGerm()
+        //to-do: Make these objects random
         //drawPeel()
-        //checkPhysics()
+        checkPhysics()
         
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(jumpUp))
         swipeUp.direction = .up
@@ -127,7 +129,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         return (since1970 * 1000)
     }
     
-    /*
     func closingScene() -> Void{
                 
         house = SKSpriteNode(imageNamed: "imageedit_1_5329322170.png")
@@ -169,7 +170,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             }
         }
     }
- */
 
     func pauseRunning() -> Void{
         
@@ -476,8 +476,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func initObjectPhysics() -> Void{
         
-        
-       /*
         //GermCloud
         germCloud = SKSpriteNode(imageNamed: "Clipart-Email-10350186")
         germCloud.size = CGSize(width: 200, height: 200)
@@ -491,7 +489,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         self.addChild(germCloud)
         
-        */
         
         //BananaPeel
         bananaPeel = SKSpriteNode(imageNamed: "banana-peel-2504671_640.png")
@@ -504,11 +501,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         bananaPeel.physicsBody?.contactTestBitMask = ColliderType.character
         bananaPeel.physicsBody?.isDynamic = true
         
-        self.addChild(bananaPeel)
+        //self.addChild(bananaPeel)
         
         //Walking Girl
          
-        /*
         littleGirl = SKSpriteNode(imageNamed: "step1.png")
         littleGirl.name = "girl"
         littleGirl.size = CGSize(width: littleGirl.size.width / 1.1, height: characterSprite.size.height / 1.1)
@@ -523,8 +519,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         littleGirl.physicsBody?.contactTestBitMask = ColliderType.character
         littleGirl.physicsBody?.isDynamic = false
         
-        self.addChild(littleGirl)
- */
+        //self.addChild(littleGirl)
     }
     
     func drawGerm() -> Void {
