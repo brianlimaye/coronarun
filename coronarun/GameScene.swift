@@ -29,6 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var characterSprite: SKSpriteNode = SKSpriteNode()
     var background: SKSpriteNode = SKSpriteNode()
     var platform: SKSpriteNode = SKSpriteNode()
+    var house: SKSpriteNode = SKSpriteNode()
     //var scoreLabel: SKSpriteNode = SKSpriteNode()
     var germCloud: SKSpriteNode = SKSpriteNode()
     var bananaPeel: SKSpriteNode = SKSpriteNode()
@@ -53,6 +54,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         drawBackground()
         drawPlatform()
         drawCharacter()
+        
+        let seconds = 5.0
+        /*
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
+        {
+            self.closingScene()
+        }
+ */
         //initObjectPhysics()
         //drawGirl()
         //drawGerm()
@@ -72,9 +81,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         startedContact = true
         print("yo")
-        peelDieAnimation()
-        //germDieAnimation()
-        //girlDieAnimation()
+        
+        let nodeA = contact.bodyA
+        let nodeB = contact.bodyB
+        
+        if(((nodeA.node?.name == "character") && (nodeB.node?.name == "banana")) || ((nodeA.node?.name == "banana") && (nodeB.node?.name == "character")))
+        {
+            peelDieAnimation()
+        }
+        else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "germ")) || ((nodeA.node?.name == "germ") && (nodeB.node?.name == "character")))
+        {
+            germDieAnimation()
+        }
+        else
+        {
+            girlDieAnimation()
+        }
+        
+        startedContact = false
     }
 
     @objc func timerAction(){
@@ -102,6 +126,50 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
         return (since1970 * 1000)
     }
+    
+    /*
+    func closingScene() -> Void{
+                
+        house = SKSpriteNode(imageNamed: "imageedit_1_5329322170.png")
+        house.size = CGSize(width: house.size.width / 3, height: house.size.height / 3)
+        house.position = CGPoint(x: self.frame.width * 2, y: self.frame.minY / 1.9)
+        
+        self.addChild(house)
+        
+        let standingFrames:[SKTexture] = [SKTexture(imageNamed: "updated1.png"), SKTexture(imageNamed: "updated2.png"), SKTexture(imageNamed: "updated3.png"), SKTexture(imageNamed: "updated4.png")]
+        
+        let standingAnim = SKAction.animate(with: standingFrames, timePerFrame: 0.25)
+        let moveToHouse = SKAction.move(to: CGPoint(x: self.frame.maxX / 1.5, y: self.frame.minY / 1.9), duration: 1)
+        
+        let charMoveToHouse = SKAction.move(to: CGPoint(x: self.frame.maxX / 4, y: self.frame.minY / 1.70), duration: 1)
+        
+        let repeatingStanding = SKAction.repeatForever(standingAnim)
+        let houseShift = SKAction.repeat(moveToHouse, count: 1)
+        let charShift = SKAction.repeat(charMoveToHouse, count: 1)
+        
+        house.run(houseShift, withKey: "houseshift")
+        
+        let seconds = 1.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
+        {
+            //self.background.isPaused = true
+            //self.platform.isPaused = true
+            self.house.removeAction(forKey: "houseshift")
+            self.characterSprite.run(charShift, withKey: "movetohouse")
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
+            {
+                self.characterSprite.removeAllActions()
+                self.characterSprite.texture = SKTexture(imageNamed: "updated1.png")
+                self.characterSprite.run(repeatingStanding)
+                DispatchQueue.main.asyncAfter(deadline: .now() + (seconds * 6))
+                {
+                    self.isPaused = true
+                }
+            }
+        }
+    }
+ */
 
     func pauseRunning() -> Void{
         
@@ -360,7 +428,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             {
                 self.characterSprite.removeAction(forKey: "up")
                 self.characterSprite.removeAction(forKey: "down")
-                self.characterSprite.texture = SKTexture(imageNamed: "updated13.png")
+                self.characterSprite.texture = SKTexture(imageNamed: "updated16.png")
                 return
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds){
@@ -368,7 +436,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 if(self.startedContact)
                 {
                     self.characterSprite.removeAction(forKey: "down")
-                    self.characterSprite.texture = SKTexture(imageNamed: "updated13.png")
+                    self.characterSprite.texture = SKTexture(imageNamed: "updated16.png")
                     return
                 }
                 self.characterSprite.removeAction(forKey: "down")
