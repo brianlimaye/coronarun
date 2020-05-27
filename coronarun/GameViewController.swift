@@ -81,18 +81,41 @@ class GameViewController: UIViewController {
                if isDebug
                {
                    print("c pressed")
-                   
                    self.gameScene.closingScene()
                }
-           case .keyboardLeftArrow:
+           case .keyboardP:
+           
+               if isDebug
+               {
+                    print("p was pressed")
+                    self.gameScene.drawPeel()
+               }
 
-               print("left arrow pressured")
-
+           case .keyboardG:
+                
+               if isDebug
+               {
+                    print("g was pressed")
+                    self.gameScene.drawGerm()
+               }
+            
+           case .keyboard9:
+               
+               if isDebug
+               {
+                    print("9 was pressed")
+                    self.gameScene.drawGirl()
+               }
            default:
+                
+               if isDebug
+               {
+                    print("different key detected")
+               }
 
-               super.pressesBegan(presses, with: event)
-
-           }
+            super.pressesBegan(presses, with: event)
+            
+        }
 
        }
 
