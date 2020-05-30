@@ -722,17 +722,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func drawPeel() -> Void {
         
         let peelShift = SKAction.move(by: CGVector(dx: -self.frame.size.width * 2, dy: 0), duration: bgAnimatedInSecs * 1.3)
-        let peelReversion = SKAction.move(by: CGVector(dx: self.frame.size.width * 2, dy: 0), duration: 0)
-        
         //let peelSequence = SKAction.sequence([peelShift, peelReversion])
         let peelAnimation = SKAction.repeat(peelShift, count: 1)
-        let peelRevert = SKAction.repeat(peelReversion, count: 1)
                 
-        bananaPeel.run(peelAnimation, withKey: "banana")
-        DispatchQueue.main.asyncAfter(deadline: .now() + bgAnimatedInSecs * 1.3)
-        {
-            self.bananaPeel.run(peelRevert)
-        }
+        bananaPeel.run(peelAnimation, completion: revertPeel)
+    }
+    
+    func revertPeel() {
+        
+        let peelReversion = SKAction.move(by: CGVector(dx: self.frame.size.width * 2, dy: 0), duration: 0)
+        let peelRevert = SKAction.repeat(peelReversion, count: 1)
+        
+        self.bananaPeel.run(peelRevert)
     }
     
     func drawGirl() -> Void {

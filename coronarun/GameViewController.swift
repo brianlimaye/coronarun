@@ -31,6 +31,7 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
@@ -40,6 +41,8 @@ class GameViewController: UIViewController {
                 // Set the scale mode to scale to fit the window
                 
                 scene.scaleMode = .aspectFill
+                
+                
                 
                 /*
                 let leadingConstraint = view.leadingAnchor.constraint(equalTo: )
@@ -55,6 +58,10 @@ class GameViewController: UIViewController {
                 // Present the scene.
                 
                 view.presentScene(scene)
+                
+                let notificationCenter = NotificationCenter.default
+                notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+                notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
             }
 
             view.ignoresSiblingOrder = true
@@ -106,6 +113,12 @@ class GameViewController: UIViewController {
                     print("9 was pressed")
                     self.gameScene.drawGirl()
                }
+           case .keyboardReturnOrEnter:
+               if isDebug
+               {
+                    print("return was pressed")
+                    self.gameScene.isPaused = !self.gameScene.isPaused
+               }
            default:
                 
                if isDebug
@@ -140,4 +153,17 @@ class GameViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    
+    @objc func appMovedToBackground() {
+
+        print("App moved to background!")
+        gameScene.isPaused = true
+    }
+    
+    @objc func appMovedToForeground() {
+        
+        print("App moved to foreground!")
+        gameScene.isPaused = false
+    }
+    
 }
