@@ -132,7 +132,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         var isReady: Bool = true
         let currentTime = currentTimeInMilliSeconds()
     
-        if((lastTime > 0) && (currentTime - lastTime) <= 1000)
+        if((lastTime > 0) && (currentTime - lastTime) <= 1001)
         {
             isReady = false
         }
@@ -392,35 +392,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         print("jumpUp")
         pauseRunning()
         
-        jumpCharacter()
-        
         if(!game.contactDetected)
         {
-            if(game.contactDetected)
-            {
-                print("herio")
-                return
-            }
-            let seconds = 0.9
-            DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
-            {
-                if(game.contactDetected)
-                {
-                    return
-                }
-                else
-                {
-                    if(game.contactDetected)
-                    {
-                        return
-                    }
-                    self.resumeRunning()
-                }
-            }
+            jumpCharacter()
         }
     }
     
-    @objc func slideDown(sender: UIButton!) {
+    @objc func slideDown() {
                 
         if(!isReady())
         {
@@ -429,22 +407,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         }
         print("jumpDown")
         pauseRunning()
-        duckCharacter()
         
         if(!game.contactDetected)
         {
-            let seconds = 0.9
-            DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
-            {
-                if(game.contactDetected)
-                {
-                    return
-                }
-                else
-                {
-                    self.resumeRunning()
-                }
-            }
+            duckCharacter()
         }
     }
     
@@ -452,7 +418,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         let backgTexture = SKTexture(imageNamed: "seamless-background.png")
             
-        let backgAnimation = SKAction.move(by: CGVector(dx: -backgTexture.size().width, dy: 0), duration: bgAnimatedInSecs)
+        let backgAnimation = SKAction.move(by: CGVector(dx: -backgTexture.size().width, dy: 0), duration: bgAnimatedInSecs / 2)
         
         let backgShift = SKAction.move(by: CGVector(dx: backgTexture.size().width, dy: 0), duration: 0)
         let bgAnimation = SKAction.sequence([backgAnimation, backgShift])
@@ -572,51 +538,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         {
             return
         }
+        
         let upAction = SKAction.move(to: CGPoint(x: self.frame.minX / 3, y: self.frame.midY), duration: 0.5)
-        let downAction = SKAction.move(to: CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.70), duration: 0.5)
-    
         let upRepeater = SKAction.repeat(upAction, count: 1)
-        let downRepeater = SKAction.repeat(downAction, count: 1)
         
         characterSprite.texture = SKTexture(imageNamed: "bobby-12.png")
-        characterSprite.run(upRepeater, withKey: "up")
+        characterSprite.run(upRepeater, completion: jumpLanding)
         
-        
+        /*
         if(game.contactDetected)
         {
             characterSprite.removeAction(forKey: "up")
             print("reached")
             return
         }
+ */
         
-        let seconds = 0.50
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-            
-            self.characterSprite.texture = SKTexture(imageNamed: "bobby-13.png")
-            self.characterSprite.removeAction(forKey: "up")
-            self.characterSprite.run(downRepeater, withKey: "down")
-            
-            if(game.contactDetected)
-            {
-                self.characterSprite.removeAction(forKey: "up")
-                self.characterSprite.removeAction(forKey: "down")
-                self.characterSprite.texture = SKTexture(imageNamed: "bobby-16.png")
-                print("reached")
-                return
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + seconds){
-                
-                if(game.contactDetected)
-                {
-                    self.characterSprite.removeAction(forKey: "down")
-                    self.characterSprite.texture = SKTexture(imageNamed: "bobby-16.png")
-                    print("reached")
-                    return
-                }
-                self.characterSprite.removeAction(forKey: "down")
-                //self.characterSprite.texture = SKTexture(imageNamed: "row-1-col-1.png")
-            }
+        /*
+        if(game.contactDetected)
+        {
+            self.characterSprite.texture = SKTexture(imageNamed: "bobby-16.png")
+            print("reached")
+            return
         }
+ */
+        
+    }
+    
+    func jumpLanding() {
+        
+        let downAction = SKAction.move(to: CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.70), duration: 0.5)
+        let downRepeater = SKAction.repeat(downAction, count: 1)
+
+        characterSprite.texture = SKTexture(imageNamed: "bobby-13.png")
+        characterSprite.run(downRepeater, completion: resumeRunning)
     }
     
     func duckCharacter() -> Void {
@@ -625,27 +580,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                         
        let duckAnimation = SKAction.animate(with: duckFrames, timePerFrame: 0.25)
        let yShift = SKAction.move(to: CGPoint(x: characterSprite.position.x, y: characterSprite.position.y - 15), duration: 0.5)
-       let yRevert = SKAction.move(to: CGPoint(x: characterSprite.position.x, y: characterSprite.position.y), duration: 0.3)
         
-       let repeatDuck = SKAction.repeatForever(duckAnimation)
-       let repeatYShift = SKAction.repeatForever(yShift)
-       let repeatYRevert = SKAction.repeat(yRevert, count: 1)
+       let repeatDuck = SKAction.repeat(duckAnimation, count: 1)
+       let repeatYShift = SKAction.repeat(yShift, count: 1)
 
-       characterSprite.run(repeatDuck, withKey: "ducking")
-       characterSprite.run(repeatYShift, withKey: "yshift")
-
-       var seconds = 0.5
-       DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
-       {
-            self.characterSprite.removeAction(forKey: "ducking")
-            self.characterSprite.removeAction(forKey: "yshift")
-            self.characterSprite.run(repeatYRevert, withKey: "yrevert")
-            seconds = 0.2
-            DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
-            {
-            
-            }
-       }
+       characterSprite.run(repeatDuck)
+       characterSprite.run(repeatYShift, completion: duckRevert)
+    }
+    
+    func duckRevert() {
+        
+        let yRevert = SKAction.move(to: CGPoint(x: characterSprite.position.x, y: characterSprite.position.y + 15), duration: 0.3)
+        
+        let repeatYRevert = SKAction.repeat(yRevert, count: 1)
+        
+        characterSprite.run(repeatYRevert, completion: resumeRunning)
     }
     
     func initObjectPhysics() -> Void{
@@ -705,18 +654,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func drawGerm() -> Void {
         
         let germShift = SKAction.move(by: CGVector(dx: -self.frame.width * 2, dy: 0), duration: bgAnimatedInSecs)
-        let germReversion = SKAction.move(by: CGVector(dx: self.frame.width * 2, dy: 0), duration: 0)
         
-        //let germSequence = SKAction.sequence([germShift, germReversion])
         let germAnimation = SKAction.repeat(germShift, count: 1)
+        
+        germCloud.run(germAnimation, completion: germRevert)
+    }
+    
+    func germRevert() {
+        
+        let germReversion = SKAction.move(by: CGVector(dx: self.frame.width * 2, dy: 0), duration: 0)
         let germRevert = SKAction.repeat(germReversion, count: 1)
 
-        germCloud.run(germAnimation)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + bgAnimatedInSecs)
-        {
-            self.germCloud.run(germRevert)
-        }
+        self.germCloud.run(germRevert)
     }
     
     func drawPeel() -> Void {
@@ -742,20 +691,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
         let runningGirl = SKAction.animate(with: girlFrames, timePerFrame: 0.25)
         let girlShift = SKAction.moveTo(x: -self.frame.size.width * 2, duration: bgAnimatedInSecs * 1.3)
-        let girlReversion = SKAction.moveTo(x: self.frame.size.width * 2, duration: 0)
         
         //let girlAction = SKAction.sequence([girlShift, girlReversion])
         
         let moveForever = SKAction.repeat(girlShift, count: 1)
-        let peelRevert = SKAction.repeat(girlReversion, count: 1)
         let runForever = SKAction.repeatForever(runningGirl)
     
-        littleGirl.run(runForever)
+        littleGirl.run(runForever, completion: girlReversion)
         littleGirl.run(moveForever)
-        DispatchQueue.main.asyncAfter(deadline: .now() + bgAnimatedInSecs * 1.3)
-        {
-            self.littleGirl.run(peelRevert)
-        }
+    }
+    
+    func girlReversion() {
+        
+        let girlReversion = SKAction.moveTo(x: self.frame.size.width * 2, duration: 0)
+        let peelRevert = SKAction.repeat(girlReversion, count: 1)
+        littleGirl.run(peelRevert)
     }
     
     @objc func drawRandom() -> Void {

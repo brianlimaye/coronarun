@@ -113,12 +113,18 @@ class GameViewController: UIViewController {
                     print("9 was pressed")
                     self.gameScene.drawGirl()
                }
-           case .keyboardReturnOrEnter:
+           case .keyboardUpArrow:
                if isDebug
                {
-                    print("return was pressed")
-                    self.gameScene.isPaused = !self.gameScene.isPaused
+                    print("up-arrow was pressed")
+                    self.gameScene.jumpUp()
                }
+            case .keyboardDownArrow:
+                if isDebug
+                {
+                     print("down-arrow was pressed")
+                     self.gameScene.slideDown()
+                }
            default:
                 
                if isDebug
