@@ -32,6 +32,8 @@ struct game {
     static var contactDetected: Bool = false
 }
 
+let homeScene = HomeScene()
+
 class GameScene: SKScene, SKPhysicsContactDelegate
 {
     let playerSpeedPerFrame = 0.25
@@ -40,10 +42,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     let bgAnimatedInSecs: TimeInterval = 3
     let MIN_THRESHOLD_MS: Double = 1000
     
-    var effectsNode = SKEffectNode()
     var characterSprite: SKSpriteNode = SKSpriteNode()
-    var background: SKSpriteNode = SKSpriteNode()
-    var platform: SKSpriteNode = SKSpriteNode()
+    var background: SKSpriteNode = homeScene.getBackground().copy() as! SKSpriteNode
+    var platform: SKSpriteNode = homeScene.getPlatform().copy() as! SKSpriteNode
     var house: SKSpriteNode = SKSpriteNode()
     var germCloud: SKSpriteNode = SKSpriteNode()
     var bananaPeel: SKSpriteNode = SKSpriteNode()
@@ -66,6 +67,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var levelAlert: SKLabelNode = SKLabelNode()
     var levelStatusAlert: SKLabelNode = SKLabelNode()
     var scoreLabel: SKSpriteNode = SKSpriteNode()
+    
 
 
     override func didMove(to view: SKView) -> Void {
@@ -77,6 +79,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 }
     func initializeGame() -> Void {
             
+        if((homeScene.getBackground().isPaused) && (homeScene.getPlatform().isPaused))
+        {
+            background.isPaused = false
+            platform.isPaused = false
+            background.removeAllActions()
+            platform.removeAllActions()
+            print("ayo")
+        }
+        
         drawBackground()
         drawPlatform()
         drawCharacter()
@@ -163,6 +174,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         replayShape.fillColor = .white
         replayShape.isAntialiased = true
         replayShape.strokeColor = .black
+        replayShape.lineWidth = 5
         replayShape.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 50)
         replayShape.addChild(replayButton)
         replayShape.zPosition = 3
@@ -182,10 +194,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         nextLevelShape = SKShapeNode(circleOfRadius: replayButton.size.width / 2)
         nextLevelShape.name = "nextlevelshape"
-        nextLevelShape.isUserInteractionEnabled = true
+        nextLevelShape.isUserInteractionEnabled = false
         nextLevelShape.fillColor = .white
         nextLevelShape.isAntialiased = true
         nextLevelShape.strokeColor = .black
+        nextLevelShape.lineWidth = 5
         nextLevelShape.position = CGPoint(x: self.frame.midX + 200, y: self.frame.midY + 50)
         nextLevelShape.addChild(nextLevelButton)
         nextLevelShape.zPosition = 3
@@ -203,10 +216,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
         homeButtonShape = SKShapeNode(circleOfRadius: replayButton.size.width / 2)
         homeButtonShape.name = "homebuttonshape"
-        homeButtonShape.isUserInteractionEnabled = true
+        homeButtonShape.isUserInteractionEnabled = false
         homeButtonShape.fillColor = .white
         homeButtonShape.isAntialiased = true
         homeButtonShape.strokeColor = .black
+        homeButtonShape.lineWidth = 5
         homeButtonShape.position = CGPoint(x: self.frame.midX - 200, y: self.frame.midY + 50)
         homeButtonShape.addChild(homeButton)
         homeButtonShape.zPosition = 3
@@ -225,10 +239,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         menuButtonShape = SKShapeNode(circleOfRadius: 60)
         menuButtonShape.name = "menubuttonshape"
-        menuButtonShape.isUserInteractionEnabled = true
+        menuButtonShape.isUserInteractionEnabled = false
         menuButtonShape.fillColor = .white
         menuButtonShape.isAntialiased = true
         menuButtonShape.strokeColor = .black
+        menuButtonShape.lineWidth = 5
         menuButtonShape.position = CGPoint(x: self.frame.midX + 200, y: self.frame.midY + 50)
         menuButtonShape.addChild(menuButton)
         menuButtonShape.zPosition = 5
@@ -236,34 +251,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         self.addChild(menuButtonShape)
         
     }
-    
-     func blurWithCompletion() {
-        
-        let filter = CIFilter(name: "CIGaussianBlur")
-        // Set the blur amount. Adjust this to achieve the desired effect
-        let blurAmount = 10.0
-        filter?.setValue(blurAmount, forKey: kCIInputRadiusKey)
 
-        effectsNode.filter = filter
-        effectsNode.position = self.view!.center
-        effectsNode.blendMode = .alpha
-        
-        
-        /*
-        for child in self.children
-        {
-            let names: [String] = ["replaybutton", "replayshape", "nextlevelbutton", "nextlevelshape", "homebutton", "homebuttonshape"]
-            
-            
-            if(!names.contains(child.name!))
-            {
-                child.run(effectsNode)
-            }
-        }
-        self.addChild(effectsNode)
- */
-    }
-    
     func showEndingMenu() -> Void {
         
         gameOverDisplay = SKShapeNode(rect: CGRect(x: -self.frame.width, y: self.frame.midY - 20, width: self.frame.width * 2, height: 300))
@@ -302,6 +290,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         self.addChild(levelStatusAlert)
     }
     
+    //This function will be scrapped.
+    /*
     func closingScene() -> Void{
                 
         house = SKSpriteNode(imageNamed: "house.png")
@@ -343,6 +333,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             }
         }
     }
+ */
 
     func pauseRunning() -> Void{
         
@@ -431,7 +422,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             background = SKSpriteNode(texture: backgTexture)
             background.name = "background"
             background.position = CGPoint(x: backgTexture.size().width * i, y: self.frame.midY)
-            background.size.height = self.frame.height
+            background.size.height = CGFloat((self.scene?.size.height)!)
             background.run(infiniteBackg, withKey: "background")
 
             self.addChild(background)
@@ -494,6 +485,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.size = CGSize(width: characterSprite.size.width / 2, height: characterSprite.size.height / 2)
         characterSprite.color = .black
         characterSprite.colorBlendFactor = 0.1
+        characterSprite.zPosition = 2;
         
         
         //Physics Body
@@ -509,27 +501,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         
         self.addChild(characterSprite)
-        
-        characterSprite.zPosition = 2;
-
-        
-        
         characterSprite.run(mainRepeater, withKey: "running")
-        
-        /*
-        let seconds = 5.0
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
-        {
-            self.characterSprite.removeAction(forKey: "running")
-            self.jumpCharacter()
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds + 1.0)
-        {
-            self.characterSprite.run(mainRepeater, withKey: "running")
-        }
- */
-
     }
     
     func jumpCharacter() -> Void{
@@ -544,25 +516,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         characterSprite.texture = SKTexture(imageNamed: "bobby-12.png")
         characterSprite.run(upRepeater, completion: jumpLanding)
-        
-        /*
-        if(game.contactDetected)
-        {
-            characterSprite.removeAction(forKey: "up")
-            print("reached")
-            return
-        }
- */
-        
-        /*
-        if(game.contactDetected)
-        {
-            self.characterSprite.texture = SKTexture(imageNamed: "bobby-16.png")
-            print("reached")
-            return
-        }
- */
-        
     }
     
     func jumpLanding() {
@@ -687,10 +640,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func drawGirl() -> Void {
     
-        let girlFrames:[SKTexture] = [SKTexture(imageNamed: "jessica-1.png"), SKTexture(imageNamed: "jessica-2.png"), SKTexture(imageNamed: "jessica-3.png"), SKTexture(imageNamed: "jessica-4.png"), SKTexture(imageNamed: "jessica-5.png")]
+        let girlFrames:[SKTexture] = [SKTexture(imageNamed: "jessica-1.png"), SKTexture(imageNamed: "jessica-2.png"), SKTexture(imageNamed: "jessica-3.png"), SKTexture(imageNamed: "jessica-4.png"), SKTexture(imageNamed: "jessica-5.png"), SKTexture(imageNamed: "jessica-6.png")]
 
         let runningGirl = SKAction.animate(with: girlFrames, timePerFrame: 0.25)
-        let girlShift = SKAction.moveTo(x: -self.frame.size.width * 2, duration: bgAnimatedInSecs * 1.3)
+        let girlShift = SKAction.moveTo(x: -self.frame.size.width * 2, duration: bgAnimatedInSecs * 1.9)
         
         //let girlAction = SKAction.sequence([girlShift, girlReversion])
         
@@ -738,31 +691,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
         
         let bananaSlide = SKAction.move(to: CGPoint(x: self.frame.size.width * 2, y: self.frame.minX * 1.15), duration: 0.5)
-        let bananaSlideAnim = SKAction.repeat(bananaSlide, count: 1)
         
         let rotation = SKAction.rotate(byAngle: ((3 * CGFloat.pi) / 2), duration: 0.3)
-        let rotationBack = SKAction.rotate(byAngle: (-(3 * CGFloat.pi) / 2), duration: 0)
-        let fall = SKAction.move(to: CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.70), duration: 0.1)
         
-        let fallAnim = SKAction.repeat(fall, count: 1)
+        
+        let bananaSlideAnim = SKAction.repeat(bananaSlide, count: 1)
         let rotationAnim = SKAction.repeat(rotation, count: 1)
-        let rotationBackAnim = SKAction.repeat(rotationBack, count: 1)
                 
-        characterSprite.run(rotationAnim, withKey: "rotate")
-        bananaPeel.run(bananaSlideAnim, withKey: "bananaslide")
+        characterSprite.run(rotationAnim)
+        bananaPeel.run(bananaSlideAnim, completion: rotateBack)
+    }
+    
+    func rotateBack() {
         
-        let seconds = 0.3
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
-        {
-            
-            self.characterSprite.run(rotationBackAnim, withKey: "rotateback")
-            self.characterSprite.run(fallAnim, withKey: "fall")
-            self.characterSprite.texture = SKTexture(imageNamed: "bobby-16.png")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3)
-            {
-                self.endGame()
-            }
-        }
+        let rotationBack = SKAction.rotate(byAngle: (-(3 * CGFloat.pi) / 2), duration: 0)
+        let fall = SKAction.move(to: CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.70), duration: 0.3)
+        
+        let rotationBackAnim = SKAction.repeat(rotationBack, count: 1)
+        let fallAnim = SKAction.repeat(fall, count: 1)
+        
+        characterSprite.texture = SKTexture(imageNamed: "bobby-16.png")
+        characterSprite.run(rotationBackAnim)
+        characterSprite.run(fallAnim, completion: endGame)
     }
     
     func germDieAnimation() -> Void {
@@ -780,21 +730,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let spinAnim = SKAction.rotate(byAngle: -(2 * CGFloat.pi), duration: 0.3)
         let eatAnim = SKAction.move(to: CGPoint(x: characterSprite.position.x, y: characterSprite.position.y), duration: 0.3)
         
-        let spinRepeater = SKAction.repeatForever(spinAnim)
-        let eatRepeater = SKAction.repeatForever(eatAnim)
+        let spinRepeater = SKAction.repeat(spinAnim, count: 1)
+        let eatRepeater = SKAction.repeat(eatAnim, count: 1)
         
         characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
         
-        characterSprite.run(spinRepeater, withKey: "spin")
-        germCloud.run(eatRepeater, withKey: "eat")
+        germCloud.run(eatRepeater)
+        characterSprite.run(spinRepeater, completion: disappearCharacter)
+    }
+    
+    func disappearCharacter() {
         
-        let seconds = 0.3
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
-        {
-            self.characterSprite.removeAllActions()
-            self.characterSprite.isHidden = true
-            self.endGame()
-        }
+        characterSprite.removeAllActions()
+        characterSprite.isHidden = true
+        endGame()
     }
     
     func girlDieAnimation() -> Void {
@@ -809,25 +758,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
         
         let rotateAnim = SKAction.rotate(byAngle: ((3 * CGFloat.pi) / 2), duration: 0.3)
-        let reversionAnim = SKAction.rotate(byAngle: -((3 * CGFloat.pi) / 2), duration: 0)
-        let fall = SKAction.move(to: CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.70), duration: 0.3)
-
-        let fallAnim = SKAction.repeat(fall, count: 1)
         
-        characterSprite.run(rotateAnim, withKey: "rotation")
-        
-        let seconds = 0.3
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
-        {
-            self.characterSprite.removeAction(forKey: "rotation")
-            self.characterSprite.run(reversionAnim, withKey: "rev")
-            self.characterSprite.texture = SKTexture(imageNamed: "bobby-16.png")
-            self.characterSprite.run(fallAnim, withKey: "fallanim")
-            DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
-            {
-                self.endGame()
-            }
-        }
+        characterSprite.run(rotateAnim, completion: rotateBack)
     }
     
     func checkPhysics() {
@@ -900,26 +832,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             {
                 if((node?.name == "replaybutton") || (node?.name == "replayshape"))
                 {
-                    print("pressed")
-                    let scale = SKAction.scale(to: 0.9, duration: 0)
-                    replayShape.run(scale)
-                    replayButton.run(scale)
+                    print("replay-button pressed")
+                    let scale = SKAction.scale(to: 0.9, duration: 0.3)
+                    replayShape.run(scale, completion: startGame)
+                }
+                
+                if((node?.name == "homebutton") || (node?.name == "homeshape")) {
                     
-                    let seconds = 0.01
-                    DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
-                    {
-                        self.startGame()
-                    }
+                    print("home-button pressed")
+                    let scale2 = SKAction.scale(to: 0.9, duration: 0.3)
+                    homeButtonShape.run(scale2, completion: goToHomeScene)
                 }
             }
         }
+    }
+    
+    func goToHomeScene() {
+        
+        let homeScene = HomeScene(fileNamed: "HomeScene")
+        homeScene?.scaleMode = .aspectFill
+        self.view?.presentScene(homeScene)
     }
     
     
     func startGame() -> Void{
         
         cleanUp()
-        scene!.shouldEnableEffects = false
         initializeGame()
         self.speed = 1
         game.contactDetected = false
@@ -928,16 +866,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
      func endGame() -> Void{
         
-        
-        blurWithCompletion()
-        let seconds = 1.0
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
-        {
-            self.showEndingMenu()
-            self.speed = 0
-            self.timer.invalidate()
-            game.IsOver = true
-        }
+        self.showEndingMenu()
+        pauseBackgAndPlatform()
+        //self.timer.invalidate()
+        game.IsOver = true
     }
     
     func cleanUp() -> Void {
@@ -956,6 +888,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             }
         }
         self.removeAllChildren()
+    }
+    
+    func pauseBackgAndPlatform() {
+        
+        var count: Int = 0
+        for child in self.children
+        {
+            if((child.name == "background") || (child.name == "platform"))
+            {
+                count += 1
+                child.speed = 0
+            }
+        }
+        print(count)
     }
 
     /*

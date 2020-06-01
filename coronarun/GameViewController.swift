@@ -32,17 +32,19 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "GameScene") {
                 
                 self.gameScene = scene as! GameScene
+               
                 // Set the scale mode to scale to fit the window
                 
-                scene.scaleMode = .aspectFill
+                let homeScene = HomeScene(fileNamed: "HomeScene")
+                homeScene?.scaleMode = .aspectFill
+                view.presentScene(homeScene)
                 
-                
+                //scene.scaleMode = .aspectFill
                 
                 /*
                 let leadingConstraint = view.leadingAnchor.constraint(equalTo: )
@@ -57,11 +59,13 @@ class GameViewController: UIViewController {
                 
                 // Present the scene.
                 
-                view.presentScene(scene)
+               // view.presentScene(scene)
+                
                 
                 let notificationCenter = NotificationCenter.default
                 notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
                 notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
+
             }
 
             view.ignoresSiblingOrder = true
@@ -72,11 +76,8 @@ class GameViewController: UIViewController {
         }
     }
 
-    
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
 
-           
-        
            guard let key = presses.first?.key else { return }
 
     
@@ -88,7 +89,7 @@ class GameViewController: UIViewController {
                if isDebug
                {
                    print("c pressed")
-                   self.gameScene.closingScene()
+                   //gameScene.closingScene()
                }
            case .keyboardP:
            
@@ -169,7 +170,21 @@ class GameViewController: UIViewController {
     @objc func appMovedToForeground() {
         
         print("App moved to foreground!")
-        gameScene.isPaused = false
+        
+        if(gameScene.gameIsOver())
+        {
+            for child in gameScene.children
+            {
+                if((child.name == "background") || (child.name == "platform"))
+                {
+                    child.speed = 0
+                }
+            }
+        }
+
+        else
+        {
+            gameScene.isPaused = false
+        }
     }
-    
 }

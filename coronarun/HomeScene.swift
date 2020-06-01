@@ -1,0 +1,267 @@
+//
+//  HomeScene.swift
+//  coronarun
+//
+//  Created by Brian Limaye on 5/31/20.
+//  Copyright © 2020 Brian Limaye. All rights reserved.
+//
+
+import Foundation
+import SpriteKit
+
+class HomeScene: SKScene
+{
+    var frozenBackground: SKSpriteNode = SKSpriteNode()
+    var frozenPlatform: SKSpriteNode = SKSpriteNode()
+    var idleCharacter: SKSpriteNode = SKSpriteNode()
+    var greenSplat: SKSpriteNode = SKSpriteNode()
+    var mainTitleScreen: SKLabelNode = SKLabelNode()
+    var iconHolder: SKShapeNode = SKShapeNode()
+    var rateButton: SKSpriteNode = SKSpriteNode()
+    var rateButtonShape: SKShapeNode = SKShapeNode()
+    var tutorialButton: SKSpriteNode = SKSpriteNode()
+    var tutorialButtonShape: SKShapeNode = SKShapeNode()
+    var soundButton: SKSpriteNode = SKSpriteNode()
+    var soundButtonShape: SKShapeNode = SKShapeNode()
+    var clickToStart: SKLabelNode = SKLabelNode()
+    
+    override func didMove(to view: SKView){
+        
+        initTitleScreen()
+        addBackgFreezeFrame()
+        addPlatformFreezeFrame()
+        addIdleCharacter()
+        drawSoundButton()
+    }
+    
+    func addBackgFreezeFrame()
+    {
+        //frozenBackground.removeAllActions()
+        
+        frozenBackground = SKSpriteNode(imageNamed: "seamless-background.png")
+        let backgTexture = SKTexture(imageNamed: "seamless-background.png")
+            
+        let backgAnimation = SKAction.move(by: CGVector(dx: -backgTexture.size().width, dy: 0), duration: 2)
+        
+        let backgShift = SKAction.move(by: CGVector(dx: backgTexture.size().width, dy: 0), duration: 0)
+        let bgAnimation = SKAction.sequence([backgAnimation, backgShift])
+        let infiniteBackg = SKAction.repeatForever(bgAnimation)
+
+        var i: CGFloat = 0
+
+        while i < 2 {
+            
+            frozenBackground = SKSpriteNode(texture: backgTexture)
+            frozenBackground.name = "background"
+            frozenBackground.position = CGPoint(x: backgTexture.size().width * i, y: self.frame.midY)
+            frozenBackground.size.height = self.frame.height
+            frozenBackground.run(infiniteBackg, withKey: "background")
+
+            self.addChild(frozenBackground)
+
+            i += 1
+
+            // Set background first
+            frozenBackground.zPosition = -2
+            frozenBackground.speed = 0
+        }
+    }
+    
+    func addPlatformFreezeFrame() {
+        
+        //frozenPlatform.removeAllActions()
+        
+        frozenPlatform = SKSpriteNode(imageNamed: "grounds.png")
+        let pfTexture = SKTexture(imageNamed: "grounds.png")
+        
+        let movePfAnimation = SKAction.move(by: CGVector(dx: -pfTexture.size().width, dy: 0), duration: 2)
+        let shiftPfAnimation = SKAction.move(by: CGVector(dx: pfTexture.size().width, dy: 0), duration: 0)
+        
+        let pfAnimation = SKAction.sequence([movePfAnimation, shiftPfAnimation])
+        let movePfForever = SKAction.repeatForever(pfAnimation);
+        
+        var i: CGFloat = 0
+        
+        
+        
+        while i < 2{
+                
+            frozenPlatform = SKSpriteNode(imageNamed: "grounds.png")
+            
+            frozenPlatform.position = CGPoint(x: i * pfTexture.size().width, y: -(scene?.size.height)! / 2.73)
+            frozenPlatform.name = "platform"
+            frozenPlatform.size.height = 400;
+    
+            frozenPlatform.run(movePfForever, withKey: "platform")
+            
+            self.addChild(frozenPlatform)
+            
+            i += 1
+
+            // Set platform first
+            frozenPlatform.zPosition = -1;
+            frozenPlatform.speed = 0
+        }
+    }
+    
+    func addIdleCharacter() -> Void {
+        
+        //idleCharacter.removeAllActions()
+        idleCharacter = SKSpriteNode(imageNamed: "(b)obby-1.png")
+        
+        idleCharacter.position = CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 2)
+        idleCharacter.size = CGSize(width: idleCharacter.size.width / 2, height: idleCharacter.size.height / 2)
+        idleCharacter.color = .black
+        idleCharacter.colorBlendFactor = 0.1
+        idleCharacter.zPosition = 2;
+        
+        let idleFrames: [SKTexture] = [SKTexture(imageNamed: "(b)obby-1"), SKTexture(imageNamed: "(b)obby-2"), SKTexture(imageNamed: "(b)obby-3"), SKTexture(imageNamed: "(b)obby-4")]
+        
+        let idleAnim = SKAction.animate(with: idleFrames, timePerFrame: 0.25)
+        
+        let idleForever = SKAction.repeatForever(idleAnim)
+        
+        self.addChild(idleCharacter)
+        idleCharacter.run(idleForever)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        let gameScene = GameScene(fileNamed: "GameScene")
+        gameScene?.scaleMode = .aspectFill
+        self.view?.presentScene(gameScene)
+    }
+    
+    func initTitleScreen() {
+        
+        drawGreenSplat()
+        drawMainText()
+        drawIconRect()
+        drawLikeButton()
+        drawTutorialButton()
+        drawClickToStart()
+    }
+    
+    func drawGreenSplat() {
+        
+        greenSplat = SKSpriteNode(imageNamed: "green-splat.png")
+        greenSplat.zPosition = 3
+        greenSplat.size = CGSize(width: greenSplat.size.width, height: greenSplat.size.height)
+        greenSplat.position = CGPoint(x: self.frame.midX - 20, y: self.frame.maxY / 1.75)
+        self.addChild(greenSplat)
+    }
+    
+    func drawMainText() {
+        
+        mainTitleScreen = SKLabelNode(fontNamed: "BubbleLoveDemo")
+        mainTitleScreen.position = CGPoint(x: self.frame.midX, y: self.frame.maxY / 2)
+        mainTitleScreen.fontColor = .black
+        mainTitleScreen.fontSize = 100
+        mainTitleScreen.numberOfLines = 1
+        mainTitleScreen.text = "Corona Run"
+        mainTitleScreen.zPosition = 4
+        
+        self.addChild(mainTitleScreen)
+    }
+    
+    func drawIconRect() {
+        
+        iconHolder = SKShapeNode(rect: CGRect(x: -(self.frame.width * 2), y: self.frame.midY / 16, width: self.frame.width * 4, height: 100))
+        
+        iconHolder.fillColor = .clear
+        iconHolder.lineWidth = 5
+        iconHolder.isAntialiased = true
+        iconHolder.strokeColor = .black
+        
+        self.addChild(iconHolder)
+    }
+    
+    func drawLikeButton() {
+        
+        rateButton = SKSpriteNode(imageNamed: "like-icon.png")
+        rateButton.size = CGSize(width: rateButton.size.width / 15, height: rateButton.size.height / 15)
+        rateButton.position = CGPoint(x: 0, y: 0)
+        
+        rateButtonShape = SKShapeNode(circleOfRadius: 70)
+        rateButtonShape.fillColor = .white
+        rateButtonShape.isAntialiased = true
+        rateButtonShape.isUserInteractionEnabled = false
+        rateButtonShape.lineWidth = 5
+        rateButtonShape.strokeColor = .black
+        rateButtonShape.addChild(rateButton)
+        
+        iconHolder.addChild(rateButtonShape)
+        
+        rateButtonShape.position = CGPoint(x: -self.size.width / 3, y: 50)
+    }
+    
+    func drawTutorialButton() {
+        
+        tutorialButton = SKSpriteNode(imageNamed: "question-mark.png")
+        tutorialButton.size = CGSize(width: tutorialButton.size.width / 5 , height: tutorialButton.size.height / 5)
+        tutorialButton.position = CGPoint(x: 0, y: 0)
+        
+        tutorialButtonShape = SKShapeNode(circleOfRadius: 70)
+        tutorialButtonShape.fillColor = .white
+        tutorialButtonShape.isAntialiased = true
+        tutorialButtonShape.isUserInteractionEnabled = false
+        tutorialButtonShape.lineWidth = 5
+        tutorialButtonShape.strokeColor = .black
+        tutorialButtonShape.addChild(tutorialButton)
+        
+        iconHolder.addChild(tutorialButtonShape)
+        
+        tutorialButtonShape.position = CGPoint(x: 0, y: 50)
+    }
+    
+    func drawSoundButton() {
+        
+        soundButton = SKSpriteNode(imageNamed: "volume-on.png")
+        soundButton.size = CGSize(width: soundButton.size.width / 4 , height: soundButton.size.height / 4)
+        soundButton.position = CGPoint(x: 0, y: 0)
+        
+        soundButtonShape = SKShapeNode(circleOfRadius: 70)
+        soundButtonShape.fillColor = .white
+        soundButtonShape.isAntialiased = true
+        soundButtonShape.isUserInteractionEnabled = false
+        soundButtonShape.lineWidth = 5
+        soundButtonShape.strokeColor = .black
+        soundButtonShape.addChild(soundButton)
+        
+        iconHolder.addChild(soundButtonShape)
+        
+        soundButtonShape.position = CGPoint(x: self.size.width / 3, y: 50)
+    }
+    
+    func drawClickToStart() {
+        
+        clickToStart = SKLabelNode(fontNamed: "Balibold-Regular")
+        clickToStart.fontColor = .white
+        clickToStart.fontSize = 30
+        clickToStart.text = "Click to start"
+        clickToStart.position = CGPoint(x: 0, y: self.frame.minY / 3)
+        clickToStart.alpha = 1
+        
+        let fadeIn = SKAction.fadeIn(withDuration: 1)
+        let fadeOut = SKAction.fadeOut(withDuration: 1)
+       
+        let fadeSequence = SKAction.sequence([fadeIn, fadeOut])
+        
+        let fadeForever = SKAction.repeatForever(fadeSequence)
+        
+        self.addChild(clickToStart)
+        clickToStart.run(fadeForever)
+    }
+
+    func getBackground() -> SKSpriteNode {
+        
+        return frozenBackground
+    }
+    
+    func getPlatform() -> SKSpriteNode {
+        
+        return frozenPlatform
+    }
+}
+
+
