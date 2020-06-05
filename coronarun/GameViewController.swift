@@ -39,12 +39,9 @@ class GameViewController: UIViewController {
                 self.gameScene = scene as! GameScene
                
                 // Set the scale mode to scale to fit the window
+            
                 
-                let homeScene = HomeScene(fileNamed: "HomeScene")
-                homeScene?.scaleMode = .aspectFill
-                view.presentScene(homeScene)
-                
-                //scene.scaleMode = .aspectFill
+                scene.scaleMode = .aspectFill
                 
                 /*
                 let leadingConstraint = view.leadingAnchor.constraint(equalTo: )
@@ -59,7 +56,14 @@ class GameViewController: UIViewController {
                 
                 // Present the scene.
                 
-               // view.presentScene(scene)
+                
+                
+                let homeScene = HomeScene(fileNamed: "HomeScene")
+                homeScene?.scaleMode = .aspectFill
+                view.presentScene(homeScene)
+ 
+                
+               //view.presentScene(scene)
                 
                 
                 let notificationCenter = NotificationCenter.default

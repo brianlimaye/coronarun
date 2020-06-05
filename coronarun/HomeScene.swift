@@ -9,6 +9,9 @@
 import Foundation
 import SpriteKit
 
+var cameraNode: SKCameraNode = SKCameraNode()
+var backGBlur: SKEffectNode = SKEffectNode()
+
 class HomeScene: SKScene
 {
     var frozenBackground: SKSpriteNode = SKSpriteNode()
@@ -26,7 +29,9 @@ class HomeScene: SKScene
     var clickToStart: SKLabelNode = SKLabelNode()
     
     override func didMove(to view: SKView){
-        
+
+        initBlurEffect()
+        drawGreenSplat()
         initTitleScreen()
         addBackgFreezeFrame()
         addPlatformFreezeFrame()
@@ -34,11 +39,25 @@ class HomeScene: SKScene
         drawSoundButton()
     }
     
+    func initBlurEffect() {
+        
+        let filter = CIFilter(name: "CIGaussianBlur")
+        // Set the blur amount. Adjust this to achieve the desired effect
+        let blurAmount = 20.0
+        filter?.setValue(blurAmount, forKey: kCIInputRadiusKey)
+
+        backGBlur.filter = filter
+        backGBlur.shouldEnableEffects = true
+        backGBlur.blendMode = .alpha
+        cameraNode.addChild(backGBlur)
+        
+        self.addChild(cameraNode)
+    }
+    
     func addBackgFreezeFrame()
     {
         //frozenBackground.removeAllActions()
         
-        frozenBackground = SKSpriteNode(imageNamed: "seamless-background.png")
         let backgTexture = SKTexture(imageNamed: "seamless-background.png")
             
         let backgAnimation = SKAction.move(by: CGVector(dx: -backgTexture.size().width, dy: 0), duration: 2)
@@ -46,7 +65,7 @@ class HomeScene: SKScene
         let backgShift = SKAction.move(by: CGVector(dx: backgTexture.size().width, dy: 0), duration: 0)
         let bgAnimation = SKAction.sequence([backgAnimation, backgShift])
         let infiniteBackg = SKAction.repeatForever(bgAnimation)
-
+                
         var i: CGFloat = 0
 
         while i < 2 {
@@ -54,10 +73,10 @@ class HomeScene: SKScene
             frozenBackground = SKSpriteNode(texture: backgTexture)
             frozenBackground.name = "background"
             frozenBackground.position = CGPoint(x: backgTexture.size().width * i, y: self.frame.midY)
-            frozenBackground.size.height = self.frame.height
+            frozenBackground.size.height = (self.scene?.size.height)!
             frozenBackground.run(infiniteBackg, withKey: "background")
 
-            self.addChild(frozenBackground)
+            backGBlur.addChild(frozenBackground)
 
             i += 1
 
@@ -78,13 +97,13 @@ class HomeScene: SKScene
         let shiftPfAnimation = SKAction.move(by: CGVector(dx: pfTexture.size().width, dy: 0), duration: 0)
         
         let pfAnimation = SKAction.sequence([movePfAnimation, shiftPfAnimation])
-        let movePfForever = SKAction.repeatForever(pfAnimation);
-        
+        let movePfForever = SKAction.repeatForever(pfAnimation)
+                
         var i: CGFloat = 0
         
         
         
-        while i < 2{
+        while i < 2 {
                 
             frozenPlatform = SKSpriteNode(imageNamed: "grounds.png")
             
@@ -94,12 +113,12 @@ class HomeScene: SKScene
     
             frozenPlatform.run(movePfForever, withKey: "platform")
             
-            self.addChild(frozenPlatform)
+            cameraNode.addChild(frozenPlatform)
             
             i += 1
 
             // Set platform first
-            frozenPlatform.zPosition = -1;
+            frozenPlatform.zPosition = 0;
             frozenPlatform.speed = 0
         }
     }
@@ -109,27 +128,28 @@ class HomeScene: SKScene
         //idleCharacter.removeAllActions()
         idleCharacter = SKSpriteNode(imageNamed: "(b)obby-1.png")
         
-        idleCharacter.position = CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 2)
+        idleCharacter.position = CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.71)
         idleCharacter.size = CGSize(width: idleCharacter.size.width / 2, height: idleCharacter.size.height / 2)
         idleCharacter.color = .black
         idleCharacter.colorBlendFactor = 0.1
         idleCharacter.zPosition = 2;
         
-        let idleFrames: [SKTexture] = [SKTexture(imageNamed: "(b)obby-1"), SKTexture(imageNamed: "(b)obby-2"), SKTexture(imageNamed: "(b)obby-3"), SKTexture(imageNamed: "(b)obby-4")]
+        let idleFrames: [SKTexture] = [SKTexture(imageNamed: "idle-1"), SKTexture(imageNamed: "idle-2")/*, SKTexture(imageNamed: "idle-3"),*/]//, SKTexture(imageNamed: "idle-4")]
         
         let idleAnim = SKAction.animate(with: idleFrames, timePerFrame: 0.25)
         
         let idleForever = SKAction.repeatForever(idleAnim)
         
-        self.addChild(idleCharacter)
+        cameraNode.addChild(idleCharacter)
         idleCharacter.run(idleForever)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        let gameScene = GameScene(fileNamed: "GameScene")
-        gameScene?.scaleMode = .aspectFill
-        self.view?.presentScene(gameScene)
+        cleanUp()
+        let menuScene = MenuScene(fileNamed: "MenuScene")
+        menuScene?.scaleMode = .aspectFill
+        self.view?.presentScene(menuScene!, transition: SKTransition.crossFade(withDuration: 0.5))
     }
     
     func initTitleScreen() {
@@ -144,16 +164,18 @@ class HomeScene: SKScene
     
     func drawGreenSplat() {
         
+        print(self.frame.maxY)
+        
         greenSplat = SKSpriteNode(imageNamed: "green-splat.png")
         greenSplat.zPosition = 3
-        greenSplat.size = CGSize(width: greenSplat.size.width, height: greenSplat.size.height)
+        greenSplat.size = CGSize(width: greenSplat.size.width / 1.15, height: greenSplat.size.height / 1.15)
         greenSplat.position = CGPoint(x: self.frame.midX - 20, y: self.frame.maxY / 1.75)
         self.addChild(greenSplat)
     }
     
     func drawMainText() {
         
-        mainTitleScreen = SKLabelNode(fontNamed: "BubbleLoveDemo")
+        mainTitleScreen = SKLabelNode(fontNamed: "MaassslicerItalic")
         mainTitleScreen.position = CGPoint(x: self.frame.midX, y: self.frame.maxY / 2)
         mainTitleScreen.fontColor = .black
         mainTitleScreen.fontSize = 100
@@ -179,10 +201,10 @@ class HomeScene: SKScene
     func drawLikeButton() {
         
         rateButton = SKSpriteNode(imageNamed: "like-icon.png")
-        rateButton.size = CGSize(width: rateButton.size.width / 15, height: rateButton.size.height / 15)
+        rateButton.size = CGSize(width: rateButton.size.width / 19, height: rateButton.size.height / 19)
         rateButton.position = CGPoint(x: 0, y: 0)
         
-        rateButtonShape = SKShapeNode(circleOfRadius: 70)
+        rateButtonShape = SKShapeNode(circleOfRadius: 50)
         rateButtonShape.fillColor = .white
         rateButtonShape.isAntialiased = true
         rateButtonShape.isUserInteractionEnabled = false
@@ -192,16 +214,16 @@ class HomeScene: SKScene
         
         iconHolder.addChild(rateButtonShape)
         
-        rateButtonShape.position = CGPoint(x: -self.size.width / 3, y: 50)
+        rateButtonShape.position = CGPoint(x: -self.size.width / 4, y: 50)
     }
     
     func drawTutorialButton() {
         
         tutorialButton = SKSpriteNode(imageNamed: "question-mark.png")
-        tutorialButton.size = CGSize(width: tutorialButton.size.width / 5 , height: tutorialButton.size.height / 5)
+        tutorialButton.size = CGSize(width: tutorialButton.size.width / 7 , height: tutorialButton.size.height / 7)
         tutorialButton.position = CGPoint(x: 0, y: 0)
         
-        tutorialButtonShape = SKShapeNode(circleOfRadius: 70)
+        tutorialButtonShape = SKShapeNode(circleOfRadius: 50)
         tutorialButtonShape.fillColor = .white
         tutorialButtonShape.isAntialiased = true
         tutorialButtonShape.isUserInteractionEnabled = false
@@ -217,10 +239,10 @@ class HomeScene: SKScene
     func drawSoundButton() {
         
         soundButton = SKSpriteNode(imageNamed: "volume-on.png")
-        soundButton.size = CGSize(width: soundButton.size.width / 4 , height: soundButton.size.height / 4)
+        soundButton.size = CGSize(width: soundButton.size.width / 6 , height: soundButton.size.height / 6)
         soundButton.position = CGPoint(x: 0, y: 0)
         
-        soundButtonShape = SKShapeNode(circleOfRadius: 70)
+        soundButtonShape = SKShapeNode(circleOfRadius: 50)
         soundButtonShape.fillColor = .white
         soundButtonShape.isAntialiased = true
         soundButtonShape.isUserInteractionEnabled = false
@@ -230,7 +252,7 @@ class HomeScene: SKScene
         
         iconHolder.addChild(soundButtonShape)
         
-        soundButtonShape.position = CGPoint(x: self.size.width / 3, y: 50)
+        soundButtonShape.position = CGPoint(x: self.size.width / 4, y: 50)
     }
     
     func drawClickToStart() {
@@ -251,6 +273,24 @@ class HomeScene: SKScene
         
         self.addChild(clickToStart)
         clickToStart.run(fadeForever)
+    }
+    
+    func cleanUp() {
+        
+        let children = self.children
+        
+        for child in children
+        {
+            if let spriteNode = child as? SKSpriteNode {
+                
+                if(spriteNode.name == "background" || spriteNode.name == "platform")
+                {
+                    spriteNode.texture = nil
+                }
+                spriteNode.removeAllActions()
+            }
+        }
+        self.removeAllChildren()
     }
 
     func getBackground() -> SKSpriteNode {

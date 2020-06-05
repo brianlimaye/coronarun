@@ -32,8 +32,6 @@ struct game {
     static var contactDetected: Bool = false
 }
 
-let homeScene = HomeScene()
-
 class GameScene: SKScene, SKPhysicsContactDelegate
 {
     let playerSpeedPerFrame = 0.25
@@ -43,8 +41,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     let MIN_THRESHOLD_MS: Double = 1000
     
     var characterSprite: SKSpriteNode = SKSpriteNode()
-    var background: SKSpriteNode = homeScene.getBackground().copy() as! SKSpriteNode
-    var platform: SKSpriteNode = homeScene.getPlatform().copy() as! SKSpriteNode
+    var background: SKSpriteNode = SKSpriteNode()
+    var platform: SKSpriteNode = SKSpriteNode()
     var house: SKSpriteNode = SKSpriteNode()
     var germCloud: SKSpriteNode = SKSpriteNode()
     var bananaPeel: SKSpriteNode = SKSpriteNode()
@@ -78,15 +76,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         //to-do: Make these obstacle objects random
 }
     func initializeGame() -> Void {
-            
-        if((homeScene.getBackground().isPaused) && (homeScene.getPlatform().isPaused))
-        {
-            background.isPaused = false
-            platform.isPaused = false
-            background.removeAllActions()
-            platform.removeAllActions()
-            print("ayo")
-        }
         
         drawBackground()
         drawPlatform()
@@ -406,6 +395,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     }
     
     func drawBackground() -> Void{
+        
+        self.removeAllChildren()
         
         let backgTexture = SKTexture(imageNamed: "seamless-background.png")
             
@@ -810,17 +801,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         }
     }
     
-    /*
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        if(game.IsOver == true)
-        {
-            startGame()
-        }
-    }
-     */
-    
-   
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         if let touch = touches.first {
@@ -837,11 +817,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                     replayShape.run(scale, completion: startGame)
                 }
                 
-                if((node?.name == "homebutton") || (node?.name == "homeshape")) {
+                else if((node?.name == "homebutton") || (node?.name == "homeshape")) {
                     
                     print("home-button pressed")
                     let scale2 = SKAction.scale(to: 0.9, duration: 0.3)
                     homeButtonShape.run(scale2, completion: goToHomeScene)
+                }
+                
+                else if((node?.name == "menubutton") || (node?.name == "menubuttonshape")) {
+                    
+                    print("menu-button pressed")
+                    let scale3 = SKAction.scale(to: 0.9, duration: 0.3)
+                    menuButtonShape.run(scale3, completion: goToMenuScene)
                 }
             }
         }
@@ -852,6 +839,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let homeScene = HomeScene(fileNamed: "HomeScene")
         homeScene?.scaleMode = .aspectFill
         self.view?.presentScene(homeScene)
+    }
+    
+    func goToMenuScene() {
+        
+        let menuScene = MenuScene(fileNamed: "MenuScene")
+        menuScene?.scaleMode = .aspectFill
+        self.view?.presentScene(menuScene)
     }
     
     

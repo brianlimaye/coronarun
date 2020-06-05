@@ -39,8 +39,10 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>CarbonBl-Regular.ps</string>
-		<string>BubbleLoveDemo.ps</string>
 		<string>Balibold-Regular.ps</string>
+		<string>MaassslicerItalic.ps</string>
+		<string>KeyVirtueRegular.ps</string>
+		<string>DKHand-Regular.ps</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
