@@ -12,9 +12,12 @@ import GameplayKit
 
 class GameViewController: UIViewController {
     
-    var gameScene = GameScene()
-    
+    static var homeScene: HomeScene?
+    static var menuScene: MenuScene?
+    static var gameScene: GameScene?
+
     let isDebug: Bool = {
+           
            var isDebug = false
            // function with a side effect and Bool return value that we can pass into assert()
            func set(debug: Bool) -> Bool {
@@ -35,13 +38,11 @@ class GameViewController: UIViewController {
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
             if let scene = SKScene(fileNamed: "GameScene") {
-                
-                self.gameScene = scene as! GameScene
-               
+                               
                 // Set the scale mode to scale to fit the window
             
                 
-                scene.scaleMode = .aspectFill
+                //scene.scaleMode = .aspectFill
                 
                 /*
                 let leadingConstraint = view.leadingAnchor.constraint(equalTo: )
@@ -66,6 +67,7 @@ class GameViewController: UIViewController {
                //view.presentScene(scene)
                 
                 
+                
                 let notificationCenter = NotificationCenter.default
                 notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
                 notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
@@ -80,11 +82,10 @@ class GameViewController: UIViewController {
         }
     }
 
+    
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
 
            guard let key = presses.first?.key else { return }
-
-    
 
            switch key.keyCode {
 
@@ -100,7 +101,7 @@ class GameViewController: UIViewController {
                if isDebug
                {
                     print("p was pressed")
-                    self.gameScene.drawPeel()
+                    GameViewController.gameScene?.drawPeel()
                }
 
            case .keyboardG:
@@ -108,7 +109,7 @@ class GameViewController: UIViewController {
                if isDebug
                {
                     print("g was pressed")
-                    self.gameScene.drawGerm()
+                    GameViewController.gameScene?.drawGerm()
                }
             
            case .keyboard9:
@@ -116,19 +117,19 @@ class GameViewController: UIViewController {
                if isDebug
                {
                     print("9 was pressed")
-                    self.gameScene.drawGirl()
+                    GameViewController.gameScene?.drawGirl()
                }
            case .keyboardUpArrow:
                if isDebug
                {
                     print("up-arrow was pressed")
-                    self.gameScene.jumpUp()
+                    GameViewController.gameScene?.jumpUp()
                }
             case .keyboardDownArrow:
                 if isDebug
                 {
                      print("down-arrow was pressed")
-                     self.gameScene.slideDown()
+                        GameViewController.gameScene?.slideDown()
                 }
            default:
                 
@@ -141,7 +142,7 @@ class GameViewController: UIViewController {
             
         }
 
-       }
+    }
 
     override var shouldAutorotate: Bool {
         return true
@@ -168,27 +169,35 @@ class GameViewController: UIViewController {
     @objc func appMovedToBackground() {
 
         print("App moved to background!")
-        gameScene.isPaused = true
+        GameViewController.gameScene?.isPaused = true
     }
     
     @objc func appMovedToForeground() {
         
         print("App moved to foreground!")
         
-        if(gameScene.gameIsOver())
+        /*
+        let children = GameViewController.gameScene?.children
+       
+        if((GameViewController.gameScene?.gameIsOver()) != nil)
         {
-            for child in gameScene.children
+            for child in children!
             {
-                if((child.name == "background") || (child.name == "platform"))
+                if(child.isEqual(to: backGBlur))
+                {
+                    for backG in backGBlur.children {
+                        
+                        backG.speed = 0
+                    }
+                }
+                
+                if((child.name == "platform0") || (child.name == "platform1"))
                 {
                     child.speed = 0
                 }
             }
         }
-
-        else
-        {
-            gameScene.isPaused = false
-        }
+ */
+        GameViewController.gameScene?.isPaused = false
     }
 }

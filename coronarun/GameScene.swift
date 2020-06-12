@@ -30,6 +30,7 @@ struct game {
     
     static var IsOver : Bool = false
     static var contactDetected: Bool = false
+    static var i: Int = 0
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate
@@ -41,6 +42,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     let MIN_THRESHOLD_MS: Double = 1000
     
     var characterSprite: SKSpriteNode = SKSpriteNode()
+    var batSprite: SKSpriteNode = SKSpriteNode()
+    var batSprite2: SKSpriteNode = SKSpriteNode()
+    var batSprite3: SKSpriteNode = SKSpriteNode()
+    var tempIdleChar: SKSpriteNode = SKSpriteNode()
     var background: SKSpriteNode = SKSpriteNode()
     var platform: SKSpriteNode = SKSpriteNode()
     var house: SKSpriteNode = SKSpriteNode()
@@ -66,10 +71,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var levelStatusAlert: SKLabelNode = SKLabelNode()
     var scoreLabel: SKSpriteNode = SKSpriteNode()
     
-
-
     override func didMove(to view: SKView) -> Void {
 
+        GameViewController.gameScene = self
         self.physicsWorld.contactDelegate = self
         initializeGame()
         
@@ -77,10 +81,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 }
     func initializeGame() -> Void {
         
-        drawBackground()
-        drawPlatform()
+        resumeNodes()
         drawCharacter()
+        drawBat1()
         initObjectPhysics()
+        
         
         //timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(drawRandom), userInfo: nil, repeats: true)
         
@@ -91,7 +96,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(slideDown))
         swipeDown.direction = .down
         self.view?.addGestureRecognizer(swipeDown)
+    }
+    
+    func resumeNodes() {
         
+        backGBlur.shouldEnableEffects = false
+        for child in cameraNode.children {
+            
+            if(child.isEqual(to: backGBlur))
+            {
+                for backG in child.children {
+                    
+                    backG.speed = 1
+                }
+            }
+                
+            if((child.name == "platform0") || (child.name == "platform1"))
+            {
+                child.speed = 1
+            }
+            
+            else if(child.name == "character")
+            {
+                child.isHidden = true
+
+            }
+        }
+        self.addChild(cameraNode)
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
@@ -99,7 +130,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         self.view?.gestureRecognizers?.removeAll()
         game.contactDetected = true
         
-        print("yo")
+        print("contact...")
         
         let nodeA = contact.bodyA
         let nodeB = contact.bodyB
@@ -250,7 +281,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         levelAlert = SKLabelNode(fontNamed: "CarbonBl-Regular")
         levelAlert.fontColor = .white
         levelAlert.fontSize = 72
-        //gameStatusAlert.alpha = 1.0
         levelAlert.position = CGPoint(x: 0, y: 200)
         levelAlert.text = "Level Beta:"
         
@@ -489,11 +519,90 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.physicsBody?.isDynamic = true
         
         
-        
-        
         self.addChild(characterSprite)
         characterSprite.run(mainRepeater, withKey: "running")
     }
+    
+    func drawBat1() {
+        
+        let batFrames: [SKTexture] = [SKTexture(imageNamed: "batframe-1"), SKTexture(imageNamed: "batframe-2"), SKTexture(imageNamed: "batframe-3"), SKTexture(imageNamed: "batframe-4")]
+        
+        batSprite = SKSpriteNode(imageNamed: "batframe-1.png")
+        batSprite2 = SKSpriteNode(imageNamed: "batframe-1.png")
+        batSprite3 = SKSpriteNode(imageNamed: "batframe-1.png")
+
+        batSprite.position = CGPoint(x: self.frame.width, y: characterSprite.position.y + 100)
+        batSprite.size = CGSize(width: batSprite.size.width / 1.75, height: batSprite.size.height / 1.75)
+        batSprite.xScale = -1
+        batSprite.zPosition = 2
+        
+        let batAnim = SKAction.animate(with: batFrames, timePerFrame: 0.2)
+        let batAnimRepeater = SKAction.repeatForever(batAnim)
+        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite.position.y), duration: bgAnimatedInSecs)
+        
+        self.addChild(batSprite)
+
+        batSprite.run(batAnimRepeater)
+        batSprite2.run(batAnimRepeater)
+        batSprite3.run(batAnimRepeater)
+        
+        batSprite.run(batShift, completion: batReversion)
+    }
+    
+    func batReversion() -> Void {
+        
+        batSprite.xScale = 1
+        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x, y: self.frame.midY + 100), duration: bgAnimatedInSecs / 2)
+        batSprite.run(batReversion, completion: drawBat2)
+    }
+    
+    func bat2Reversion() -> Void {
+        
+        batSprite2.xScale = 1
+        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x - 100, y: self.frame.midY + 200), duration: bgAnimatedInSecs / 2)
+        batSprite2.run(batReversion, completion: drawBat3)
+    }
+    
+    func bat3Reversion() -> Void {
+        
+        batSprite3.xScale = 1
+        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x + 100, y: self.frame.midY + 200), duration: bgAnimatedInSecs / 2)
+        batSprite3.run(batReversion)
+    }
+    
+    
+    func drawBat2() {
+        
+        batSprite2.position = CGPoint(x: self.frame.width, y: characterSprite.position.y + 100)
+        batSprite2.size = CGSize(width: batSprite2.size.width / 1.75, height: batSprite2.size.height / 1.75)
+        batSprite2.xScale = -1
+        batSprite2.zPosition = 2
+        
+        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite2.position.y), duration: bgAnimatedInSecs)
+        
+        self.addChild(batSprite2)
+
+        batSprite2.run(batShift, completion: bat2Reversion)
+    }
+    
+    func drawBat3() {
+           
+        let batFrames: [SKTexture] = [SKTexture(imageNamed: "batframe-1"), SKTexture(imageNamed: "batframe-2"), SKTexture(imageNamed: "batframe-3"), SKTexture(imageNamed: "batframe-4")]
+       
+        batSprite3.position = CGPoint(x: self.frame.width, y: characterSprite.position.y + 100)
+        batSprite3.size = CGSize(width: batSprite3.size.width / 1.75, height: batSprite3.size.height / 1.75)
+        batSprite3.xScale = -1
+        batSprite3.zPosition = 2
+       
+        let batAnim = SKAction.animate(with: batFrames, timePerFrame: 0.2)
+        let batAnimRepeater = SKAction.repeatForever(batAnim)
+        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite3.position.y), duration: bgAnimatedInSecs)
+       
+        self.addChild(batSprite3)
+
+        batSprite3.run(batShift, completion: bat3Reversion)
+    }
+       
     
     func jumpCharacter() -> Void{
                 
@@ -583,6 +692,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         littleGirl.position = CGPoint(x: self.frame.size.width, y: self.frame.minY / 1.70)
         littleGirl.xScale = -1
         littleGirl.color = .green
+        littleGirl.zPosition = 4
         littleGirl.colorBlendFactor = 0.30
         
         littleGirl.physicsBody = SKPhysicsBody(circleOfRadius: littleGirl.size.width / 2)
@@ -832,10 +942,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 }
             }
         }
+        
+        func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+            guard let key = presses.first?.key else { return }
+
+            switch key.keyCode {
+            case .keyboardR:
+                print("Roll dice")
+            case .keyboardH:
+                print("Show help")
+            default:
+                super.pressesBegan(presses, with: event)
+            }
+        }
     }
     
     func goToHomeScene() {
         
+        game.contactDetected = false
+        game.IsOver = false
+        cleanUp()
         let homeScene = HomeScene(fileNamed: "HomeScene")
         homeScene?.scaleMode = .aspectFill
         self.view?.presentScene(homeScene)
@@ -843,6 +969,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func goToMenuScene() {
         
+        game.contactDetected = false
+        game.IsOver = false
+        cleanUp()
         let menuScene = MenuScene(fileNamed: "MenuScene")
         menuScene?.scaleMode = .aspectFill
         self.view?.presentScene(menuScene)
@@ -862,7 +991,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         self.showEndingMenu()
         pauseBackgAndPlatform()
-        //self.timer.invalidate()
         game.IsOver = true
     }
     
@@ -872,13 +1000,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         for child in children
         {
-            if let spriteNode = child as? SKSpriteNode{
-                
-                if(spriteNode.name == "background" || spriteNode.name == "platform")
-                {
-                    spriteNode.texture = nil
-                }
-                spriteNode.removeAllActions()
+            if(!child.isEqual(to: cameraNode))
+            {
+                child.removeAllActions()
             }
         }
         self.removeAllChildren()
@@ -886,82 +1010,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func pauseBackgAndPlatform() {
         
-        var count: Int = 0
-        for child in self.children
+        for child in cameraNode.children
         {
-            if((child.name == "background") || (child.name == "platform"))
+            if(child.isEqual(to: backGBlur))
             {
-                count += 1
+                for backG in backGBlur.children
+                {
+                    backG.speed = 0
+                }
+            }
+            
+            if((child.name == "platform0") || (child.name == "platform1"))
+            {
                 child.speed = 0
             }
         }
-        print(count)
     }
-
+    
     /*
-func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
+    override func update(_ currentTime: CFTimeInterval) {
+
+        for child in cameraNode.children {
+            
+            
+            if(child.isEqual(to: backGBlur))
+            {
+                for backG in backGBlur.children {
+                    
+                    backG.position.x.round(.down)
+                    backG.position.y.round(.down)
+                }
+            }
+            
+            if((child.name == "platform0") || (child.name == "platform1"))
+            {
+                child.position.x.round(.up)
+                child.position.y.round(.up)
+            }
         }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
-        
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-        
-        // Initialize _lastUpdateTime if it has not already been
-        if (self.lastUpdateTime == 0) {
-            self.lastUpdateTime = currentTime
-        }
-        
-        // Calculate time since last update
-        let dt = currentTime - self.lastUpdateTime
-        
-        // Update entities
-        for entity in self.entities {
-            entity.update(deltaTime: dt)
-        }
-        
-        self.lastUpdateTime = currentTime
     }
  */
 }
-

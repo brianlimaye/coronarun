@@ -19,12 +19,29 @@ class MenuScene: SKScene
     var levelButtons = [SKShapeNode]()
     var levelNumerals = [SKLabelNode]()
     
-    
     override func didMove(to view: SKView) {
         
-        self.addChild(cameraNode)
+        makeCharVisible()
+        blurBackground()
         drawWorldDisplay()
         drawLevelButtons()
+    }
+    
+    func makeCharVisible() {
+        
+        for child in cameraNode.children {
+            
+            if(child.name == "character")
+            {
+                child.isHidden = false
+            }
+        }
+    }
+    
+    func blurBackground() {
+        
+        backGBlur.shouldEnableEffects = true
+        self.addChild(cameraNode)
     }
     
     func drawWorldDisplay() {
@@ -147,8 +164,23 @@ class MenuScene: SKScene
         self.addChild(levelBox)
     }
     
+    func cleanUp() -> Void {
+        
+        let children = self.children
+        
+        for child in children
+        {
+            if(!child.isEqual(to: cameraNode))
+            {
+                child.removeAllActions()
+            }
+        }
+        self.removeAllChildren()
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        cleanUp()
         let gameScene = GameScene(fileNamed: "GameScene")
         gameScene?.scaleMode = .aspectFill
         self.view?.presentScene(gameScene)

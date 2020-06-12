@@ -28,8 +28,13 @@ class HomeScene: SKScene
     var soundButtonShape: SKShapeNode = SKShapeNode()
     var clickToStart: SKLabelNode = SKLabelNode()
     
-    override func didMove(to view: SKView){
+    override func didMove(to view: SKView) {
 
+        if(cameraNode.children.count > 0)
+        {
+            cameraNode.removeAllChildren()
+        }
+        
         initBlurEffect()
         drawGreenSplat()
         initTitleScreen()
@@ -41,23 +46,21 @@ class HomeScene: SKScene
     
     func initBlurEffect() {
         
+        print("reach")
         let filter = CIFilter(name: "CIGaussianBlur")
         // Set the blur amount. Adjust this to achieve the desired effect
         let blurAmount = 20.0
         filter?.setValue(blurAmount, forKey: kCIInputRadiusKey)
 
         backGBlur.filter = filter
-        backGBlur.shouldEnableEffects = true
+        backGBlur.shouldEnableEffects = false
         backGBlur.blendMode = .alpha
         cameraNode.addChild(backGBlur)
-        
         self.addChild(cameraNode)
     }
     
     func addBackgFreezeFrame()
     {
-        //frozenBackground.removeAllActions()
-        
         let backgTexture = SKTexture(imageNamed: "seamless-background.png")
             
         let backgAnimation = SKAction.move(by: CGVector(dx: -backgTexture.size().width, dy: 0), duration: 2)
@@ -71,7 +74,7 @@ class HomeScene: SKScene
         while i < 2 {
             
             frozenBackground = SKSpriteNode(texture: backgTexture)
-            frozenBackground.name = "background"
+            frozenBackground.name = "background" + String(format: "%.0f", Double(i))
             frozenBackground.position = CGPoint(x: backgTexture.size().width * i, y: self.frame.midY)
             frozenBackground.size.height = (self.scene?.size.height)!
             frozenBackground.run(infiniteBackg, withKey: "background")
@@ -108,7 +111,7 @@ class HomeScene: SKScene
             frozenPlatform = SKSpriteNode(imageNamed: "grounds.png")
             
             frozenPlatform.position = CGPoint(x: i * pfTexture.size().width, y: -(scene?.size.height)! / 2.73)
-            frozenPlatform.name = "platform"
+            frozenPlatform.name = "platform" + String(format: "%.0f", Double(i))
             frozenPlatform.size.height = 400;
     
             frozenPlatform.run(movePfForever, withKey: "platform")
@@ -129,6 +132,7 @@ class HomeScene: SKScene
         idleCharacter = SKSpriteNode(imageNamed: "(b)obby-1.png")
         
         idleCharacter.position = CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.71)
+        idleCharacter.name = "character"
         idleCharacter.size = CGSize(width: idleCharacter.size.width / 2, height: idleCharacter.size.height / 2)
         idleCharacter.color = .black
         idleCharacter.colorBlendFactor = 0.1
@@ -163,8 +167,6 @@ class HomeScene: SKScene
     }
     
     func drawGreenSplat() {
-        
-        print(self.frame.maxY)
         
         greenSplat = SKSpriteNode(imageNamed: "green-splat.png")
         greenSplat.zPosition = 3
@@ -275,19 +277,15 @@ class HomeScene: SKScene
         clickToStart.run(fadeForever)
     }
     
-    func cleanUp() {
+    func cleanUp() -> Void {
         
         let children = self.children
         
         for child in children
         {
-            if let spriteNode = child as? SKSpriteNode {
-                
-                if(spriteNode.name == "background" || spriteNode.name == "platform")
-                {
-                    spriteNode.texture = nil
-                }
-                spriteNode.removeAllActions()
+            if(!child.isEqual(to: cameraNode))
+            {
+                child.removeAllActions()
             }
         }
         self.removeAllChildren()
