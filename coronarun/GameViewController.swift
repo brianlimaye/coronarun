@@ -109,9 +109,16 @@ class GameViewController: UIViewController {
                if isDebug
                {
                     print("g was pressed")
-                    GameViewController.gameScene?.drawGerm()
+                    GameViewController.gameScene?.drawBlueGerm()
                }
-            
+           case .keyboardH:
+               
+               if isDebug
+               {
+                    print("h was pressed")
+                    GameViewController.gameScene?.drawGreenGerm()
+               }
+
            case .keyboard9:
                
                if isDebug
@@ -120,17 +127,34 @@ class GameViewController: UIViewController {
                     GameViewController.gameScene?.drawGirl()
                }
            case .keyboardUpArrow:
+               
                if isDebug
                {
                     print("up-arrow was pressed")
                     GameViewController.gameScene?.jumpUp()
                }
             case .keyboardDownArrow:
+                
                 if isDebug
                 {
                      print("down-arrow was pressed")
-                        GameViewController.gameScene?.slideDown()
+                     GameViewController.gameScene?.slideDown()
                 }
+            case .keyboardB:
+
+                if isDebug
+                {
+                     print("B was pressed")
+                     GameViewController.gameScene?.drawBats()
+                }
+            case .keyboardE:
+
+            if isDebug
+            {
+                 print("E was pressed")
+                 GameViewController.gameScene?.drawPortal()
+            }
+
            default:
                 
                if isDebug
@@ -151,7 +175,7 @@ class GameViewController: UIViewController {
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
+            return .portrait
         } else {
             return .all
         }

@@ -2,19 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../coronarun/animation/f1.png">
+      location = "group:../coronarun/magic.sks">
    </FileRef>
    <FileRef
-      location = "group:../coronarun/animation/f2.png">
-   </FileRef>
-   <FileRef
-      location = "group:../coronarun/animation/f3.png">
-   </FileRef>
-   <FileRef
-      location = "group:../coronarun/animation/f4.png">
-   </FileRef>
-   <FileRef
-      location = "group:../coronarun/animation/f5.png">
+      location = "group:../coronarun/animation/glitter.png">
    </FileRef>
    <FileRef
       location = "self:">

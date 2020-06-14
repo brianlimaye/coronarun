@@ -63,7 +63,7 @@ class HomeScene: SKScene
     {
         let backgTexture = SKTexture(imageNamed: "seamless-background.png")
             
-        let backgAnimation = SKAction.move(by: CGVector(dx: -backgTexture.size().width, dy: 0), duration: 2)
+        let backgAnimation = SKAction.move(by: CGVector(dx: -backgTexture.size().width, dy: 0), duration: 3)
         
         let backgShift = SKAction.move(by: CGVector(dx: backgTexture.size().width, dy: 0), duration: 0)
         let bgAnimation = SKAction.sequence([backgAnimation, backgShift])
@@ -93,10 +93,10 @@ class HomeScene: SKScene
         
         //frozenPlatform.removeAllActions()
         
-        frozenPlatform = SKSpriteNode(imageNamed: "grounds.png")
-        let pfTexture = SKTexture(imageNamed: "grounds.png")
+        frozenPlatform = SKSpriteNode(imageNamed: "world1.png")
+        let pfTexture = SKTexture(imageNamed: "world1.png")
         
-        let movePfAnimation = SKAction.move(by: CGVector(dx: -pfTexture.size().width, dy: 0), duration: 2)
+        let movePfAnimation = SKAction.move(by: CGVector(dx: -pfTexture.size().width, dy: 0), duration: 3)
         let shiftPfAnimation = SKAction.move(by: CGVector(dx: pfTexture.size().width, dy: 0), duration: 0)
         
         let pfAnimation = SKAction.sequence([movePfAnimation, shiftPfAnimation])
@@ -104,15 +104,13 @@ class HomeScene: SKScene
                 
         var i: CGFloat = 0
         
-        
-        
         while i < 2 {
                 
-            frozenPlatform = SKSpriteNode(imageNamed: "grounds.png")
+            frozenPlatform = SKSpriteNode(imageNamed: "world1.png")
             
-            frozenPlatform.position = CGPoint(x: i * pfTexture.size().width, y: -(scene?.size.height)! / 2.73)
+            frozenPlatform.position = CGPoint(x: i * pfTexture.size().width, y: -(scene?.size.height)! / 2.5)
             frozenPlatform.name = "platform" + String(format: "%.0f", Double(i))
-            frozenPlatform.size.height = 400;
+            frozenPlatform.size = CGSize(width: (self.scene?.size.width)! * 2, height: 400)
     
             frozenPlatform.run(movePfForever, withKey: "platform")
             

@@ -24,6 +24,8 @@ struct ColliderType
     static let banana: UInt32 = 0x1 << 2
     static let germs: UInt32 = 0x1 << 3
     static let girl: UInt32 = 0x1 << 4
+    static let soap: UInt32 = 0x1 << 5
+    static let portal: UInt32 = 0x1 << 6
 }
 
 struct game {
@@ -31,6 +33,7 @@ struct game {
     static var IsOver : Bool = false
     static var contactDetected: Bool = false
     static var i: Int = 0
+    static var charInitalPos: CGPoint = CGPoint(x: 0, y: 0)
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate
@@ -41,6 +44,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     let bgAnimatedInSecs: TimeInterval = 3
     let MIN_THRESHOLD_MS: Double = 1000
     
+    var portal: SKSpriteNode = SKSpriteNode()
+    var glitter: SKEmitterNode = SKEmitterNode()
+    var soap: SKSpriteNode = SKSpriteNode()
     var characterSprite: SKSpriteNode = SKSpriteNode()
     var batSprite: SKSpriteNode = SKSpriteNode()
     var batSprite2: SKSpriteNode = SKSpriteNode()
@@ -48,8 +54,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var tempIdleChar: SKSpriteNode = SKSpriteNode()
     var background: SKSpriteNode = SKSpriteNode()
     var platform: SKSpriteNode = SKSpriteNode()
-    var house: SKSpriteNode = SKSpriteNode()
-    var germCloud: SKSpriteNode = SKSpriteNode()
+    var blueGermCloud: SKSpriteNode = SKSpriteNode()
+    var greenGermCloud: SKSpriteNode = SKSpriteNode()
     var bananaPeel: SKSpriteNode = SKSpriteNode()
     var littleGirl: SKSpriteNode = SKSpriteNode()
     var replayButton: SKSpriteNode = SKSpriteNode()
@@ -61,6 +67,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var menuButton: SKSpriteNode = SKSpriteNode()
     var menuButtonShape: SKShapeNode = SKShapeNode()
     var score: Int = 0
+    var temp: Int = 0
     var lives: Int = 1
     var isLevelPassed: Bool = false
     var timer: Timer = Timer()
@@ -83,8 +90,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         resumeNodes()
         drawCharacter()
-        drawBat1()
         initObjectPhysics()
+        addSoap()
+        //drawBats()
         
         
         //timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(drawRandom), userInfo: nil, repeats: true)
@@ -107,27 +115,67 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             {
                 for backG in child.children {
                     
-                    backG.speed = 1
+                    backG.speed = 1.5
                 }
             }
                 
-            if((child.name == "platform0") || (child.name == "platform1"))
+            if((child.name == "platform0") || (child.name == "platform1") || (child.name == "platform2"))
             {
-                child.speed = 1
+                child.speed = 1.5
             }
             
             else if(child.name == "character")
             {
+                game.charInitalPos = child.position
                 child.isHidden = true
-
             }
         }
         self.addChild(cameraNode)
     }
+    
+    func minimizeChar() {
+        
+        let minimizeEffect = SKAction.resize(toWidth: 0, height: 0, duration: bgAnimatedInSecs / 10)
+        let bat1ToPortal = SKAction.move(to: portal.position, duration: bgAnimatedInSecs / 5)
+        let bat2ToPortal = SKAction.move(to: portal.position, duration: bgAnimatedInSecs / 3)
+        let bat3ToPortal = SKAction.move(to: portal.position, duration: bgAnimatedInSecs / 2)
+        
+        let bat1ToOffscreen = SKAction.move(to: CGPoint(x: self.frame.width, y: portal.frame.midY), duration: bgAnimatedInSecs / 9)
+        let bat2ToOffscreen = SKAction.move(to: CGPoint(x: self.frame.width, y: self.frame.maxY / 2), duration: bgAnimatedInSecs / 9)
+        let bat3ToOffscreen = SKAction.move(to: CGPoint(x: self.frame.width, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
+        
+        let bat1Seq = SKAction.sequence([bat1ToPortal, bat1ToOffscreen])
+        let bat2Seq = SKAction.sequence([bat2ToPortal, bat2ToOffscreen])
+        let bat3Seq = SKAction.sequence([bat3ToPortal, bat3ToOffscreen])
+        
+        let minimizeRepeater = SKAction.repeat(minimizeEffect, count: 1)
+        let bat1Movement = SKAction.repeat(bat1Seq, count: 1)
+        let bat2Movement = SKAction.repeat(bat2Seq, count: 1)
+        let bat3Movement = SKAction.repeat(bat3Seq, count: 1)
+        
+        batSprite.run(bat1Movement)
+        batSprite2.run(bat2Movement)
+        batSprite3.run(bat3Movement)
+        characterSprite.run(minimizeRepeater, completion: gameSuccession)
+    }
+    
+    func gameSuccession() {
+        
+        characterSprite.isHidden = true
+        
+        let portalMinimize = SKAction.resize(toWidth: 0, height: 0, duration: bgAnimatedInSecs / 10)
+        
+        
+
+        let portalMinimizeRepeater = SKAction.repeat(portalMinimize, count: 1)
+        
+        
+        portal.run(portalMinimizeRepeater)
+        endGame()
+    }
 
     func didBegin(_ contact: SKPhysicsContact) {
         
-        self.view?.gestureRecognizers?.removeAll()
         game.contactDetected = true
         
         print("contact...")
@@ -135,16 +183,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let nodeA = contact.bodyA
         let nodeB = contact.bodyB
         
-        if(((nodeA.node?.name == "character") && (nodeB.node?.name == "banana")) || ((nodeA.node?.name == "banana") && (nodeB.node?.name == "character")))
+        if(((nodeA.node?.name == "character") && (nodeB.node?.name == "portal")) || ((nodeA.node?.name == "portal") && (nodeB.node?.name == "character")))
         {
+            characterSprite.physicsBody?.isDynamic = false
+            portal.physicsBody?.isDynamic = false
+            minimizeChar()
+        }
+        
+        if(((nodeA.node?.name == "character") && (nodeB.node?.name == "soap")) || ((nodeA.node?.name == "soap") && (nodeB.node?.name == "character")))
+        {
+            score += 1
+            soap.physicsBody?.isDynamic = false
+            soap.isHidden = true
+            game.contactDetected = false
+        }
+        
+        else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "banana")) || ((nodeA.node?.name == "banana") && (nodeB.node?.name == "character")))
+        {
+            self.view?.gestureRecognizers?.removeAll()
             peelDieAnimation()
         }
         else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "germ")) || ((nodeA.node?.name == "germ") && (nodeB.node?.name == "character")))
         {
+            self.view?.gestureRecognizers?.removeAll()
             germDieAnimation()
         }
-        else
+        else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "girl")) || ((nodeA.node?.name == "girl") && (nodeB.node?.name == "character")))
         {
+            self.view?.gestureRecognizers?.removeAll()
             girlDieAnimation()
         }
     }
@@ -430,7 +496,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         let backgTexture = SKTexture(imageNamed: "seamless-background.png")
             
-        let backgAnimation = SKAction.move(by: CGVector(dx: -backgTexture.size().width, dy: 0), duration: bgAnimatedInSecs / 2)
+        let backgAnimation = SKAction.move(by: CGVector(dx: -backgTexture.size().width, dy: 0), duration: bgAnimatedInSecs)
         
         let backgShift = SKAction.move(by: CGVector(dx: backgTexture.size().width, dy: 0), duration: 0)
         let bgAnimation = SKAction.sequence([backgAnimation, backgShift])
@@ -523,7 +589,98 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.run(mainRepeater, withKey: "running")
     }
     
-    func drawBat1() {
+    func charMoveToPortal() {
+        
+        self.view?.gestureRecognizers?.removeAll()
+        pauseBackgAndPlatform()
+        
+        let xShift = SKAction.moveTo(x: portal.position.x - 100, duration: bgAnimatedInSecs / 8)
+        
+        let xRepeater = SKAction.repeat(xShift, count: 1)
+        
+        characterSprite.run(xRepeater, completion: charEndAnimation)
+        
+    }
+    
+    func charEndAnimation() {
+        
+        isLevelPassed = true
+        
+        let charShift = SKAction.moveTo(x: portal.position.x + 10, duration: bgAnimatedInSecs / 4)
+        let yRise = SKAction.moveTo(y: portal.position.y + 10, duration: bgAnimatedInSecs / 8)
+        let rotation = SKAction.rotate(toAngle: -(2 * CGFloat.pi), duration: bgAnimatedInSecs / 8)
+        let reversion = SKAction.rotate(toAngle: 0, duration: 0)
+        
+        let rotationSeq = SKAction.sequence([rotation, reversion])
+        
+        let charRepeater = SKAction.repeat(charShift, count: 1)
+        let yRepeater = SKAction.repeatForever(yRise)
+        let rotationRepeater = SKAction.repeatForever(rotationSeq)
+        
+        characterSprite.removeAction(forKey: "running")
+        characterSprite.run(charRepeater)
+        characterSprite.run(yRepeater)
+        characterSprite.run(rotationRepeater)
+        
+    }
+    
+    func drawPortal() {
+        
+        portal = SKSpriteNode(imageNamed: "cool-portal.png")
+        portal.position = CGPoint(x: self.frame.width, y: game.charInitalPos.y + 100)
+        portal.size = CGSize(width: portal.size.width, height: portal.size.height)
+        portal.name = "portal"
+        
+        //Physics Body
+
+        portal.physicsBody = SKPhysicsBody(circleOfRadius: portal.size.width / 6)
+        portal.physicsBody?.affectedByGravity = false
+        portal.physicsBody?.categoryBitMask = ColliderType.portal
+        portal.physicsBody?.collisionBitMask = ColliderType.character
+        portal.physicsBody?.contactTestBitMask = ColliderType.character
+        portal.physicsBody?.usesPreciseCollisionDetection = true
+        portal.physicsBody?.isDynamic = true
+        
+        
+        
+        let portalSpin = SKAction.rotate(byAngle: (2 * CGFloat.pi), duration: bgAnimatedInSecs / 2)
+        let portalShift = SKAction.moveTo(x: self.frame.width / 2.5, duration: bgAnimatedInSecs / 2)
+        let portalRepeater = SKAction.repeat(portalShift, count: 1)
+        let spinRepeater = SKAction.repeatForever(portalSpin)
+        
+        self.addChild(portal)
+        portal.run(spinRepeater)
+        portal.run(portalRepeater, completion: charMoveToPortal)
+    }
+    
+    func addGlitterEffect() {
+        
+        let xShift = SKAction.moveTo(x: -self.frame.width, duration: bgAnimatedInSecs)
+        let xReversion = SKAction.moveTo(x: self.frame.width, duration: 0)
+        let xSequencer = SKAction.sequence([xShift, xReversion])
+        let xRepeater = SKAction.repeat(xSequencer, count: 1)
+        
+        glitter.run(xRepeater)
+    }
+    
+    func addSoap() {
+        
+        temp += 1
+        soap.isHidden = false
+        
+        addGlitterEffect()
+        
+        glitter.position.x = self.frame.width
+        
+        if(temp == 1)
+        {
+            let fullRotation = SKAction.rotate(byAngle: (2 * CGFloat.pi), duration: bgAnimatedInSecs / 2)
+            let rotationRepeater = SKAction.repeatForever(fullRotation)
+            soap.run(rotationRepeater)
+        }
+    }
+    
+    func drawBats() {
         
         let batFrames: [SKTexture] = [SKTexture(imageNamed: "batframe-1"), SKTexture(imageNamed: "batframe-2"), SKTexture(imageNamed: "batframe-3"), SKTexture(imageNamed: "batframe-4")]
         
@@ -531,16 +688,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         batSprite2 = SKSpriteNode(imageNamed: "batframe-1.png")
         batSprite3 = SKSpriteNode(imageNamed: "batframe-1.png")
 
-        batSprite.position = CGPoint(x: self.frame.width, y: characterSprite.position.y + 100)
+        batSprite.position = CGPoint(x: self.frame.width, y: game.charInitalPos.y + 100)
         batSprite.size = CGSize(width: batSprite.size.width / 1.75, height: batSprite.size.height / 1.75)
         batSprite.xScale = -1
         batSprite.zPosition = 2
+        
+        batSprite2.position = CGPoint(x: self.frame.width, y: game.charInitalPos.y + 100)
+        batSprite2.size = CGSize(width: batSprite2.size.width / 1.75, height: batSprite2.size.height / 1.75)
+        batSprite2.xScale = -1
+        batSprite2.zPosition = 2
+        
+        batSprite3.position = CGPoint(x: self.frame.width, y: game.charInitalPos.y + 100)
+        batSprite3.size = CGSize(width: batSprite3.size.width / 1.75, height: batSprite3.size.height / 1.75)
+        batSprite3.xScale = -1
+        batSprite3.zPosition = 2
         
         let batAnim = SKAction.animate(with: batFrames, timePerFrame: 0.2)
         let batAnimRepeater = SKAction.repeatForever(batAnim)
         let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite.position.y), duration: bgAnimatedInSecs)
         
         self.addChild(batSprite)
+        self.addChild(batSprite2)
+        self.addChild(batSprite3)
+        
+        batSprite2.isHidden = true
+        batSprite3.isHidden = true
 
         batSprite.run(batAnimRepeater)
         batSprite2.run(batAnimRepeater)
@@ -552,53 +724,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func batReversion() -> Void {
         
         batSprite.xScale = 1
-        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x, y: self.frame.midY + 100), duration: bgAnimatedInSecs / 2)
+        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x, y: self.frame.midY + 100), duration: bgAnimatedInSecs)
         batSprite.run(batReversion, completion: drawBat2)
     }
     
     func bat2Reversion() -> Void {
         
         batSprite2.xScale = 1
-        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x - 100, y: self.frame.midY + 200), duration: bgAnimatedInSecs / 2)
+        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x - 100, y: self.frame.midY + 200), duration: bgAnimatedInSecs)
         batSprite2.run(batReversion, completion: drawBat3)
     }
     
     func bat3Reversion() -> Void {
         
         batSprite3.xScale = 1
-        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x + 100, y: self.frame.midY + 200), duration: bgAnimatedInSecs / 2)
+        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x + 100, y: self.frame.midY + 200), duration: bgAnimatedInSecs)
         batSprite3.run(batReversion)
     }
     
     
     func drawBat2() {
         
-        batSprite2.position = CGPoint(x: self.frame.width, y: characterSprite.position.y + 100)
-        batSprite2.size = CGSize(width: batSprite2.size.width / 1.75, height: batSprite2.size.height / 1.75)
-        batSprite2.xScale = -1
-        batSprite2.zPosition = 2
+        batSprite2.isHidden = false
         
         let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite2.position.y), duration: bgAnimatedInSecs)
-        
-        self.addChild(batSprite2)
 
         batSprite2.run(batShift, completion: bat2Reversion)
     }
     
     func drawBat3() {
-           
-        let batFrames: [SKTexture] = [SKTexture(imageNamed: "batframe-1"), SKTexture(imageNamed: "batframe-2"), SKTexture(imageNamed: "batframe-3"), SKTexture(imageNamed: "batframe-4")]
-       
-        batSprite3.position = CGPoint(x: self.frame.width, y: characterSprite.position.y + 100)
-        batSprite3.size = CGSize(width: batSprite3.size.width / 1.75, height: batSprite3.size.height / 1.75)
-        batSprite3.xScale = -1
-        batSprite3.zPosition = 2
-       
-        let batAnim = SKAction.animate(with: batFrames, timePerFrame: 0.2)
-        let batAnimRepeater = SKAction.repeatForever(batAnim)
+        
+        batSprite3.isHidden = false
+        
         let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite3.position.y), duration: bgAnimatedInSecs)
-       
-        self.addChild(batSprite3)
 
         batSprite3.run(batShift, completion: bat3Reversion)
     }
@@ -652,21 +810,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func initObjectPhysics() -> Void{
         
-        //GermCloud
-        germCloud = SKSpriteNode(imageNamed: "blue-germ-1")
-        germCloud.size = CGSize(width: 200, height: 200)
-        germCloud.position = CGPoint(x: self.frame.size.width, y: (self.frame.minY / 2.65))
-        germCloud.zPosition = 3
-        germCloud.name = "germ"
+        //blueGermCloud
+        blueGermCloud = SKSpriteNode(imageNamed: "blue-germ-1")
+        blueGermCloud.size = CGSize(width: 200, height: 200)
+        blueGermCloud.position = CGPoint(x: self.frame.size.width, y: (self.frame.minY / 2.65))
+        blueGermCloud.zPosition = 3
+        blueGermCloud.name = "germ"
         
-        germCloud.physicsBody = SKPhysicsBody(circleOfRadius: germCloud.size.width / 2.3)
-        germCloud.physicsBody?.affectedByGravity = false
-        germCloud.physicsBody?.categoryBitMask = ColliderType.germs
-        germCloud.physicsBody?.collisionBitMask = ColliderType.character
-        germCloud.physicsBody?.contactTestBitMask = ColliderType.character
-        germCloud.physicsBody?.isDynamic = false
+        blueGermCloud.physicsBody = SKPhysicsBody(circleOfRadius: blueGermCloud.size.width / 2.3)
+        blueGermCloud.physicsBody?.affectedByGravity = false
+        blueGermCloud.physicsBody?.categoryBitMask = ColliderType.germs
+        blueGermCloud.physicsBody?.collisionBitMask = ColliderType.character
+        blueGermCloud.physicsBody?.contactTestBitMask = ColliderType.character
+        blueGermCloud.physicsBody?.isDynamic = false
         
-        self.addChild(germCloud)
+        self.addChild(blueGermCloud)
+        
+        //greenGermCloud
+        greenGermCloud = SKSpriteNode(imageNamed: "green-germ-1")
+        greenGermCloud.size = CGSize(width: 200, height: 200)
+        greenGermCloud.position = CGPoint(x: self.frame.size.width, y: self.frame.midY)
+        greenGermCloud.zPosition = 3
+        greenGermCloud.name = "greengerm"
+        
+        greenGermCloud.physicsBody = SKPhysicsBody(circleOfRadius: greenGermCloud.size.width / 2.3)
+        greenGermCloud.physicsBody?.affectedByGravity = false
+        greenGermCloud.physicsBody?.categoryBitMask = ColliderType.germs
+        greenGermCloud.physicsBody?.collisionBitMask = ColliderType.character
+        greenGermCloud.physicsBody?.contactTestBitMask = ColliderType.character
+        greenGermCloud.physicsBody?.isDynamic = false
+        
+        self.addChild(greenGermCloud)
         
         //BananaPeel
         bananaPeel = SKSpriteNode(imageNamed: "banana-peel.png")
@@ -703,23 +877,67 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         littleGirl.physicsBody?.isDynamic = false
         
         self.addChild(littleGirl)
+        
+        //Soap/Glitter
+        soap = SKSpriteNode(imageNamed: "hand-sanitizer.png")
+        soap.name = "soap"
+        soap.size = CGSize(width: soap.size.width / 6, height: soap.size.height / 6)
+        soap.zPosition = 4
+        soap.physicsBody = SKPhysicsBody(circleOfRadius: soap.size.height / 2)
+        soap.physicsBody?.affectedByGravity = false
+        soap.physicsBody?.categoryBitMask = ColliderType.soap
+        soap.physicsBody?.collisionBitMask = ColliderType.character
+        soap.physicsBody?.contactTestBitMask = ColliderType.character
+        soap.physicsBody?.usesPreciseCollisionDetection = true
+        soap.physicsBody?.isDynamic = false
+        
+        glitter = SKEmitterNode(fileNamed: "shimmer.sks")!
+        glitter.zPosition = 3
+        glitter.position = CGPoint(x: 0, y: -250)
+        
+        glitter.addChild(soap)
+        self.addChild(glitter)
     }
     
-    func drawGerm() -> Void {
+    func drawBlueGerm() -> Void {
         
         let germShift = SKAction.move(by: CGVector(dx: -self.frame.width * 2, dy: 0), duration: bgAnimatedInSecs)
         
         let germAnimation = SKAction.repeat(germShift, count: 1)
         
-        germCloud.run(germAnimation, completion: germRevert)
+        blueGermCloud.run(germAnimation, completion: blueGermRevert)
     }
     
-    func germRevert() {
+    func drawGreenGerm() -> Void {
+        
+        let germShift = SKAction.move(by: CGVector(dx: -self.frame.width * 2, dy: 0), duration: bgAnimatedInSecs)
+
+        let germRise = SKAction.moveTo(y: self.frame.midY, duration: bgAnimatedInSecs / 2)
+        let germFall = SKAction.moveTo(y: characterSprite.position.y, duration: bgAnimatedInSecs / 2)
+        
+        let germSeq = SKAction.sequence([germFall, germRise])
+        
+        let germOscillation = SKAction.repeatForever(germSeq)
+        let germAnimation = SKAction.repeat(germShift, count: 1)
+        
+        greenGermCloud.run(germOscillation)
+        greenGermCloud.run(germAnimation, completion: greenGermRevert)
+    }
+    
+    func greenGermRevert() {
         
         let germReversion = SKAction.move(by: CGVector(dx: self.frame.width * 2, dy: 0), duration: 0)
         let germRevert = SKAction.repeat(germReversion, count: 1)
-
-        self.germCloud.run(germRevert)
+        
+        greenGermCloud.run(germRevert)
+    }
+    
+    func blueGermRevert() {
+        
+        let germReversion = SKAction.move(by: CGVector(dx: self.frame.width * 2, dy: 0), duration: 0)
+        let germRevert = SKAction.repeat(germReversion, count: 1)
+        
+        blueGermCloud.run(germRevert)
     }
     
     func drawPeel() -> Void {
@@ -770,7 +988,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             case 1:
                 drawPeel()
             case 2:
-                drawGerm()
+                drawBlueGerm()
             case 3:
                 drawGirl()
             default:
@@ -785,7 +1003,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         self.view?.gestureRecognizers?.removeAll()
 
         bananaPeel.removeAllActions()
-        germCloud.removeAllActions()
+        blueGermCloud.removeAllActions()
         characterSprite.removeAllActions()
         littleGirl.removeAllActions()
         
@@ -822,7 +1040,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.physicsBody?.isDynamic = false
 
         bananaPeel.removeAllActions()
-        germCloud.removeAllActions()
+        blueGermCloud.removeAllActions()
         characterSprite.removeAllActions()
         littleGirl.removeAllActions()
         
@@ -836,9 +1054,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
         
-        germCloud.run(eatRepeater)
+        blueGermCloud.run(eatRepeater)
         characterSprite.run(spinRepeater, completion: disappearCharacter)
     }
+    
     
     func disappearCharacter() {
         
@@ -853,7 +1072,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.physicsBody?.isDynamic = false
         
         bananaPeel.removeAllActions()
-        germCloud.removeAllActions()
+        blueGermCloud.removeAllActions()
         characterSprite.removeAllActions()
         
         characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
@@ -991,6 +1210,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         self.showEndingMenu()
         pauseBackgAndPlatform()
+        self.temp = 0
+        isLevelPassed = false
         game.IsOver = true
     }
     
@@ -1020,7 +1241,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 }
             }
             
-            if((child.name == "platform0") || (child.name == "platform1"))
+            if((child.name == "platform0") || (child.name == "platform1") || (child.name == "platform2"))
             {
                 child.speed = 0
             }
@@ -1029,7 +1250,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     /*
     override func update(_ currentTime: CFTimeInterval) {
-
+        
+        
+        if(characterSprite.position.x == portal.position.x - 45)
+        {
+            jumpCharacter()
+        }
+        
         for child in cameraNode.children {
             
             
