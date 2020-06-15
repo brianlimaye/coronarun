@@ -36,53 +36,23 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                               
-                // Set the scale mode to scale to fit the window
-            
-                
-                //scene.scaleMode = .aspectFill
-                
-                /*
-                let leadingConstraint = view.leadingAnchor.constraint(equalTo: )
-                let trailingConstraint = landscapeView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-                let topConstraint = landscapeView.topAnchor.constraint(equalTo: self.view.topAnchor)
-                let bottomConstraint = landscapeView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50)
-                
-                initialConstraints.append(contentsOf: [leadingConstraint, trailingConstraint, topConstraint, bottomConstraint])
-                
-                //NSLayoutConstraint.activate(initialConstraints)
-                */
-                
-                // Present the scene.
-                
-                
                 
                 let homeScene = HomeScene(fileNamed: "HomeScene")
                 homeScene?.scaleMode = .aspectFill
                 view.presentScene(homeScene)
  
-                
-               //view.presentScene(scene)
-                
-                
-                
                 let notificationCenter = NotificationCenter.default
                 notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
                 notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
 
-            }
-
-            view.ignoresSiblingOrder = true
-
-            view.showsFPS = true
-            view.showsNodeCount = true
-            view.showsPhysics = true
+                
+                view.ignoresSiblingOrder = true
+                view.showsFPS = true
+                view.showsNodeCount = true
+                view.showsPhysics = true
         }
     }
 
-    
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
 
            guard let key = presses.first?.key else { return }
@@ -118,14 +88,6 @@ class GameViewController: UIViewController {
                     print("h was pressed")
                     GameViewController.gameScene?.drawGreenGerm()
                }
-
-           case .keyboard9:
-               
-               if isDebug
-               {
-                    print("9 was pressed")
-                    GameViewController.gameScene?.drawGirl()
-               }
            case .keyboardUpArrow:
                
                if isDebug
@@ -145,7 +107,7 @@ class GameViewController: UIViewController {
                 if isDebug
                 {
                      print("B was pressed")
-                     GameViewController.gameScene?.drawBats()
+                     GameViewController.gameScene?.drawBat1()
                 }
             case .keyboardE:
 
@@ -154,7 +116,6 @@ class GameViewController: UIViewController {
                  print("E was pressed")
                  GameViewController.gameScene?.drawPortal()
             }
-
            default:
                 
                if isDebug
@@ -175,7 +136,7 @@ class GameViewController: UIViewController {
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
-            return .portrait
+            return .allButUpsideDown
         } else {
             return .all
         }
@@ -199,29 +160,6 @@ class GameViewController: UIViewController {
     @objc func appMovedToForeground() {
         
         print("App moved to foreground!")
-        
-        /*
-        let children = GameViewController.gameScene?.children
-       
-        if((GameViewController.gameScene?.gameIsOver()) != nil)
-        {
-            for child in children!
-            {
-                if(child.isEqual(to: backGBlur))
-                {
-                    for backG in backGBlur.children {
-                        
-                        backG.speed = 0
-                    }
-                }
-                
-                if((child.name == "platform0") || (child.name == "platform1"))
-                {
-                    child.speed = 0
-                }
-            }
-        }
- */
         GameViewController.gameScene?.isPaused = false
     }
 }

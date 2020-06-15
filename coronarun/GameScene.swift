@@ -34,6 +34,13 @@ struct game {
     static var contactDetected: Bool = false
     static var i: Int = 0
     static var charInitalPos: CGPoint = CGPoint(x: 0, y: 0)
+    static var greenInitalPos: CGPoint = CGPoint(x: 0, y: 0)
+    
+    static var levelOneObjects: [Int] = [2, 4, 2, 5, 2, 2, 2, 1, 6, 3, 7]
+    static var levelTwoObjects: [Int] = [4, 3, 2, 3, 3, 5, 3, 2, 6, 1, 7]
+    static var levelThreeObjects: [Int] = [4, 2, 3, 3, 3, 5, 6, 1, 3, 2, 7]
+    static var levelFourObjects: [Int] = [1, 1, 4, 5, 2, 1, 1, 6, 3, 3, 7]
+    static var levelFiveObjects: [Int] = [2, 2, 4, 2, 1, 5, 3, 3, 3, 6, 7]
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate
@@ -51,9 +58,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var batSprite: SKSpriteNode = SKSpriteNode()
     var batSprite2: SKSpriteNode = SKSpriteNode()
     var batSprite3: SKSpriteNode = SKSpriteNode()
-    var tempIdleChar: SKSpriteNode = SKSpriteNode()
-    var background: SKSpriteNode = SKSpriteNode()
-    var platform: SKSpriteNode = SKSpriteNode()
     var blueGermCloud: SKSpriteNode = SKSpriteNode()
     var greenGermCloud: SKSpriteNode = SKSpriteNode()
     var bananaPeel: SKSpriteNode = SKSpriteNode()
@@ -68,6 +72,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var menuButtonShape: SKShapeNode = SKShapeNode()
     var score: Int = 0
     var temp: Int = 0
+    var objNum: Int = 0
     var lives: Int = 1
     var isLevelPassed: Bool = false
     var timer: Timer = Timer()
@@ -92,10 +97,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         drawCharacter()
         initObjectPhysics()
         addSoap()
-        //drawBats()
         
-        
-        //timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(drawRandom), userInfo: nil, repeats: true)
+        //timer = Timer.scheduledTimer(timeInterval: 7.0, target: self, selector: #selector(loadLevel1), userInfo: nil, repeats: true)
         
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(jumpUp))
         swipeUp.direction = .up
@@ -115,13 +118,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             {
                 for backG in child.children {
                     
-                    backG.speed = 1.5
+                    backG.speed = 1.75
                 }
             }
                 
             if((child.name == "platform0") || (child.name == "platform1") || (child.name == "platform2"))
             {
-                child.speed = 1.5
+                child.speed = 1.75
             }
             
             else if(child.name == "character")
@@ -131,6 +134,105 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             }
         }
         self.addChild(cameraNode)
+    }
+    
+    func runCorrespondingAction(num: Int) {
+        
+        switch(num)
+        {
+            case 1:
+                drawPeel()
+            case 2:
+                drawBlueGerm()
+            case 3:
+                drawGreenGerm()
+            case 4:
+                drawBat1()
+            case 5:
+                drawBat2()
+            case 6:
+                drawBat3()
+            case 7:
+                drawPortal()
+            default:
+                print("error....")
+        }
+        print("action done...")
+    }
+    
+    @objc func loadLevel1() -> Void {
+        
+        if(objNum == 11)
+        {
+            timer.invalidate()
+            objNum = 0
+        }
+        
+        let currentObj = game.levelOneObjects[objNum]
+        
+        runCorrespondingAction(num: currentObj)
+        
+        objNum += 1
+    }
+    
+    @objc func loadLevel2() {
+        
+        if(objNum == 11)
+        {
+            timer.invalidate()
+            objNum = 0
+        }
+        
+        let currentObj = game.levelTwoObjects[objNum]
+        
+        runCorrespondingAction(num: currentObj)
+        
+        objNum += 1
+    }
+    
+    @objc func loadLevel3() {
+        
+        if(objNum == 11)
+        {
+            timer.invalidate()
+            objNum = 0
+        }
+        
+        let currentObj = game.levelThreeObjects[objNum]
+
+        runCorrespondingAction(num: currentObj)
+        
+        objNum += 1
+    }
+    
+    @objc func loadLevel4() {
+        
+        if(objNum == 11)
+        {
+            timer.invalidate()
+            objNum = 0
+        }
+        
+        let currentObj = game.levelOneObjects[objNum]
+        
+        runCorrespondingAction(num: currentObj)
+        
+        objNum += 1
+    }
+    
+    @objc func loadLevel5() {
+        
+        if(objNum == 11)
+        {
+            timer.invalidate()
+            objNum = 0
+        }
+        
+        let currentObj = game.levelOneObjects[objNum]
+        
+        runCorrespondingAction(num: currentObj)
+        
+        objNum += 1
     }
     
     func minimizeChar() {
@@ -374,51 +476,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         self.addChild(levelAlert)
         self.addChild(levelStatusAlert)
     }
-    
-    //This function will be scrapped.
-    /*
-    func closingScene() -> Void{
-                
-        house = SKSpriteNode(imageNamed: "house.png")
-        house.size = CGSize(width: house.size.width / 3, height: house.size.height / 3)
-        house.position = CGPoint(x: self.frame.width * 2, y: self.frame.minY / 1.9)
-        
-        self.addChild(house)
-        
-        let standingFrames:[SKTexture] = [SKTexture(imageNamed: "bobby-1.png"), SKTexture(imageNamed: "bobby-2.png"), SKTexture(imageNamed: "bobby-3.png"), SKTexture(imageNamed: "bobby-4.png")]
-        
-        let standingAnim = SKAction.animate(with: standingFrames, timePerFrame: 0.25)
-        let moveToHouse = SKAction.move(to: CGPoint(x: self.frame.maxX / 1.5, y: self.frame.minY / 1.9), duration: 1)
-        
-        let charMoveToHouse = SKAction.move(to: CGPoint(x: self.frame.maxX / 4, y: self.frame.minY / 1.70), duration: 1)
-        
-        let repeatingStanding = SKAction.repeatForever(standingAnim)
-        let houseShift = SKAction.repeat(moveToHouse, count: 1)
-        let charShift = SKAction.repeat(charMoveToHouse, count: 1)
-        
-        house.run(houseShift, withKey: "houseshift")
-        
-        let seconds = 1.0
-        DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
-        {
-            //self.background.isPaused = true
-            //self.platform.isPaused = true
-            self.house.removeAction(forKey: "houseshift")
-            self.characterSprite.run(charShift, withKey: "movetohouse")
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + seconds)
-            {
-                self.characterSprite.removeAllActions()
-                self.characterSprite.texture = SKTexture(imageNamed: "bobby-1.png")
-                self.characterSprite.run(repeatingStanding)
-                DispatchQueue.main.asyncAfter(deadline: .now() + (seconds * 2))
-                {
-                    self.endGame()
-                }
-            }
-        }
-    }
- */
 
     func pauseRunning() -> Void{
         
@@ -489,77 +546,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             duckCharacter()
         }
     }
-    
-    func drawBackground() -> Void{
-        
-        self.removeAllChildren()
-        
-        let backgTexture = SKTexture(imageNamed: "seamless-background.png")
-            
-        let backgAnimation = SKAction.move(by: CGVector(dx: -backgTexture.size().width, dy: 0), duration: bgAnimatedInSecs)
-        
-        let backgShift = SKAction.move(by: CGVector(dx: backgTexture.size().width, dy: 0), duration: 0)
-        let bgAnimation = SKAction.sequence([backgAnimation, backgShift])
-        let infiniteBackg = SKAction.repeatForever(bgAnimation)
 
-        var i: CGFloat = 0
-
-        while i < maxTimeMoving {
-            
-            background = SKSpriteNode(texture: backgTexture)
-            background.name = "background"
-            background.position = CGPoint(x: backgTexture.size().width * i, y: self.frame.midY)
-            background.size.height = CGFloat((self.scene?.size.height)!)
-            background.run(infiniteBackg, withKey: "background")
-
-            self.addChild(background)
-
-            i += 1
-
-            // Set background first
-            background.zPosition = -2
-        }
-    }
-    
-    func drawPlatform() -> Void{
-        
-        let pfTexture = SKTexture(imageNamed: "grounds.png")
-        
-        let movePfAnimation = SKAction.move(by: CGVector(dx: -pfTexture.size().width, dy: 0), duration: bgAnimatedInSecs)
-        let shiftPfAnimation = SKAction.move(by: CGVector(dx: pfTexture.size().width, dy: 0), duration: 0)
-        
-        let pfAnimation = SKAction.sequence([movePfAnimation, shiftPfAnimation])
-        let movePfForever = SKAction.repeatForever(pfAnimation);
-        
-        var i: CGFloat = 0
-        
-        
-        
-        while i < maxTimeMoving{
-            
-            platform = SKSpriteNode(imageNamed: "grounds.png")
-            
-            platform.position = CGPoint(x: i * pfTexture.size().width, y: -(scene?.size.height)! / 2.73)
-            platform.name = "platform"
-            platform.size.height = 400;
-    
-            platform.run(movePfForever, withKey: "platform")
-            
-            self.addChild(platform)
-            
-            i += 1
-
-            // Set platform first
-            platform.zPosition = -1;
-        }
-    }
-    
     func drawCharacter() -> Void{
-        
-        //let runAnimations:[SKTexture] = [SKTexture(imageNamed: "row-1-col-1.png"), SKTexture(imageNamed: "row-1-col-2.png"), SKTexture(imageNamed: "row-1-col-3.png"), SKTexture(imageNamed: "row-2-col-1.png"), SKTexture(imageNamed: "row-2-col-2.png"), SKTexture(imageNamed: "row-2-col-3.png")]
-        
-        //let lastFrame = SKTexture(imageNamed: "new11-removebg-preview.png")
-        //lastFrame.
         
         let runAnimations:[SKTexture] = [SKTexture(imageNamed: "bobby-6.png"), SKTexture(imageNamed: "bobby-7.png"), SKTexture(imageNamed: "bobby-8.png"), SKTexture(imageNamed: "bobby-9.png"), SKTexture(imageNamed: "bobby-10.png"), SKTexture(imageNamed: "bobby-11.png")]
         
@@ -591,7 +579,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func charMoveToPortal() {
         
-        self.view?.gestureRecognizers?.removeAll()
         pauseBackgAndPlatform()
         
         let xShift = SKAction.moveTo(x: portal.position.x - 100, duration: bgAnimatedInSecs / 8)
@@ -641,10 +628,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         portal.physicsBody?.usesPreciseCollisionDetection = true
         portal.physicsBody?.isDynamic = true
         
-        
-        
+        self.view?.gestureRecognizers?.removeAll()
         let portalSpin = SKAction.rotate(byAngle: (2 * CGFloat.pi), duration: bgAnimatedInSecs / 2)
-        let portalShift = SKAction.moveTo(x: self.frame.width / 2.5, duration: bgAnimatedInSecs / 2)
+        let portalShift = SKAction.moveTo(x: self.frame.width / 3, duration: bgAnimatedInSecs / 2)
         let portalRepeater = SKAction.repeat(portalShift, count: 1)
         let spinRepeater = SKAction.repeatForever(portalSpin)
         
@@ -680,7 +666,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         }
     }
     
-    func drawBats() {
+    func drawBat1() {
         
         let batFrames: [SKTexture] = [SKTexture(imageNamed: "batframe-1"), SKTexture(imageNamed: "batframe-2"), SKTexture(imageNamed: "batframe-3"), SKTexture(imageNamed: "batframe-4")]
         
@@ -725,14 +711,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         batSprite.xScale = 1
         let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x, y: self.frame.midY + 100), duration: bgAnimatedInSecs)
-        batSprite.run(batReversion, completion: drawBat2)
+        batSprite.run(batReversion)
     }
     
     func bat2Reversion() -> Void {
         
         batSprite2.xScale = 1
         let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x - 100, y: self.frame.midY + 200), duration: bgAnimatedInSecs)
-        batSprite2.run(batReversion, completion: drawBat3)
+        batSprite2.run(batReversion)
     }
     
     func bat3Reversion() -> Void {
@@ -901,7 +887,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func drawBlueGerm() -> Void {
         
-        let germShift = SKAction.move(by: CGVector(dx: -self.frame.width * 2, dy: 0), duration: bgAnimatedInSecs)
+        blueGermCloud.isHidden = false
+        let germShift = SKAction.move(by: CGVector(dx: -self.frame.width * 2, dy: 0), duration: bgAnimatedInSecs / 1.75)
         
         let germAnimation = SKAction.repeat(germShift, count: 1)
         
@@ -910,10 +897,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func drawGreenGerm() -> Void {
         
-        let germShift = SKAction.move(by: CGVector(dx: -self.frame.width * 2, dy: 0), duration: bgAnimatedInSecs)
+        greenGermCloud.isHidden = false
+        let germShift = SKAction.move(by: CGVector(dx: -self.frame.width * 2, dy: 0), duration: bgAnimatedInSecs / 1.75)
 
-        let germRise = SKAction.moveTo(y: self.frame.midY, duration: bgAnimatedInSecs / 2)
-        let germFall = SKAction.moveTo(y: characterSprite.position.y, duration: bgAnimatedInSecs / 2)
+        let germRise = SKAction.moveTo(y: self.frame.midY, duration: bgAnimatedInSecs / 1.5)
+        let germFall = SKAction.moveTo(y: characterSprite.position.y, duration: bgAnimatedInSecs / 1.5)
         
         let germSeq = SKAction.sequence([germFall, germRise])
         
@@ -930,6 +918,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let germRevert = SKAction.repeat(germReversion, count: 1)
         
         greenGermCloud.run(germRevert)
+        greenGermCloud.isHidden = true
     }
     
     func blueGermRevert() {
@@ -938,11 +927,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let germRevert = SKAction.repeat(germReversion, count: 1)
         
         blueGermCloud.run(germRevert)
+        blueGermCloud.isHidden = true
     }
     
     func drawPeel() -> Void {
         
-        let peelShift = SKAction.move(by: CGVector(dx: -self.frame.size.width * 2, dy: 0), duration: bgAnimatedInSecs * 1.3)
+        bananaPeel.isHidden = false
+        let peelShift = SKAction.move(by: CGVector(dx: -self.frame.size.width * 2, dy: 0), duration: bgAnimatedInSecs / 1.75)
         //let peelSequence = SKAction.sequence([peelShift, peelReversion])
         let peelAnimation = SKAction.repeat(peelShift, count: 1)
                 
@@ -954,7 +945,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let peelReversion = SKAction.move(by: CGVector(dx: self.frame.size.width * 2, dy: 0), duration: 0)
         let peelRevert = SKAction.repeat(peelReversion, count: 1)
         
-        self.bananaPeel.run(peelRevert)
+        bananaPeel.run(peelRevert)
+        bananaPeel.isHidden = true
+        
     }
     
     func drawGirl() -> Void {
@@ -978,24 +971,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let girlReversion = SKAction.moveTo(x: self.frame.size.width * 2, duration: 0)
         let peelRevert = SKAction.repeat(girlReversion, count: 1)
         littleGirl.run(peelRevert)
-    }
-    
-    @objc func drawRandom() -> Void {
-        
-        let number = Int.random(in: 1 ... 3)
-        
-        switch(number) {
-            case 1:
-                drawPeel()
-            case 2:
-                drawBlueGerm()
-            case 3:
-                drawGirl()
-            default:
-                print("number other than 1-3....")
-            
-        }
-        print("object spawned.")
     }
     
     func peelDieAnimation() -> Void {
@@ -1251,30 +1226,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     /*
     override func update(_ currentTime: CFTimeInterval) {
         
-        
-        if(characterSprite.position.x == portal.position.x - 45)
-        {
-            jumpCharacter()
-        }
-        
-        for child in cameraNode.children {
-            
-            
-            if(child.isEqual(to: backGBlur))
-            {
-                for backG in backGBlur.children {
-                    
-                    backG.position.x.round(.down)
-                    backG.position.y.round(.down)
-                }
-            }
-            
-            if((child.name == "platform0") || (child.name == "platform1"))
-            {
-                child.position.x.round(.up)
-                child.position.y.round(.up)
-            }
-        }
     }
  */
 }

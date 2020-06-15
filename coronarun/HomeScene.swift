@@ -12,6 +12,7 @@ import SpriteKit
 var cameraNode: SKCameraNode = SKCameraNode()
 var backGBlur: SKEffectNode = SKEffectNode()
 
+
 class HomeScene: SKScene
 {
     var frozenBackground: SKSpriteNode = SKSpriteNode()
@@ -76,7 +77,7 @@ class HomeScene: SKScene
             frozenBackground = SKSpriteNode(texture: backgTexture)
             frozenBackground.name = "background" + String(format: "%.0f", Double(i))
             frozenBackground.position = CGPoint(x: backgTexture.size().width * i, y: self.frame.midY)
-            frozenBackground.size.height = (self.scene?.size.height)!
+            frozenBackground.size.height = self.frame.height
             frozenBackground.run(infiniteBackg, withKey: "background")
 
             backGBlur.addChild(frozenBackground)
@@ -108,9 +109,9 @@ class HomeScene: SKScene
                 
             frozenPlatform = SKSpriteNode(imageNamed: "world1.png")
             
-            frozenPlatform.position = CGPoint(x: i * pfTexture.size().width, y: -(scene?.size.height)! / 2.5)
+            frozenPlatform.position = CGPoint(x: i * pfTexture.size().width, y: -(self.frame.height / 2.5))
             frozenPlatform.name = "platform" + String(format: "%.0f", Double(i))
-            frozenPlatform.size = CGSize(width: (self.scene?.size.width)! * 2, height: 400)
+            frozenPlatform.size = CGSize(width: self.frame.width * 2, height: self.frame.height / 3.5)
     
             frozenPlatform.run(movePfForever, withKey: "platform")
             
