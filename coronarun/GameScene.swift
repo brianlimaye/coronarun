@@ -36,11 +36,11 @@ struct game {
     static var charInitalPos: CGPoint = CGPoint(x: 0, y: 0)
     static var greenInitalPos: CGPoint = CGPoint(x: 0, y: 0)
     
-    static var levelOneObjects: [Int] = [2, 4, 2, 5, 2, 2, 2, 1, 6, 3, 7]
-    static var levelTwoObjects: [Int] = [4, 3, 2, 3, 3, 5, 3, 2, 6, 1, 7]
-    static var levelThreeObjects: [Int] = [4, 2, 3, 3, 3, 5, 6, 1, 3, 2, 7]
-    static var levelFourObjects: [Int] = [1, 1, 4, 5, 2, 1, 1, 6, 3, 3, 7]
-    static var levelFiveObjects: [Int] = [2, 2, 4, 2, 1, 5, 3, 3, 3, 6, 7]
+    static var levelOneObjects: [Int] = [2, 4, 2, 5, 2, 1, 2, 1, 6, 3, 7]
+    static var levelTwoObjects: [Int] = [4, 3, 2, 3, 3, 5, 1, 2, 6, 1, 7]
+    static var levelThreeObjects: [Int] = [4, 2, 1, 3, 2, 5, 6, 1, 3, 2, 7]
+    static var levelFourObjects: [Int] = [1, 1, 4, 5, 2, 3, 1, 6, 3, 3, 7]
+    static var levelFiveObjects: [Int] = [2, 2, 4, 3, 1, 5, 3, 3, 1, 6, 7]
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate
@@ -93,12 +93,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 }
     func initializeGame() -> Void {
         
+        objNum = 0
         resumeNodes()
         drawCharacter()
         initObjectPhysics()
         addSoap()
         
-        //timer = Timer.scheduledTimer(timeInterval: 7.0, target: self, selector: #selector(loadLevel1), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(loadLevel1), userInfo: nil, repeats: true)
         
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(jumpUp))
         swipeUp.direction = .up
@@ -267,12 +268,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         let portalMinimize = SKAction.resize(toWidth: 0, height: 0, duration: bgAnimatedInSecs / 10)
         
-        
-
         let portalMinimizeRepeater = SKAction.repeat(portalMinimize, count: 1)
-        
-        
+    
         portal.run(portalMinimizeRepeater)
+        isLevelPassed = true
+        
         endGame()
     }
 
@@ -292,7 +292,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             minimizeChar()
         }
         
-        if(((nodeA.node?.name == "character") && (nodeB.node?.name == "soap")) || ((nodeA.node?.name == "soap") && (nodeB.node?.name == "character")))
+        else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "soap")) || ((nodeA.node?.name == "soap") && (nodeB.node?.name == "character")))
         {
             score += 1
             soap.physicsBody?.isDynamic = false
@@ -308,7 +308,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "germ")) || ((nodeA.node?.name == "germ") && (nodeB.node?.name == "character")))
         {
             self.view?.gestureRecognizers?.removeAll()
-            germDieAnimation()
+            germDieAnimation(germ: blueGermCloud)
+        }
+        else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "greengerm")) || ((nodeA.node?.name == "greengerm") && (nodeB.node?.name == "character")))
+        {
+            self.view?.gestureRecognizers?.removeAll()
+            germDieAnimation(germ: greenGermCloud)
         }
         else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "girl")) || ((nodeA.node?.name == "girl") && (nodeB.node?.name == "character")))
         {
@@ -442,7 +447,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
 
     func showEndingMenu() -> Void {
         
-        gameOverDisplay = SKShapeNode(rect: CGRect(x: -self.frame.width, y: self.frame.midY - 20, width: self.frame.width * 2, height: 300))
+        gameOverDisplay = SKShapeNode(rect: CGRect(x: -self.frame.width, y: self.frame.midY - 20, width: self.frame.width * 2, height: self.frame.height / 4.5))
         gameOverDisplay.fillColor = .black
         gameOverDisplay.alpha = 0.5
                 
@@ -466,7 +471,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         {
             self.initMenuButton()
             levelStatusAlert.fontColor = .red
-            levelStatusAlert.text = "FAILED"
+            levelStatusAlert.text = "INCOMPLETE"
         }
         
         self.initReplayButton()
@@ -691,7 +696,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         let batAnim = SKAction.animate(with: batFrames, timePerFrame: 0.2)
         let batAnimRepeater = SKAction.repeatForever(batAnim)
-        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite.position.y), duration: bgAnimatedInSecs)
+        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite.position.y), duration: bgAnimatedInSecs / 1.75)
         
         self.addChild(batSprite)
         self.addChild(batSprite2)
@@ -733,7 +738,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         batSprite2.isHidden = false
         
-        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite2.position.y), duration: bgAnimatedInSecs)
+        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite2.position.y), duration: bgAnimatedInSecs / 1.75)
 
         batSprite2.run(batShift, completion: bat2Reversion)
     }
@@ -742,7 +747,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         batSprite3.isHidden = false
         
-        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite3.position.y), duration: bgAnimatedInSecs)
+        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite3.position.y), duration: bgAnimatedInSecs / 1.75)
 
         batSprite3.run(batShift, completion: bat3Reversion)
     }
@@ -819,7 +824,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         greenGermCloud.zPosition = 3
         greenGermCloud.name = "greengerm"
         
-        greenGermCloud.physicsBody = SKPhysicsBody(circleOfRadius: greenGermCloud.size.width / 2.3)
+        greenGermCloud.physicsBody = SKPhysicsBody(circleOfRadius: greenGermCloud.size.width / 4)
         greenGermCloud.physicsBody?.affectedByGravity = false
         greenGermCloud.physicsBody?.categoryBitMask = ColliderType.germs
         greenGermCloud.physicsBody?.collisionBitMask = ColliderType.character
@@ -900,12 +905,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         greenGermCloud.isHidden = false
         let germShift = SKAction.move(by: CGVector(dx: -self.frame.width * 2, dy: 0), duration: bgAnimatedInSecs / 1.75)
 
-        let germRise = SKAction.moveTo(y: self.frame.midY, duration: bgAnimatedInSecs / 1.5)
-        let germFall = SKAction.moveTo(y: characterSprite.position.y, duration: bgAnimatedInSecs / 1.5)
+        let germRise = SKAction.moveTo(y: self.frame.midY, duration: bgAnimatedInSecs / 2)
+        let germFall = SKAction.moveTo(y: characterSprite.position.y, duration: bgAnimatedInSecs / 2)
         
         let germSeq = SKAction.sequence([germFall, germRise])
         
-        let germOscillation = SKAction.repeatForever(germSeq)
+        let germOscillation = SKAction.repeat(germSeq, count: 1)
         let germAnimation = SKAction.repeat(germShift, count: 1)
         
         greenGermCloud.run(germOscillation)
@@ -933,7 +938,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func drawPeel() -> Void {
         
         bananaPeel.isHidden = false
-        let peelShift = SKAction.move(by: CGVector(dx: -self.frame.size.width * 2, dy: 0), duration: bgAnimatedInSecs / 1.75)
+        let peelShift = SKAction.move(by: CGVector(dx: -self.frame.size.width * 2, dy: 0), duration: bgAnimatedInSecs * 1.5)
         //let peelSequence = SKAction.sequence([peelShift, peelReversion])
         let peelAnimation = SKAction.repeat(peelShift, count: 1)
                 
@@ -1009,13 +1014,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.run(fallAnim, completion: endGame)
     }
     
-    func germDieAnimation() -> Void {
+    func germDieAnimation(germ: SKSpriteNode) -> Void {
         
         self.view?.gestureRecognizers?.removeAll()
         characterSprite.physicsBody?.isDynamic = false
 
         bananaPeel.removeAllActions()
-        blueGermCloud.removeAllActions()
+        germ.removeAllActions()
         characterSprite.removeAllActions()
         littleGirl.removeAllActions()
         
@@ -1029,7 +1034,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
         
-        blueGermCloud.run(eatRepeater)
+        germ.run(eatRepeater)
         characterSprite.run(spinRepeater, completion: disappearCharacter)
     }
     
@@ -1183,6 +1188,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
      func endGame() -> Void{
         
+        if((batSprite.isHidden == false) || (batSprite2.isHidden == false) || (batSprite3.isHidden == false))
+        {
+            if(!isLevelPassed)
+            {
+                let bat1ToOffscreen = SKAction.move(to: CGPoint(x: -self.frame.width, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
+                let bat2ToOffscreen = SKAction.move(to: CGPoint(x: 0, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
+                let bat3ToOffscreen = SKAction.move(to: CGPoint(x: self.frame.width, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
+                       
+                    
+                let bat1Movement = SKAction.repeat(bat1ToOffscreen, count: 1)
+                let bat2Movement = SKAction.repeat(bat2ToOffscreen, count: 1)
+                let bat3Movement = SKAction.repeat(bat3ToOffscreen, count: 1)
+                
+                batSprite.run(bat1Movement)
+                batSprite2.run(bat2Movement)
+                batSprite3.run(bat3Movement)
+            }
+        }
+        
+        timer.invalidate()
         self.showEndingMenu()
         pauseBackgAndPlatform()
         self.temp = 0

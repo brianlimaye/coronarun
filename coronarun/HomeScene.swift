@@ -5,6 +5,9 @@
 //  Created by Brian Limaye on 5/31/20.
 //  Copyright © 2020 Brian Limaye. All rights reserved.
 //
+//1. Try to add characters that cough/sneeze.
+//2. Pick up facemasks, gloves, faceshield.
+//3. Background from China.
 
 import Foundation
 import SpriteKit
@@ -27,6 +30,8 @@ class HomeScene: SKScene
     var tutorialButtonShape: SKShapeNode = SKShapeNode()
     var soundButton: SKSpriteNode = SKSpriteNode()
     var soundButtonShape: SKShapeNode = SKShapeNode()
+    var menuButton: SKSpriteNode = SKSpriteNode()
+    var menuButtonShape: SKShapeNode = SKShapeNode()
     var clickToStart: SKLabelNode = SKLabelNode()
     
     override func didMove(to view: SKView) {
@@ -150,9 +155,9 @@ class HomeScene: SKScene
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         cleanUp()
-        let menuScene = MenuScene(fileNamed: "MenuScene")
-        menuScene?.scaleMode = .aspectFill
-        self.view?.presentScene(menuScene!, transition: SKTransition.crossFade(withDuration: 0.5))
+        let gameScene = GameScene(fileNamed: "GameScene")
+        gameScene?.scaleMode = .aspectFill
+        self.view?.presentScene(gameScene!, transition: SKTransition.crossFade(withDuration: 0.5))
     }
     
     func initTitleScreen() {
@@ -162,6 +167,7 @@ class HomeScene: SKScene
         drawIconRect()
         drawLikeButton()
         drawTutorialButton()
+        drawMenuButton()
         drawClickToStart()
     }
     
@@ -189,7 +195,7 @@ class HomeScene: SKScene
     
     func drawIconRect() {
         
-        iconHolder = SKShapeNode(rect: CGRect(x: -(self.frame.width * 2), y: self.frame.midY / 16, width: self.frame.width * 4, height: 100))
+        iconHolder = SKShapeNode(rect: CGRect(x: -self.frame.width, y: self.frame.midY, width: (2 * self.frame.width), height: self.frame.height / 13))
         
         iconHolder.fillColor = .clear
         iconHolder.lineWidth = 5
@@ -205,7 +211,7 @@ class HomeScene: SKScene
         rateButton.size = CGSize(width: rateButton.size.width / 19, height: rateButton.size.height / 19)
         rateButton.position = CGPoint(x: 0, y: 0)
         
-        rateButtonShape = SKShapeNode(circleOfRadius: 50)
+        rateButtonShape = SKShapeNode(circleOfRadius: 55)
         rateButtonShape.fillColor = .white
         rateButtonShape.isAntialiased = true
         rateButtonShape.isUserInteractionEnabled = false
@@ -215,7 +221,7 @@ class HomeScene: SKScene
         
         iconHolder.addChild(rateButtonShape)
         
-        rateButtonShape.position = CGPoint(x: -self.size.width / 4, y: 50)
+        rateButtonShape.position = CGPoint(x: -self.size.width / 3, y: 50)
     }
     
     func drawTutorialButton() {
@@ -224,7 +230,7 @@ class HomeScene: SKScene
         tutorialButton.size = CGSize(width: tutorialButton.size.width / 7 , height: tutorialButton.size.height / 7)
         tutorialButton.position = CGPoint(x: 0, y: 0)
         
-        tutorialButtonShape = SKShapeNode(circleOfRadius: 50)
+        tutorialButtonShape = SKShapeNode(circleOfRadius: 55)
         tutorialButtonShape.fillColor = .white
         tutorialButtonShape.isAntialiased = true
         tutorialButtonShape.isUserInteractionEnabled = false
@@ -234,7 +240,7 @@ class HomeScene: SKScene
         
         iconHolder.addChild(tutorialButtonShape)
         
-        tutorialButtonShape.position = CGPoint(x: 0, y: 50)
+        tutorialButtonShape.position = CGPoint(x: -self.size.width / 9, y: 50)
     }
     
     func drawSoundButton() {
@@ -243,7 +249,7 @@ class HomeScene: SKScene
         soundButton.size = CGSize(width: soundButton.size.width / 6 , height: soundButton.size.height / 6)
         soundButton.position = CGPoint(x: 0, y: 0)
         
-        soundButtonShape = SKShapeNode(circleOfRadius: 50)
+        soundButtonShape = SKShapeNode(circleOfRadius: 55)
         soundButtonShape.fillColor = .white
         soundButtonShape.isAntialiased = true
         soundButtonShape.isUserInteractionEnabled = false
@@ -253,7 +259,26 @@ class HomeScene: SKScene
         
         iconHolder.addChild(soundButtonShape)
         
-        soundButtonShape.position = CGPoint(x: self.size.width / 4, y: 50)
+        soundButtonShape.position = CGPoint(x: self.size.width / 3, y: 50)
+    }
+    
+    func drawMenuButton() {
+        
+        menuButton = SKSpriteNode(imageNamed: "menu-icon.png")
+        menuButton.size = CGSize(width: menuButton.size.width / 5 , height: menuButton.size.height / 5)
+        
+        menuButtonShape = SKShapeNode(circleOfRadius: 55)
+        menuButtonShape.fillColor = .white
+        menuButtonShape.isAntialiased = true
+        menuButtonShape.isUserInteractionEnabled = false
+        menuButtonShape.lineWidth = 5
+        menuButtonShape.strokeColor = .black
+        menuButtonShape.addChild(menuButton)
+        menuButton.position = CGPoint(x: 15, y: 0)
+        
+        iconHolder.addChild(menuButtonShape)
+        
+        menuButtonShape.position = CGPoint(x: self.size.width / 9, y: 50)
     }
     
     func drawClickToStart() {

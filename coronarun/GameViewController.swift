@@ -36,7 +36,7 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
-                
+            
                 let homeScene = HomeScene(fileNamed: "HomeScene")
                 homeScene?.scaleMode = .aspectFill
                 view.presentScene(homeScene)
@@ -108,6 +108,20 @@ class GameViewController: UIViewController {
                 {
                      print("B was pressed")
                      GameViewController.gameScene?.drawBat1()
+                }
+            case .keyboard2:
+
+                if isDebug
+                {
+                     print("2 was pressed")
+                     GameViewController.gameScene?.drawBat2()
+                }
+            case .keyboard3:
+
+                if isDebug
+                {
+                     print("3 was pressed")
+                     GameViewController.gameScene?.drawBat3()
                 }
             case .keyboardE:
 
