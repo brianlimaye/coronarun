@@ -20,6 +20,8 @@
 		B402FE902484C7BA000AB014 /* (b)obby-4.png in Resources */ = {isa = PBXBuildFile; fileRef = B402FE8C2484C7B9000AB014 /* (b)obby-4.png */; };
 		B402FE912484C7BA000AB014 /* (b)obby-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B402FE8D2484C7B9000AB014 /* (b)obby-1.png */; };
 		B402FE922484C7BA000AB014 /* (b)obby-3.png in Resources */ = {isa = PBXBuildFile; fileRef = B402FE8E2484C7B9000AB014 /* (b)obby-3.png */; };
+		B421044324982B99005AC764 /* NightinTokyo-Bold.ps in Resources */ = {isa = PBXBuildFile; fileRef = B421044224982B99005AC764 /* NightinTokyo-Bold.ps */; };
+		B421044524983235005AC764 /* HABESHAPIXELS-Bold.ps in Resources */ = {isa = PBXBuildFile; fileRef = B421044424983235005AC764 /* HABESHAPIXELS-Bold.ps */; };
 		B42BF964246BC24F00AD9292 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BF963246BC24F00AD9292 /* AppDelegate.swift */; };
 		B42BF966246BC24F00AD9292 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B42BF965246BC24F00AD9292 /* GameScene.sks */; };
 		B42BF968246BC24F00AD9292 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B42BF967246BC24F00AD9292 /* Actions.sks */; };
@@ -133,6 +135,8 @@
 		B402FE8C2484C7B9000AB014 /* (b)obby-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "(b)obby-4.png"; path = "animation/(b)obby-4.png"; sourceTree = "<group>"; };
 		B402FE8D2484C7B9000AB014 /* (b)obby-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "(b)obby-1.png"; path = "animation/(b)obby-1.png"; sourceTree = "<group>"; };
 		B402FE8E2484C7B9000AB014 /* (b)obby-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "(b)obby-3.png"; path = "animation/(b)obby-3.png"; sourceTree = "<group>"; };
+		B421044224982B99005AC764 /* NightinTokyo-Bold.ps */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NightinTokyo-Bold.ps"; path = "animation/NightinTokyo-Bold.ps"; sourceTree = "<group>"; };
+		B421044424983235005AC764 /* HABESHAPIXELS-Bold.ps */ = {isa = PBXFileReference; lastKnownFileType = file; name = "HABESHAPIXELS-Bold.ps"; path = "animation/HABESHAPIXELS-Bold.ps"; sourceTree = "<group>"; };
 		B42BF960246BC24F00AD9292 /* coronarun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coronarun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B42BF963246BC24F00AD9292 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B42BF965246BC24F00AD9292 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -278,6 +282,8 @@
 				B402FE712484530B000AB014 /* HomeScene.swift */,
 				B4BCA8E22486C5C000EE3735 /* MenuScene.swift */,
 				B42BF969246BC24F00AD9292 /* GameScene.swift */,
+				B421044424983235005AC764 /* HABESHAPIXELS-Bold.ps */,
+				B421044224982B99005AC764 /* NightinTokyo-Bold.ps */,
 				B49EEC042481E8CC001309E2 /* menu-icon.png */,
 				B4701F0D24958DD400A3CED8 /* world1.png */,
 				B42E335E2495587300AB9C18 /* cool-portal.png */,
@@ -537,6 +543,7 @@
 				B42E335F2495587400AB9C18 /* cool-portal.png in Resources */,
 				B4763B6A249347B500665A99 /* shimmer.sks in Resources */,
 				B4401CCD24803F5400B49192 /* CarbonBl-Regular.ps in Resources */,
+				B421044324982B99005AC764 /* NightinTokyo-Bold.ps in Resources */,
 				B4401CC5247EE83800B49192 /* next-level-icon.png in Resources */,
 				B463048D2485BBF5004CC114 /* idle-3.png in Resources */,
 				B4BAD2ED24870E950008ED87 /* Maassslicer3D.ps in Resources */,
@@ -549,6 +556,7 @@
 				B4B58200247B660D0043CEEB /* bobby-9.png in Resources */,
 				B42E335D24954F5100AB9C18 /* portal.png in Resources */,
 				B402FE70248452EB000AB014 /* HomeScene.sks in Resources */,
+				B421044524983235005AC764 /* HABESHAPIXELS-Bold.ps in Resources */,
 				B49EEC052481E8CD001309E2 /* menu-icon.png in Resources */,
 				B402FE8024846BA6000AB014 /* Balibold-Regular.ps in Resources */,
 				B42BF974246BC25100AD9292 /* LaunchScreen.storyboard in Resources */,

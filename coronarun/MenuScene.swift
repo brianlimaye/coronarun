@@ -9,11 +9,6 @@
 import Foundation
 import SpriteKit
 
-struct levelToLoad
-{
-    static var levelSelected: Int = -1
-}
-
 class MenuScene: SKScene
 {
     var levelScreen: SKSpriteNode = SKSpriteNode()
@@ -218,9 +213,10 @@ class MenuScene: SKScene
             if((node?.name == "level-one") || (node?.name == "1"))
             {
                 print("level-one pressed")
-                levelToLoad.levelSelected = 1
+                levelData.levelSelected = 1
                 
                 cleanUp()
+                levelData.didLoadFromHome = false
                 let gameScene = GameScene(fileNamed: "GameScene")
                 gameScene?.scaleMode = .aspectFill
                 self.view?.presentScene(gameScene)
@@ -228,9 +224,10 @@ class MenuScene: SKScene
             else if((node?.name == "level-two") || (node?.name == "2"))
             {
                 print("level-two pressed")
-                levelToLoad.levelSelected = 2
+                levelData.levelSelected = 2
                 
                 cleanUp()
+                levelData.didLoadFromHome = false
                 let gameScene = GameScene(fileNamed: "GameScene")
                 gameScene?.scaleMode = .aspectFill
                 self.view?.presentScene(gameScene)
@@ -238,9 +235,10 @@ class MenuScene: SKScene
             else if((node?.name == "level-three") || (node?.name == "3"))
             {
                 print("level-three pressed")
-                levelToLoad.levelSelected = 3
+                levelData.levelSelected = 3
                 
                 cleanUp()
+                levelData.didLoadFromHome = false
                 let gameScene = GameScene(fileNamed: "GameScene")
                 gameScene?.scaleMode = .aspectFill
                 self.view?.presentScene(gameScene)
@@ -248,9 +246,10 @@ class MenuScene: SKScene
             else if((node?.name == "level-four") || (node?.name == "4"))
             {
                 print("level-four pressed")
-                levelToLoad.levelSelected = 4
+                levelData.levelSelected = 4
                 
                 cleanUp()
+                levelData.didLoadFromHome = false
                 let gameScene = GameScene(fileNamed: "GameScene")
                 gameScene?.scaleMode = .aspectFill
                 self.view?.presentScene(gameScene)
@@ -258,16 +257,13 @@ class MenuScene: SKScene
             else if((node?.name == "level-five") || (node?.name == "5"))
             {
                 print("level-five pressed")
-                levelToLoad.levelSelected = 5
+                levelData.levelSelected = 5
                 
                 cleanUp()
+                levelData.didLoadFromHome = false
                 let gameScene = GameScene(fileNamed: "GameScene")
                 gameScene?.scaleMode = .aspectFill
                 self.view?.presentScene(gameScene)
-            }
-            else
-            {
-                print("nothing was pressed :)")
             }
         }
     }

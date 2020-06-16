@@ -26,6 +26,7 @@ struct ColliderType
     static let girl: UInt32 = 0x1 << 4
     static let soap: UInt32 = 0x1 << 5
     static let portal: UInt32 = 0x1 << 6
+    static let bat: UInt32 = 0x1 << 7
 }
 
 struct game {
@@ -50,11 +51,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     let maxTimeMoving: CGFloat = 2
     let bgAnimatedInSecs: TimeInterval = 3
     let MIN_THRESHOLD_MS: Double = 1000
+    static let defaults = UserDefaults.standard
     
     var portal: SKSpriteNode = SKSpriteNode()
     var glitter: SKEmitterNode = SKEmitterNode()
     var soap: SKSpriteNode = SKSpriteNode()
     var characterSprite: SKSpriteNode = SKSpriteNode()
+    var characterFace: SKSpriteNode = SKSpriteNode()
     var batSprite: SKSpriteNode = SKSpriteNode()
     var batSprite2: SKSpriteNode = SKSpriteNode()
     var batSprite3: SKSpriteNode = SKSpriteNode()
@@ -80,6 +83,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var lastTime: Double = 0
     var gameOverDisplay: SKShapeNode = SKShapeNode()
     var levelAlert: SKLabelNode = SKLabelNode()
+    var levelDisplay: SKLabelNode = SKLabelNode()
+    var livesDisplay: SKLabelNode = SKLabelNode()
+    var levelDisplayShape: SKShapeNode = SKShapeNode()
     var levelStatusAlert: SKLabelNode = SKLabelNode()
     var scoreLabel: SKSpriteNode = SKSpriteNode()
     
@@ -88,18 +94,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         GameViewController.gameScene = self
         self.physicsWorld.contactDelegate = self
         initializeGame()
-        
-        //to-do: Make these obstacle objects random
-}
+    }
+    
     func initializeGame() -> Void {
         
-        objNum = 0
-        resumeNodes()
         drawCharacter()
+        resumeNodes()
         initObjectPhysics()
+        showCurrentLevel()
+        objNum = 0
         addSoap()
-        
-        timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(loadLevel1), userInfo: nil, repeats: true)
         
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(jumpUp))
         swipeUp.direction = .up
@@ -108,6 +112,107 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(slideDown))
         swipeDown.direction = .down
         self.view?.addGestureRecognizer(swipeDown)
+    }
+    
+    func startLevel(level: String) {
+        
+        switch(level)
+        {
+            case "1":
+                timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(loadLevel1), userInfo: nil, repeats: true)
+            case "2":
+                timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(loadLevel2), userInfo: nil, repeats: true)
+            case "3":
+                timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(loadLevel3), userInfo: nil, repeats: true)
+            case "4":
+                timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(loadLevel4), userInfo: nil, repeats: true)
+            case "5":
+                timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(loadLevel5), userInfo: nil, repeats: true)
+            default:
+                print("other..")
+        }
+    }
+    
+    func showCurrentLevel() {
+        
+        levelDisplay = SKLabelNode(fontNamed: "HABESHAPIXELS-Bold")
+        levelDisplay.fontColor = .white
+        levelDisplay.fontSize = 60
+        
+        if(!levelData.didLoadFromHome)
+        {
+            levelDisplay.text = "World 1: Level " + String(levelData.levelSelected)
+        }
+        else
+        {
+            levelDisplay.text = "World 1: Level " + String(levelData.currentLevel)
+        }
+        
+        levelDisplay.position = CGPoint(x: 0, y: self.frame.height / 14)
+        levelDisplay.zPosition = 5
+        
+        livesDisplay = SKLabelNode(fontNamed: "HABESHAPIXELS-Bold")
+        livesDisplay.fontColor = .white
+        livesDisplay.fontSize = 48
+        livesDisplay.text = " x 1"
+        livesDisplay.position = CGPoint(x: 30, y: 30)
+        livesDisplay.zPosition = 5
+        
+        characterFace = SKSpriteNode(imageNamed: "(b)obby-1.png")
+        characterFace.position = CGPoint(x: -30, y: 50)
+        characterFace.size = CGSize(width: characterFace.size.width / 4, height: characterFace.size.height / 4)
+        characterFace.zPosition = 5
+        self.addChild(characterFace)
+        
+        levelDisplayShape = SKShapeNode(rect: CGRect(x: (-self.frame.width), y: 0, width: (2 * self.frame.width), height: self.frame.height / 8))
+        levelDisplayShape.fillColor = .black
+        levelDisplayShape.alpha = 0.5
+        levelDisplayShape.zPosition = 4
+        
+        let showLevel = SKAction.resize(toWidth: (2 * self.frame.width), duration: 3)
+        
+        let showLevelRepeater = SKAction.repeat(showLevel, count: 1)
+        
+        self.addChild(levelDisplay)
+        self.addChild(levelDisplayShape)
+        self.addChild(livesDisplay)
+        levelDisplayShape.run(showLevelRepeater, completion: fadeLevelDisplay)
+    }
+    
+    func fadeLevelDisplay() {
+        
+        let fadeLevel = SKAction.fadeOut(withDuration: 0.5)
+        
+        let fadeRepeater = SKAction.repeat(fadeLevel, count: 1)
+        
+        levelDisplayShape.run(fadeRepeater, completion: fadeIn)
+        livesDisplay.run(fadeRepeater)
+        characterFace.run(fadeRepeater)
+        levelDisplay.run(fadeRepeater)
+    }
+    
+    func fadeIn() {
+
+        levelDisplayShape.isHidden = true
+        livesDisplay.isHidden = true
+        characterFace.isHidden = true
+        levelDisplay.isHidden = true
+        
+        levelDisplayShape.alpha = 0.5
+        livesDisplay.alpha = 1
+        characterFace.alpha = 1
+        levelDisplay.alpha = 1
+        
+        if(levelData.didLoadFromHome)
+        {
+            startLevel(level: String(levelData.currentLevel))
+        }
+        else
+        {
+            startLevel(level: String(levelData.levelSelected))
+        }
+        
+        
     }
     
     func resumeNodes() {
@@ -158,7 +263,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             default:
                 print("error....")
         }
-        print("action done...")
     }
     
     @objc func loadLevel1() -> Void {
@@ -214,7 +318,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             objNum = 0
         }
         
-        let currentObj = game.levelOneObjects[objNum]
+        let currentObj = game.levelFourObjects[objNum]
         
         runCorrespondingAction(num: currentObj)
         
@@ -229,7 +333,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             objNum = 0
         }
         
-        let currentObj = game.levelOneObjects[objNum]
+        let currentObj = game.levelFiveObjects[objNum]
         
         runCorrespondingAction(num: currentObj)
         
@@ -272,20 +376,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
         portal.run(portalMinimizeRepeater)
         isLevelPassed = true
+        let i = levelData.currentLevel + 1
+        levelData.currentLevel = i
+        GameScene.defaults.set(levelData.currentLevel, forKey: "maxlevel")
         
         endGame()
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
         
+        print("contact.")
         game.contactDetected = true
-        
-        print("contact...")
-        
+                
         let nodeA = contact.bodyA
         let nodeB = contact.bodyB
         
-        if(((nodeA.node?.name == "character") && (nodeB.node?.name == "portal")) || ((nodeA.node?.name == "portal") && (nodeB.node?.name == "character")))
+        if(((nodeA.node?.name == "character") && (nodeB.node?.name == "bat")) || ((nodeA.node?.name == "bat") && (nodeB.node?.name == "character")))
+        {
+            characterSprite.physicsBody?.isDynamic = false
+            batDieAnimation()
+        }
+        
+        else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "portal")) || ((nodeA.node?.name == "portal") && (nodeB.node?.name == "character")))
         {
             characterSprite.physicsBody?.isDynamic = false
             portal.physicsBody?.isDynamic = false
@@ -322,10 +434,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         }
     }
 
-    @objc func timerAction(){
-       print("timer fired!")
-    }
-    
     func gameIsOver() -> Bool {
         
         return game.IsOver
@@ -675,36 +783,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         let batFrames: [SKTexture] = [SKTexture(imageNamed: "batframe-1"), SKTexture(imageNamed: "batframe-2"), SKTexture(imageNamed: "batframe-3"), SKTexture(imageNamed: "batframe-4")]
         
-        batSprite = SKSpriteNode(imageNamed: "batframe-1.png")
-        batSprite2 = SKSpriteNode(imageNamed: "batframe-1.png")
-        batSprite3 = SKSpriteNode(imageNamed: "batframe-1.png")
-
-        batSprite.position = CGPoint(x: self.frame.width, y: game.charInitalPos.y + 100)
-        batSprite.size = CGSize(width: batSprite.size.width / 1.75, height: batSprite.size.height / 1.75)
-        batSprite.xScale = -1
-        batSprite.zPosition = 2
-        
-        batSprite2.position = CGPoint(x: self.frame.width, y: game.charInitalPos.y + 100)
-        batSprite2.size = CGSize(width: batSprite2.size.width / 1.75, height: batSprite2.size.height / 1.75)
-        batSprite2.xScale = -1
-        batSprite2.zPosition = 2
-        
-        batSprite3.position = CGPoint(x: self.frame.width, y: game.charInitalPos.y + 100)
-        batSprite3.size = CGSize(width: batSprite3.size.width / 1.75, height: batSprite3.size.height / 1.75)
-        batSprite3.xScale = -1
-        batSprite3.zPosition = 2
-        
         let batAnim = SKAction.animate(with: batFrames, timePerFrame: 0.2)
         let batAnimRepeater = SKAction.repeatForever(batAnim)
-        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite.position.y), duration: bgAnimatedInSecs / 1.75)
+        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite.position.y), duration: bgAnimatedInSecs)
         
-        self.addChild(batSprite)
-        self.addChild(batSprite2)
-        self.addChild(batSprite3)
+        batSprite.isHidden = false
         
-        batSprite2.isHidden = true
-        batSprite3.isHidden = true
-
         batSprite.run(batAnimRepeater)
         batSprite2.run(batAnimRepeater)
         batSprite3.run(batAnimRepeater)
@@ -738,7 +822,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         batSprite2.isHidden = false
         
-        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite2.position.y), duration: bgAnimatedInSecs / 1.75)
+        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite2.position.y), duration: bgAnimatedInSecs)
 
         batSprite2.run(batShift, completion: bat2Reversion)
     }
@@ -747,7 +831,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         batSprite3.isHidden = false
         
-        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite3.position.y), duration: bgAnimatedInSecs / 1.75)
+        let batShift = SKAction.move(to: CGPoint(x: -self.frame.width * 2, y: batSprite3.position.y), duration: bgAnimatedInSecs)
 
         batSprite3.run(batShift, completion: bat3Reversion)
     }
@@ -888,6 +972,60 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         glitter.addChild(soap)
         self.addChild(glitter)
+        
+        //Bats
+        batSprite = SKSpriteNode(imageNamed: "batframe-1.png")
+        batSprite2 = SKSpriteNode(imageNamed: "batframe-1.png")
+        batSprite3 = SKSpriteNode(imageNamed: "batframe-1.png")
+
+        batSprite.position = CGPoint(x: self.frame.width, y: game.charInitalPos.y + 100)
+        batSprite.size = CGSize(width: batSprite.size.width / 1.75, height: batSprite.size.height / 1.75)
+        batSprite.name = "bat"
+        batSprite.xScale = -1
+        batSprite.zPosition = 2
+        batSprite.physicsBody = SKPhysicsBody(circleOfRadius: batSprite.size.width / 2)
+        batSprite.physicsBody?.affectedByGravity = false
+        batSprite.physicsBody?.categoryBitMask = ColliderType.bat
+        batSprite.physicsBody?.collisionBitMask = ColliderType.character
+        batSprite.physicsBody?.contactTestBitMask = ColliderType.character
+        batSprite.physicsBody?.usesPreciseCollisionDetection = true
+        batSprite.physicsBody?.isDynamic = false
+        
+        batSprite2.position = CGPoint(x: self.frame.width, y: game.charInitalPos.y + 100)
+        batSprite2.size = CGSize(width: batSprite2.size.width / 1.75, height: batSprite2.size.height / 1.75)
+        batSprite2.name = "bat"
+        batSprite2.xScale = -1
+        batSprite2.zPosition = 2
+        batSprite2.physicsBody = SKPhysicsBody(circleOfRadius: batSprite2.size.width / 2)
+        batSprite2.physicsBody?.affectedByGravity = false
+        batSprite2.physicsBody?.categoryBitMask = ColliderType.bat
+        batSprite2.physicsBody?.collisionBitMask = ColliderType.character
+        batSprite2.physicsBody?.contactTestBitMask = ColliderType.character
+        batSprite2.physicsBody?.usesPreciseCollisionDetection = true
+        batSprite2.physicsBody?.isDynamic = false
+        
+        batSprite3.position = CGPoint(x: self.frame.width, y: game.charInitalPos.y + 100)
+        batSprite3.size = CGSize(width: batSprite3.size.width / 1.75, height: batSprite3.size.height / 1.75)
+        batSprite3.name = "bat"
+        batSprite3.xScale = -1
+        batSprite3.zPosition = 2
+        batSprite3.physicsBody = SKPhysicsBody(circleOfRadius: batSprite3.size.width / 2)
+        batSprite3.physicsBody?.affectedByGravity = false
+        batSprite3.physicsBody?.categoryBitMask = ColliderType.bat
+        batSprite3.physicsBody?.collisionBitMask = ColliderType.character
+        batSprite3.physicsBody?.contactTestBitMask = ColliderType.character
+        batSprite3.physicsBody?.usesPreciseCollisionDetection = true
+        batSprite3.physicsBody?.isDynamic = false
+        
+        self.addChild(batSprite)
+        self.addChild(batSprite2)
+        self.addChild(batSprite3)
+        
+        batSprite.isHidden = true
+        batSprite2.isHidden = true
+        batSprite3.isHidden = true
+        
+        
     }
     
     func drawBlueGerm() -> Void {
@@ -938,7 +1076,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func drawPeel() -> Void {
         
         bananaPeel.isHidden = false
-        let peelShift = SKAction.move(by: CGVector(dx: -self.frame.size.width * 2, dy: 0), duration: bgAnimatedInSecs * 1.5)
+        let peelShift = SKAction.move(by: CGVector(dx: -self.frame.size.width * 2, dy: 0), duration: bgAnimatedInSecs / 1.75)
         //let peelSequence = SKAction.sequence([peelShift, peelReversion])
         let peelAnimation = SKAction.repeat(peelShift, count: 1)
                 
@@ -1012,6 +1150,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.texture = SKTexture(imageNamed: "bobby-16.png")
         characterSprite.run(rotationBackAnim)
         characterSprite.run(fallAnim, completion: endGame)
+    }
+    
+    func batDieAnimation() {
+        
+        self.view?.gestureRecognizers?.removeAll()
+        characterSprite.removeAllActions()
+        
+        let rotation = SKAction.rotate(byAngle: ((3 * CGFloat.pi) / 2), duration: 0.3)
+        
+        let rotationAnim = SKAction.repeat(rotation, count: 1)
+        
+        characterSprite.run(rotationAnim, completion: rotateBack)
     }
     
     func germDieAnimation(germ: SKSpriteNode) -> Void {
@@ -1188,10 +1338,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
      func endGame() -> Void{
         
+        batSprite.isHidden = true
+        batSprite2.isHidden = true
+        batSprite3.isHidden = true
         if((batSprite.isHidden == false) || (batSprite2.isHidden == false) || (batSprite3.isHidden == false))
         {
             if(!isLevelPassed)
             {
+                
                 let bat1ToOffscreen = SKAction.move(to: CGPoint(x: -self.frame.width, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
                 let bat2ToOffscreen = SKAction.move(to: CGPoint(x: 0, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
                 let bat3ToOffscreen = SKAction.move(to: CGPoint(x: self.frame.width, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)

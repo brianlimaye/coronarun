@@ -15,6 +15,13 @@ import SpriteKit
 var cameraNode: SKCameraNode = SKCameraNode()
 var backGBlur: SKEffectNode = SKEffectNode()
 
+struct levelData
+{
+    static var maxLevel: Int = 5
+    static var currentLevel: Int = 1
+    static var levelSelected: Int = -1
+    static var didLoadFromHome: Bool = false
+}
 
 class HomeScene: SKScene
 {
@@ -33,9 +40,11 @@ class HomeScene: SKScene
     var menuButton: SKSpriteNode = SKSpriteNode()
     var menuButtonShape: SKShapeNode = SKShapeNode()
     var clickToStart: SKLabelNode = SKLabelNode()
-    
+        
     override func didMove(to view: SKView) {
-
+        
+        pullSavedData()
+        
         if(cameraNode.children.count > 0)
         {
             cameraNode.removeAllChildren()
@@ -50,9 +59,18 @@ class HomeScene: SKScene
         drawSoundButton()
     }
     
+    func pullSavedData() {
+        
+        let str = String(GameScene.defaults.integer(forKey: "maxlevel"))
+        
+        if(Int(str) ?? 0 > 1)
+        {
+            levelData.currentLevel = GameScene.defaults.integer(forKey: "maxlevel")
+        }
+    }
+    
     func initBlurEffect() {
         
-        print("reach")
         let filter = CIFilter(name: "CIGaussianBlur")
         // Set the blur amount. Adjust this to achieve the desired effect
         let blurAmount = 20.0
@@ -154,7 +172,32 @@ class HomeScene: SKScene
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        if let touch = touches.first {
+            
+            let location = touch.previousLocation(in: self)
+            let node = self.nodes(at: location).first
+            
+            if((node?.name == "menuicon") || (node?.name == "menubutton"))
+            {
+                cleanUp()
+                let menuScene = MenuScene(fileNamed: "MenuScene")
+                menuScene?.scaleMode = .aspectFill
+                self.view?.presentScene(menuScene)
+            }
+            /*
+            else
+            {
+                cleanUp()
+                let gameScene = GameScene(fileNamed: "GameScene")
+                gameScene?.scaleMode = .aspectFill
+                self.view?.presentScene(gameScene)
+            }
+ */
+        }
+        
+        
         cleanUp()
+        levelData.didLoadFromHome = true
         let gameScene = GameScene(fileNamed: "GameScene")
         gameScene?.scaleMode = .aspectFill
         self.view?.presentScene(gameScene!, transition: SKTransition.crossFade(withDuration: 0.5))
@@ -266,9 +309,12 @@ class HomeScene: SKScene
         
         menuButton = SKSpriteNode(imageNamed: "menu-icon.png")
         menuButton.size = CGSize(width: menuButton.size.width / 5 , height: menuButton.size.height / 5)
+        menuButton.name = "menuicon"
+        menuButton.isUserInteractionEnabled = false
         
         menuButtonShape = SKShapeNode(circleOfRadius: 55)
         menuButtonShape.fillColor = .white
+        menuButtonShape.name = "menubutton"
         menuButtonShape.isAntialiased = true
         menuButtonShape.isUserInteractionEnabled = false
         menuButtonShape.lineWidth = 5
