@@ -37,7 +37,10 @@ class GameViewController: UIViewController {
         
         if let view = self.view as! SKView? {
             
+            
                 let homeScene = HomeScene(fileNamed: "HomeScene")
+                print((view.frame.maxX))
+                print((view.frame.maxY))
                 homeScene?.scaleMode = .aspectFill
                 view.presentScene(homeScene)
  
@@ -125,12 +128,26 @@ class GameViewController: UIViewController {
                 }
             case .keyboardE:
 
-            if isDebug
-            {
-                 print("E was pressed")
-                 GameViewController.gameScene?.drawPortal()
-            }
-           default:
+                if isDebug
+                {
+                     print("E was pressed")
+                     GameViewController.gameScene?.drawPortal()
+                }
+            case .keyboardZ:
+
+                if isDebug
+                {
+                     print("Z was pressed")
+                     GameViewController.gameScene?.drawBlondeZombie()
+                }
+            case .keyboardR:
+                
+                if isDebug
+                {
+                     print("R was pressed")
+                     GameViewController.gameScene?.drawRedZombie()
+                }
+            default:
                 
                if isDebug
                {
@@ -149,8 +166,8 @@ class GameViewController: UIViewController {
     
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
+        if UIDevice.current.userInterfaceIdiom == .phone || UIDevice.current.userInterfaceIdiom == .pad {
+            return .portrait
         } else {
             return .all
         }

@@ -67,6 +67,7 @@ class HomeScene: SKScene
         {
             levelData.currentLevel = GameScene.defaults.integer(forKey: "maxlevel")
         }
+
     }
     
     func initBlurEffect() {
@@ -85,6 +86,11 @@ class HomeScene: SKScene
     
     func addBackgFreezeFrame()
     {
+        if(cameraNode.contains(frozenBackground))
+        {
+            return
+        }
+        
         let backgTexture = SKTexture(imageNamed: "seamless-background.png")
             
         let backgAnimation = SKAction.move(by: CGVector(dx: -backgTexture.size().width, dy: 0), duration: 3)
@@ -115,7 +121,10 @@ class HomeScene: SKScene
     
     func addPlatformFreezeFrame() {
         
-        //frozenPlatform.removeAllActions()
+        if(cameraNode.contains(frozenPlatform))
+        {
+            return
+        }
         
         frozenPlatform = SKSpriteNode(imageNamed: "world1.png")
         let pfTexture = SKTexture(imageNamed: "world1.png")
@@ -150,6 +159,10 @@ class HomeScene: SKScene
     
     func addIdleCharacter() -> Void {
         
+        if(cameraNode.contains(idleCharacter))
+        {
+            return
+        }
         //idleCharacter.removeAllActions()
         idleCharacter = SKSpriteNode(imageNamed: "(b)obby-1.png")
         

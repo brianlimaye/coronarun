@@ -20,6 +20,7 @@
 		B402FE902484C7BA000AB014 /* (b)obby-4.png in Resources */ = {isa = PBXBuildFile; fileRef = B402FE8C2484C7B9000AB014 /* (b)obby-4.png */; };
 		B402FE912484C7BA000AB014 /* (b)obby-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B402FE8D2484C7B9000AB014 /* (b)obby-1.png */; };
 		B402FE922484C7BA000AB014 /* (b)obby-3.png in Resources */ = {isa = PBXBuildFile; fileRef = B402FE8E2484C7B9000AB014 /* (b)obby-3.png */; };
+		B4114023249A733500358238 /* blondezombie-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B4114022249A733500358238 /* blondezombie-1.png */; };
 		B421044324982B99005AC764 /* NightinTokyo-Bold.ps in Resources */ = {isa = PBXBuildFile; fileRef = B421044224982B99005AC764 /* NightinTokyo-Bold.ps */; };
 		B421044524983235005AC764 /* HABESHAPIXELS-Bold.ps in Resources */ = {isa = PBXBuildFile; fileRef = B421044424983235005AC764 /* HABESHAPIXELS-Bold.ps */; };
 		B42BF964246BC24F00AD9292 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BF963246BC24F00AD9292 /* AppDelegate.swift */; };
@@ -74,6 +75,16 @@
 		B4763B6D2493FB9A00665A99 /* soapbottle.png in Resources */ = {isa = PBXBuildFile; fileRef = B4763B6C2493FB9A00665A99 /* soapbottle.png */; };
 		B4763B6F249418C600665A99 /* hand-sanitizer.png in Resources */ = {isa = PBXBuildFile; fileRef = B4763B6E249418C600665A99 /* hand-sanitizer.png */; };
 		B4763B712494663F00665A99 /* green-germ-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B4763B702494663E00665A99 /* green-germ-1.png */; };
+		B4814786249AE8EA00E74EC7 /* exclamation-mark.png in Resources */ = {isa = PBXBuildFile; fileRef = B4814785249AE8EA00E74EC7 /* exclamation-mark.png */; };
+		B4814788249C0BA800E74EC7 /* sneezegreen.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4814787249C0BA800E74EC7 /* sneezegreen.sks */; };
+		B4814791249C189400E74EC7 /* redzombie-3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4814789249C189300E74EC7 /* redzombie-3.png */; };
+		B4814792249C189400E74EC7 /* redzombie-4.png in Resources */ = {isa = PBXBuildFile; fileRef = B481478A249C189300E74EC7 /* redzombie-4.png */; };
+		B4814793249C189400E74EC7 /* redzombie-5.png in Resources */ = {isa = PBXBuildFile; fileRef = B481478B249C189300E74EC7 /* redzombie-5.png */; };
+		B4814794249C189400E74EC7 /* redzombie-6.png in Resources */ = {isa = PBXBuildFile; fileRef = B481478C249C189400E74EC7 /* redzombie-6.png */; };
+		B4814795249C189400E74EC7 /* redzombie-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B481478D249C189400E74EC7 /* redzombie-2.png */; };
+		B4814796249C189400E74EC7 /* redzombie-7.png in Resources */ = {isa = PBXBuildFile; fileRef = B481478E249C189400E74EC7 /* redzombie-7.png */; };
+		B4814797249C189400E74EC7 /* redzombie-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B481478F249C189400E74EC7 /* redzombie-1.png */; };
+		B4814798249C189400E74EC7 /* redzombie-8.png in Resources */ = {isa = PBXBuildFile; fileRef = B4814790249C189400E74EC7 /* redzombie-8.png */; };
 		B49EEC052481E8CD001309E2 /* menu-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B49EEC042481E8CC001309E2 /* menu-icon.png */; };
 		B4B581FD247B660D0043CEEB /* bobby-8.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B581ED247B660C0043CEEB /* bobby-8.png */; };
 		B4B581FE247B660D0043CEEB /* bobby-7.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B581EE247B660C0043CEEB /* bobby-7.png */; };
@@ -102,6 +113,16 @@
 		B4BCA8E32486C5C000EE3735 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BCA8E22486C5C000EE3735 /* MenuScene.swift */; };
 		B4BCA8E52486E36F00EE3735 /* orange-menu.png in Resources */ = {isa = PBXBuildFile; fileRef = B4BCA8E42486E36F00EE3735 /* orange-menu.png */; };
 		B4EDE0782488703700B33711 /* DKHand-Regular.ps in Resources */ = {isa = PBXBuildFile; fileRef = B4EDE0772488703700B33711 /* DKHand-Regular.ps */; };
+		B4FFE519249A773800DAC9EE /* blondezombie-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE518249A773800DAC9EE /* blondezombie-2.png */; };
+		B4FFE52C249A79FE00DAC9EE /* blondezombie-3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE526249A79FE00DAC9EE /* blondezombie-3.png */; };
+		B4FFE52D249A79FE00DAC9EE /* blondezombie-4.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE527249A79FE00DAC9EE /* blondezombie-4.png */; };
+		B4FFE52E249A79FE00DAC9EE /* blondezombie-8.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE528249A79FE00DAC9EE /* blondezombie-8.png */; };
+		B4FFE52F249A79FE00DAC9EE /* blondezombie-7.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE529249A79FE00DAC9EE /* blondezombie-7.png */; };
+		B4FFE530249A79FE00DAC9EE /* blondezombie-5.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE52A249A79FE00DAC9EE /* blondezombie-5.png */; };
+		B4FFE531249A79FE00DAC9EE /* blondezombie-6.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE52B249A79FE00DAC9EE /* blondezombie-6.png */; };
+		B4FFE533249A803600DAC9EE /* sneeze-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE532249A803600DAC9EE /* sneeze-sound.mp3 */; };
+		B4FFE535249A882900DAC9EE /* sneezeblue.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE534249A882900DAC9EE /* sneezeblue.sks */; };
+		B4FFE537249A912400DAC9EE /* exclamation.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE536249A912400DAC9EE /* exclamation.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +156,7 @@
 		B402FE8C2484C7B9000AB014 /* (b)obby-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "(b)obby-4.png"; path = "animation/(b)obby-4.png"; sourceTree = "<group>"; };
 		B402FE8D2484C7B9000AB014 /* (b)obby-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "(b)obby-1.png"; path = "animation/(b)obby-1.png"; sourceTree = "<group>"; };
 		B402FE8E2484C7B9000AB014 /* (b)obby-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "(b)obby-3.png"; path = "animation/(b)obby-3.png"; sourceTree = "<group>"; };
+		B4114022249A733500358238 /* blondezombie-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-1.png"; path = "animation/blondezombie-1.png"; sourceTree = "<group>"; };
 		B421044224982B99005AC764 /* NightinTokyo-Bold.ps */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NightinTokyo-Bold.ps"; path = "animation/NightinTokyo-Bold.ps"; sourceTree = "<group>"; };
 		B421044424983235005AC764 /* HABESHAPIXELS-Bold.ps */ = {isa = PBXFileReference; lastKnownFileType = file; name = "HABESHAPIXELS-Bold.ps"; path = "animation/HABESHAPIXELS-Bold.ps"; sourceTree = "<group>"; };
 		B42BF960246BC24F00AD9292 /* coronarun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coronarun.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +215,16 @@
 		B4763B6C2493FB9A00665A99 /* soapbottle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = soapbottle.png; path = animation/soapbottle.png; sourceTree = "<group>"; };
 		B4763B6E249418C600665A99 /* hand-sanitizer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "hand-sanitizer.png"; path = "animation/hand-sanitizer.png"; sourceTree = "<group>"; };
 		B4763B702494663E00665A99 /* green-germ-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "green-germ-1.png"; path = "animation/green-germ-1.png"; sourceTree = "<group>"; };
+		B4814785249AE8EA00E74EC7 /* exclamation-mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exclamation-mark.png"; path = "animation/exclamation-mark.png"; sourceTree = "<group>"; };
+		B4814787249C0BA800E74EC7 /* sneezegreen.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sneezegreen.sks; sourceTree = "<group>"; };
+		B4814789249C189300E74EC7 /* redzombie-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-3.png"; path = "animation/redzombie-3.png"; sourceTree = "<group>"; };
+		B481478A249C189300E74EC7 /* redzombie-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-4.png"; path = "animation/redzombie-4.png"; sourceTree = "<group>"; };
+		B481478B249C189300E74EC7 /* redzombie-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-5.png"; path = "animation/redzombie-5.png"; sourceTree = "<group>"; };
+		B481478C249C189400E74EC7 /* redzombie-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-6.png"; path = "animation/redzombie-6.png"; sourceTree = "<group>"; };
+		B481478D249C189400E74EC7 /* redzombie-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-2.png"; path = "animation/redzombie-2.png"; sourceTree = "<group>"; };
+		B481478E249C189400E74EC7 /* redzombie-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-7.png"; path = "animation/redzombie-7.png"; sourceTree = "<group>"; };
+		B481478F249C189400E74EC7 /* redzombie-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-1.png"; path = "animation/redzombie-1.png"; sourceTree = "<group>"; };
+		B4814790249C189400E74EC7 /* redzombie-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-8.png"; path = "animation/redzombie-8.png"; sourceTree = "<group>"; };
 		B49EEC042481E8CC001309E2 /* menu-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu-icon.png"; path = "animation/menu-icon.png"; sourceTree = "<group>"; };
 		B4B581ED247B660C0043CEEB /* bobby-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bobby-8.png"; path = "animation/bobby-8.png"; sourceTree = "<group>"; };
 		B4B581EE247B660C0043CEEB /* bobby-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bobby-7.png"; path = "animation/bobby-7.png"; sourceTree = "<group>"; };
@@ -221,6 +253,16 @@
 		B4BCA8E22486C5C000EE3735 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		B4BCA8E42486E36F00EE3735 /* orange-menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "orange-menu.png"; path = "animation/orange-menu.png"; sourceTree = "<group>"; };
 		B4EDE0772488703700B33711 /* DKHand-Regular.ps */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DKHand-Regular.ps"; path = "animation/DKHand-Regular.ps"; sourceTree = "<group>"; };
+		B4FFE518249A773800DAC9EE /* blondezombie-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-2.png"; path = "animation/blondezombie-2.png"; sourceTree = "<group>"; };
+		B4FFE526249A79FE00DAC9EE /* blondezombie-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-3.png"; path = "animation/blondezombie-3.png"; sourceTree = "<group>"; };
+		B4FFE527249A79FE00DAC9EE /* blondezombie-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-4.png"; path = "animation/blondezombie-4.png"; sourceTree = "<group>"; };
+		B4FFE528249A79FE00DAC9EE /* blondezombie-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-8.png"; path = "animation/blondezombie-8.png"; sourceTree = "<group>"; };
+		B4FFE529249A79FE00DAC9EE /* blondezombie-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-7.png"; path = "animation/blondezombie-7.png"; sourceTree = "<group>"; };
+		B4FFE52A249A79FE00DAC9EE /* blondezombie-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-5.png"; path = "animation/blondezombie-5.png"; sourceTree = "<group>"; };
+		B4FFE52B249A79FE00DAC9EE /* blondezombie-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-6.png"; path = "animation/blondezombie-6.png"; sourceTree = "<group>"; };
+		B4FFE532249A803600DAC9EE /* sneeze-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "sneeze-sound.mp3"; path = "../../../../../Downloads/sneeze-sound.mp3"; sourceTree = "<group>"; };
+		B4FFE534249A882900DAC9EE /* sneezeblue.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sneezeblue.sks; sourceTree = "<group>"; };
+		B4FFE536249A912400DAC9EE /* exclamation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exclamation.png; path = animation/exclamation.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,13 +317,34 @@
 				B42BF963246BC24F00AD9292 /* AppDelegate.swift */,
 				B42BF967246BC24F00AD9292 /* Actions.sks */,
 				B42BF965246BC24F00AD9292 /* GameScene.sks */,
+				B4FFE534249A882900DAC9EE /* sneezeblue.sks */,
 				B4763B68249347B500665A99 /* shimmer.sks */,
+				B4814787249C0BA800E74EC7 /* sneezegreen.sks */,
 				B42E335924953D3900AB9C18 /* Assets.xcassets */,
 				B402FE6F248452EB000AB014 /* HomeScene.sks */,
 				B4BCA8DE2486C52500EE3735 /* MenuScene.sks */,
 				B402FE712484530B000AB014 /* HomeScene.swift */,
 				B4BCA8E22486C5C000EE3735 /* MenuScene.swift */,
 				B42BF969246BC24F00AD9292 /* GameScene.swift */,
+				B4814785249AE8EA00E74EC7 /* exclamation-mark.png */,
+				B4FFE536249A912400DAC9EE /* exclamation.png */,
+				B4FFE532249A803600DAC9EE /* sneeze-sound.mp3 */,
+				B4114022249A733500358238 /* blondezombie-1.png */,
+				B4FFE518249A773800DAC9EE /* blondezombie-2.png */,
+				B4FFE526249A79FE00DAC9EE /* blondezombie-3.png */,
+				B4FFE527249A79FE00DAC9EE /* blondezombie-4.png */,
+				B4FFE52A249A79FE00DAC9EE /* blondezombie-5.png */,
+				B4FFE52B249A79FE00DAC9EE /* blondezombie-6.png */,
+				B4FFE529249A79FE00DAC9EE /* blondezombie-7.png */,
+				B4FFE528249A79FE00DAC9EE /* blondezombie-8.png */,
+				B481478F249C189400E74EC7 /* redzombie-1.png */,
+				B481478D249C189400E74EC7 /* redzombie-2.png */,
+				B4814789249C189300E74EC7 /* redzombie-3.png */,
+				B481478A249C189300E74EC7 /* redzombie-4.png */,
+				B481478B249C189300E74EC7 /* redzombie-5.png */,
+				B481478C249C189400E74EC7 /* redzombie-6.png */,
+				B481478E249C189400E74EC7 /* redzombie-7.png */,
+				B4814790249C189400E74EC7 /* redzombie-8.png */,
 				B421044424983235005AC764 /* HABESHAPIXELS-Bold.ps */,
 				B421044224982B99005AC764 /* NightinTokyo-Bold.ps */,
 				B49EEC042481E8CC001309E2 /* menu-icon.png */,
@@ -493,8 +556,10 @@
 				B4BAD2F324883BA20008ED87 /* KeyVirtueRegular.ps in Resources */,
 				B4B5820C247B660D0043CEEB /* bobby-6.png in Resources */,
 				B4B581FE247B660D0043CEEB /* bobby-7.png in Resources */,
+				B4FFE52C249A79FE00DAC9EE /* blondezombie-3.png in Resources */,
 				B4BCA8DF2486C52500EE3735 /* MenuScene.sks in Resources */,
 				B4B7DB822472356600D8C129 /* bandit-11.png in Resources */,
+				B4FFE52E249A79FE00DAC9EE /* blondezombie-8.png in Resources */,
 				B46F060A24706F730002CCEB /* bandit-2.png in Resources */,
 				B4B73A4B2470FE3B004200E9 /* up-arrow.png in Resources */,
 				B46F060E24706F730002CCEB /* bandit-8.png in Resources */,
@@ -502,6 +567,7 @@
 				B4763B712494663F00665A99 /* green-germ-1.png in Resources */,
 				B402FE912484C7BA000AB014 /* (b)obby-1.png in Resources */,
 				B4763B6D2493FB9A00665A99 /* soapbottle.png in Resources */,
+				B4814796249C189400E74EC7 /* redzombie-7.png in Resources */,
 				B4B58202247B660D0043CEEB /* bobby-5.png in Resources */,
 				B45D1F3E2477A72900C06C4E /* jessica-6.png in Resources */,
 				B4B58201247B660D0043CEEB /* bobby-13.png in Resources */,
@@ -515,21 +581,26 @@
 				B4701F0E24958DD400A3CED8 /* world1.png in Resources */,
 				B4B58205247B660D0043CEEB /* bobby-10.png in Resources */,
 				B42E335B24953D3900AB9C18 /* Assets.xcassets in Resources */,
+				B4814794249C189400E74EC7 /* redzombie-6.png in Resources */,
 				B46F061324706F730002CCEB /* bandit-6.png in Resources */,
 				B4763B6F249418C600665A99 /* hand-sanitizer.png in Resources */,
 				B4B7DB85247259AA00D8C129 /* blue-germ-1.png in Resources */,
 				B4B58206247B660D0043CEEB /* bobby-11.png in Resources */,
 				B46F061024706F730002CCEB /* bandit-1.png in Resources */,
+				B4FFE519249A773800DAC9EE /* blondezombie-2.png in Resources */,
+				B4814786249AE8EA00E74EC7 /* exclamation-mark.png in Resources */,
 				B45D1F3D2477A72900C06C4E /* jessica-3.png in Resources */,
 				B45D1F422477A72900C06C4E /* jessica-5.png in Resources */,
 				B4B7DB832472356600D8C129 /* bandit-12.png in Resources */,
 				B45D1F3F2477A72900C06C4E /* jessica-2.png in Resources */,
 				B4B73A4F247103E4004200E9 /* down-arrow.png in Resources */,
+				B4814792249C189400E74EC7 /* redzombie-4.png in Resources */,
 				B4B581FD247B660D0043CEEB /* bobby-8.png in Resources */,
 				B46F060924706F730002CCEB /* bandit-9.png in Resources */,
 				B46F061224706F730002CCEB /* bandit-4.png in Resources */,
 				B463048C2485BBF5004CC114 /* idle-1.png in Resources */,
 				B4763B4E2492B5EB00665A99 /* batframe-3.png in Resources */,
+				B4814798249C189400E74EC7 /* redzombie-8.png in Resources */,
 				B4763B4F2492B5EB00665A99 /* batframe-4.png in Resources */,
 				B4B58204247B660D0043CEEB /* bobby-14.png in Resources */,
 				B42BF966246BC24F00AD9292 /* GameScene.sks in Resources */,
@@ -538,9 +609,13 @@
 				B46F060B24706F730002CCEB /* seamless-background.png in Resources */,
 				B46F060F24706F730002CCEB /* bandit-3.png in Resources */,
 				B4B58208247B660D0043CEEB /* bobby-15.png in Resources */,
+				B4FFE535249A882900DAC9EE /* sneezeblue.sks in Resources */,
+				B4814795249C189400E74EC7 /* redzombie-2.png in Resources */,
 				B4401CC7247EEF0F00B49192 /* home-icon.png in Resources */,
 				B402FE8A2484BCD2000AB014 /* volume-on.png in Resources */,
 				B42E335F2495587400AB9C18 /* cool-portal.png in Resources */,
+				B4FFE533249A803600DAC9EE /* sneeze-sound.mp3 in Resources */,
+				B4114023249A733500358238 /* blondezombie-1.png in Resources */,
 				B4763B6A249347B500665A99 /* shimmer.sks in Resources */,
 				B4401CCD24803F5400B49192 /* CarbonBl-Regular.ps in Resources */,
 				B421044324982B99005AC764 /* NightinTokyo-Bold.ps in Resources */,
@@ -552,9 +627,13 @@
 				B402FE902484C7BA000AB014 /* (b)obby-4.png in Resources */,
 				B46F061124706F730002CCEB /* grounds.png in Resources */,
 				B402FE8224846DCF000AB014 /* BubbleLoveDemo.ps in Resources */,
+				B4814791249C189400E74EC7 /* redzombie-3.png in Resources */,
 				B46F060C24706F730002CCEB /* bandit-5.png in Resources */,
 				B4B58200247B660D0043CEEB /* bobby-9.png in Resources */,
+				B4FFE52F249A79FE00DAC9EE /* blondezombie-7.png in Resources */,
+				B4FFE52D249A79FE00DAC9EE /* blondezombie-4.png in Resources */,
 				B42E335D24954F5100AB9C18 /* portal.png in Resources */,
+				B4FFE531249A79FE00DAC9EE /* blondezombie-6.png in Resources */,
 				B402FE70248452EB000AB014 /* HomeScene.sks in Resources */,
 				B421044524983235005AC764 /* HABESHAPIXELS-Bold.ps in Resources */,
 				B49EEC052481E8CD001309E2 /* menu-icon.png in Resources */,
@@ -562,17 +641,22 @@
 				B42BF974246BC25100AD9292 /* LaunchScreen.storyboard in Resources */,
 				B46304842485AD0D004CC114 /* (b)obby-3 (1).png in Resources */,
 				B4763B6324933EDE00665A99 /* Assets.xcassets in Resources */,
+				B4814788249C0BA800E74EC7 /* sneezegreen.sks in Resources */,
 				B4BCA8E52486E36F00EE3735 /* orange-menu.png in Resources */,
 				B42BF968246BC24F00AD9292 /* Actions.sks in Resources */,
 				B4B58212247E281F0043CEEB /* replay-button.png in Resources */,
 				B402FE892484BCD2000AB014 /* volume-off.png in Resources */,
 				B4EDE0782488703700B33711 /* DKHand-Regular.ps in Resources */,
+				B4814793249C189400E74EC7 /* redzombie-5.png in Resources */,
+				B4FFE537249A912400DAC9EE /* exclamation.png in Resources */,
 				B4B7DB87247265D300D8C129 /* banana-peel.png in Resources */,
 				B463048A2485BBF5004CC114 /* idle-2.png in Resources */,
 				B4BAD2F124870FAF0008ED87 /* MaassslicerItalic.ps in Resources */,
 				B4B58207247B660D0043CEEB /* bobby-16.png in Resources */,
 				B402FE8F2484C7BA000AB014 /* (b)obby-2.png in Resources */,
 				B45D1F412477A72900C06C4E /* jessica-4.png in Resources */,
+				B4FFE530249A79FE00DAC9EE /* blondezombie-5.png in Resources */,
+				B4814797249C189400E74EC7 /* redzombie-1.png in Resources */,
 				B402FE922484C7BA000AB014 /* (b)obby-3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
