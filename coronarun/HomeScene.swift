@@ -20,6 +20,7 @@ struct levelData
     static var maxLevel: Int = 5
     static var currentLevel: Int = 1
     static var levelSelected: Int = -1
+    static var handSanitizerCount: Int = 0
     static var didLoadFromHome: Bool = false
 }
 
@@ -40,14 +41,23 @@ class HomeScene: SKScene
     var menuButton: SKSpriteNode = SKSpriteNode()
     var menuButtonShape: SKShapeNode = SKShapeNode()
     var clickToStart: SKLabelNode = SKLabelNode()
+    
+    var handSanitizerScore: Int = 0
+    var scoreLabel: SKLabelNode = SKLabelNode()
+    var miniHandSanitizer: SKSpriteNode = SKSpriteNode()
+    var scoreLabelShape: SKShapeNode = SKShapeNode()
         
     override func didMove(to view: SKView) {
         
-        pullSavedData()
+        //pullSavedData()
         
-        if(cameraNode.children.count > 0)
+        GameScene.defaults.removeObject(forKey: "maxlevel")
+        GameScene.defaults.removeObject(forKey: "handsanitizer")
+        
+        if((cameraNode.children.count > 0) && (backGBlur.children.count > 0))
         {
             cameraNode.removeAllChildren()
+            backGBlur.removeAllChildren()
         }
         
         initBlurEffect()
@@ -62,13 +72,58 @@ class HomeScene: SKScene
     func pullSavedData() {
         
         let str = String(GameScene.defaults.integer(forKey: "maxlevel"))
+        let count = GameScene.defaults.integer(forKey: "handsanitizer")
         
         if(Int(str) ?? 0 > 1)
         {
             levelData.currentLevel = GameScene.defaults.integer(forKey: "maxlevel")
         }
+        
+        levelData.handSanitizerCount = count
+        
 
     }
+    
+    func convert(point: CGPoint)->CGPoint {
+        return self.view!.convert(CGPoint(x: point.x, y:self.view!.frame.height-point.y), to:self)
+    }
+    
+    func showScore() {
+           
+       scoreLabel = SKLabelNode(fontNamed: "KeyVirtueRegular")
+       scoreLabel.text = String(handSanitizerScore)
+       scoreLabel.fontColor = .white
+       scoreLabel.fontSize = 84
+       
+       miniHandSanitizer = SKSpriteNode(imageNamed: "hand-sanitizer.png")
+       miniHandSanitizer.size = CGSize(width: miniHandSanitizer.size.width / 8, height: miniHandSanitizer.size.height / 8)
+       miniHandSanitizer.position = CGPoint(x: -150, y: -50)
+       scoreLabel.position = CGPoint(x: -75, y: -75)
+       
+       scoreLabelShape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: -200, height: -100), cornerRadius: 100)
+       
+       scoreLabelShape.addChild(scoreLabel)
+       scoreLabelShape.addChild(miniHandSanitizer)
+   
+       
+       if(UIDevice.current.userInterfaceIdiom == .pad)
+       {
+           scoreLabelShape.position.x = self.frame.width / 2
+           scoreLabelShape.position.y = self.frame.height / 2.5
+       }
+       if(UIDevice.current.userInterfaceIdiom == .phone)
+       {
+           scoreLabelShape.position.x = self.frame.width / 2
+           scoreLabelShape.position.y = self.frame.height / 2
+       }
+
+       //scoreLabelShape.fillColor = .
+       scoreLabelShape.strokeColor = .green
+       scoreLabelShape.lineWidth = 5
+       scoreLabelShape.isAntialiased = true
+       
+       self.addChild(scoreLabelShape)
+  }
     
     func initBlurEffect() {
         
@@ -231,15 +286,30 @@ class HomeScene: SKScene
         
         greenSplat = SKSpriteNode(imageNamed: "green-splat.png")
         greenSplat.zPosition = 3
-        greenSplat.size = CGSize(width: greenSplat.size.width / 1.15, height: greenSplat.size.height / 1.15)
-        greenSplat.position = CGPoint(x: self.frame.midX - 20, y: self.frame.maxY / 1.75)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+          
+        greenSplat.size = CGSize(width: (self.frame.width - greenSplat.size.width) * 3.75, height: (self.frame.width - greenSplat.size.height) * 3.75)
+        greenSplat.position = CGPoint(x: self.frame.midX - 20, y: self.frame.midY + 320)
+        }
+        
+        if(UIDevice.current.userInterfaceIdiom == .phone) {
+            
+           greenSplat.size = CGSize(width: (self.frame.width - greenSplat.size.width) * 4, height: (self.frame.width - greenSplat.size.height) * 4)
+            greenSplat.position = CGPoint(x: self.frame.midX - 20, y: self.frame.midY + 400)
+        }
         self.addChild(greenSplat)
     }
     
     func drawMainText() {
         
         mainTitleScreen = SKLabelNode(fontNamed: "MaassslicerItalic")
-        mainTitleScreen.position = CGPoint(x: self.frame.midX, y: self.frame.maxY / 2)
+        
+        mainTitleScreen.position = CGPoint(x: self.frame.midX, y: self.frame.maxY / 1.85)
+        if(UIDevice.current.userInterfaceIdiom == .pad)
+        {
+            mainTitleScreen.position.y = self.frame.maxY / 2.3
+        }
+        
         mainTitleScreen.fontColor = .black
         mainTitleScreen.fontSize = 100
         mainTitleScreen.numberOfLines = 1

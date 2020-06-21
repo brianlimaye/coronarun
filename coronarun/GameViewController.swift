@@ -37,10 +37,7 @@ class GameViewController: UIViewController {
         
         if let view = self.view as! SKView? {
             
-            
                 let homeScene = HomeScene(fileNamed: "HomeScene")
-                print((view.frame.maxX))
-                print((view.frame.maxY))
                 homeScene?.scaleMode = .aspectFill
                 view.presentScene(homeScene)
  
@@ -48,7 +45,6 @@ class GameViewController: UIViewController {
                 notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
                 notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
 
-                
                 view.ignoresSiblingOrder = true
                 view.showsFPS = true
                 view.showsNodeCount = true
@@ -77,20 +73,6 @@ class GameViewController: UIViewController {
                     GameViewController.gameScene?.drawPeel()
                }
 
-           case .keyboardG:
-                
-               if isDebug
-               {
-                    print("g was pressed")
-                    GameViewController.gameScene?.drawBlueGerm()
-               }
-           case .keyboardH:
-               
-               if isDebug
-               {
-                    print("h was pressed")
-                    GameViewController.gameScene?.drawGreenGerm()
-               }
            case .keyboardUpArrow:
                
                if isDebug
@@ -146,6 +128,14 @@ class GameViewController: UIViewController {
                 {
                      print("R was pressed")
                      GameViewController.gameScene?.drawRedZombie()
+                }
+            
+           case .keyboardM:
+                
+                if isDebug
+                {
+                    print("M was pressed")
+                    GameViewController.gameScene?.drawMask()
                 }
             default:
                 

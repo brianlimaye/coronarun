@@ -5,12 +5,6 @@
 //  Created by Brian Limaye on 5/13/20.
 //  Copyright © 2020 Brian Limaye. All rights reserved.
 //
-//0. Implement the app delegate methods (ex. Hit home button after dying)
-//2. Randomize objects
-//3. Implement time-based closing animation
-//4  Score board
-//5. Make sure it works on all devices
-//6. Make sure orientation is dynamic
 
 import SpriteKit
 import GameplayKit
@@ -18,17 +12,17 @@ import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate
 {
-   
     struct ColliderType
     {
         static let none: UInt32 = 0x1 << 0
         static let character: UInt32 = 0x1 << 1
         static let banana: UInt32 = 0x1 << 2
-        static let germs: UInt32 = 0x1 << 3
-        static let girl: UInt32 = 0x1 << 4
+        static let bluegerms: UInt32 = 0x1 << 3
+        static let greengerms: UInt32 = 0x1 << 4
         static let soap: UInt32 = 0x1 << 5
         static let portal: UInt32 = 0x1 << 6
         static let bat: UInt32 = 0x1 << 7
+        static let mask: UInt32 = 0x1 << 8
     }
 
     struct game {
@@ -37,6 +31,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
        static var contactDetected: Bool = false
        static var i: Int = 0
        static var charInitialPos: CGPoint = CGPoint(x: 0, y: 0)
+       static var zombieInitalSize: CGSize = CGSize(width: 0, height: 0)
        
        static var levelOneObjects: [Int] = [2, 8, 4, 2, 5, 8, 2, 1, 2, 1, 6, 8, 3, 7]
        static var levelTwoObjects: [Int] = [4, 3, 2, 8, 3, 3, 8, 5, 1, 2, 6, 1, 8, 7]
@@ -52,6 +47,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     let MIN_THRESHOLD_MS: Double = 1000
     static let defaults = UserDefaults.standard
     
+    var isMasked: Bool = false
     var audioPlayer: AVAudioPlayer?
     var portal: SKSpriteNode = SKSpriteNode()
     var blueGerms: SKEmitterNode = SKEmitterNode()
@@ -86,6 +82,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var isLevelPassed: Bool = false
     var timer: Timer = Timer()
     var runAction: SKAction = SKAction()
+    var maskedRunAction: SKAction = SKAction()
     var lastTime: Double = 0
     var gameOverDisplay: SKShapeNode = SKShapeNode()
     var levelAlert: SKLabelNode = SKLabelNode()
@@ -93,6 +90,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var livesDisplay: SKLabelNode = SKLabelNode()
     var levelDisplayShape: SKShapeNode = SKShapeNode()
     var levelStatusAlert: SKLabelNode = SKLabelNode()
+    var mask: SKSpriteNode = SKSpriteNode()
     var miniHandSanitizer: SKSpriteNode = SKSpriteNode()
     var scoreLabelShape: SKShapeNode = SKShapeNode()
     var scoreLabel: SKLabelNode = SKLabelNode()
@@ -106,7 +104,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func initializeGame() -> Void {
         
-        //updateAndShowScore()
+        //GameScene.defaults.removeObject(forKey: "maxlevel")
+        //GameScene.defaults.removeObject(forKey: "handsanitizer")
+        
+        initScore()
         drawCharacter()
         resumeNodes()
         initObjects()
@@ -120,6 +121,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(slideDown))
         swipeDown.direction = .down
         self.view?.addGestureRecognizer(swipeDown)
+        
+        print(self.children.count)
     }
     
     func playSneezeSound() {
@@ -156,30 +159,84 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         }
     }
     
-    /*
-    func updateAndShowScore() {
+    func drawMask() {
         
-        handSanitizerScore += 1
+        let rotation = SKAction.rotate(byAngle: (-2 * CGFloat.pi), duration: bgAnimatedInSecs / 1.5)
+        let xShift = SKAction.moveTo(x: -self.frame.width, duration: bgAnimatedInSecs / 1.5)
+        let xReversion = SKAction.moveTo(x: self.frame.width, duration: 0)
         
-        scoreLabel = SKLabelNode(fontNamed: "DKHand-Regular")
-        scoreLabel.text = ": " + String(handSanitizerScore)
+        let xSeq = SKAction.sequence([xShift, xReversion])
+        
+        let rotationRepeater = SKAction.repeat(rotation, count: 1)
+        let xShiftRepeater = SKAction.repeat(xSeq, count: 1)
+        
+        mask.run(rotationRepeater)
+        mask.run(xShiftRepeater)
+    }
+    
+    func initScore() {
+                
+        scoreLabel = SKLabelNode(fontNamed: "MotionControl-BoldItalic")
+        scoreLabel.text = String(levelData.handSanitizerCount)
         scoreLabel.fontColor = .white
-        scoreLabel.fontSize = 32
+        scoreLabel.fontSize = 84
         
         miniHandSanitizer = SKSpriteNode(imageNamed: "hand-sanitizer.png")
-        miniHandSanitizer.size = CGSize(width: miniHandSanitizer.size.width / 6, height: miniHandSanitizer.size.height / 6)
+        miniHandSanitizer.size = CGSize(width: miniHandSanitizer.size.width / 8, height: miniHandSanitizer.size.height / 8)
+        miniHandSanitizer.position = CGPoint(x: -150, y: -50)
+        scoreLabel.position = CGPoint(x: -100, y: -75)
         
-        scoreLabelShape = SKShapeNode(rect: CGRect(x: self.view.frame.maxX, y: self.frame.maxY, width: 1200, height: -100))
-        scoreLabelShape.fillColor = .clear
-        scoreLabelShape.strokeColor = .black
-        scoreLabelShape.lineWidth = 5
-        scoreLabelShape.isAntialiased = true
+        scoreLabelShape = SKShapeNode(rect: CGRect(x: 0, y: 0, width: -200, height: -100), cornerRadius: 200)
+        scoreLabelShape.alpha = 0.0
+        
         scoreLabelShape.addChild(scoreLabel)
         scoreLabelShape.addChild(miniHandSanitizer)
+    
+        
+        if(UIDevice.current.userInterfaceIdiom == .pad)
+        {
+            scoreLabelShape.position.x = self.frame.width / 2
+            scoreLabelShape.position.y = self.frame.height / 2.75
+        }
+        if(UIDevice.current.userInterfaceIdiom == .phone)
+        {
+            scoreLabelShape.position.x = self.frame.width / 2
+            scoreLabelShape.position.y = self.frame.height / 2.25
+        }
+ 
+        scoreLabelShape.fillColor = .clear
+        scoreLabelShape.strokeColor = .white
+        scoreLabelShape.lineWidth = 5
+        scoreLabelShape.isAntialiased = true
         
         self.addChild(scoreLabelShape)
     }
- */
+    
+    func updateAndShowScore() {
+        
+        levelData.handSanitizerCount += 1
+        scoreLabel.text = String(levelData.handSanitizerCount)
+        
+        let fadeIn = SKAction.fadeIn(withDuration: bgAnimatedInSecs / 6)
+        
+        let fadeRepeater = SKAction.repeat(fadeIn, count: 1)
+        
+        scoreLabelShape.run(fadeRepeater, completion: fadeOut)
+    }
+    
+    func fadeOut() {
+        
+        let fadeOut = SKAction.fadeOut(withDuration: bgAnimatedInSecs / 6)
+        
+        let fadeRepeater = SKAction.repeat(fadeOut, count: 1)
+        
+        scoreLabelShape.run(fadeRepeater, completion: fadeReversion)
+    }
+    
+    func fadeReversion() {
+        
+        scoreLabelShape.alpha = 0.0
+    }
     
     func showCurrentLevel() {
         
@@ -248,6 +305,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         miniCharacter.alpha = 1
         levelDisplay.alpha = 1
         
+        /*
         if(levelData.didLoadFromHome)
         {
             startLevel(level: String(levelData.currentLevel))
@@ -256,6 +314,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         {
             startLevel(level: String(levelData.levelSelected))
         }
+ */
         
     }
     
@@ -431,23 +490,89 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         isLevelPassed = true
         let i = levelData.currentLevel + 1
         levelData.currentLevel = i
+        GameScene.defaults.set(levelData.handSanitizerCount, forKey: "handsanitizer")
         GameScene.defaults.set(levelData.currentLevel, forKey: "maxlevel")
         
         endGame()
     }
+    
+    func makeCharDynamic() {
+        
+        characterSprite.physicsBody?.isDynamic = true
+    }
+    
+    func addMaskToCharacter() {
+        
+        isMasked = true
+        
+        let maskedAnimations:[SKTexture] = [SKTexture(imageNamed: "masked-bobby-6.png"), SKTexture(imageNamed: "masked-bobby-7.png"), SKTexture(imageNamed: "masked-bobby-8.png"), SKTexture(imageNamed: "masked-bobby-9.png"), SKTexture(imageNamed: "masked-bobby-10.png"), SKTexture(imageNamed: "masked-bobby-11.png")]
+    
+        let mainAnimated = SKAction.animate(with: maskedAnimations, timePerFrame: 0.2)
+        let mainRepeater = SKAction.repeatForever(mainAnimated)
+        
+        let filler = SKAction.move(to: CGPoint(x: game.charInitialPos.x, y: game.charInitialPos.y), duration: 0)
+        
+        let fillerRepeater = SKAction.repeat(filler, count: 1)
 
+
+        characterSprite.run(fillerRepeater, completion: makeCharDynamic)
+        characterSprite.run(mainRepeater, withKey: "maskedrunning")
+        
+    }
+    
+    func removeMask() {
+        
+        isMasked = false
+        
+        let runAnimations:[SKTexture] = [SKTexture(imageNamed: "bobby-6"), SKTexture(imageNamed: "bobby-7.png"), SKTexture(imageNamed: "bobby-8.png"), SKTexture(imageNamed: "bobby-9.png"), SKTexture(imageNamed: "bobby-10.png"), SKTexture(imageNamed: "bobby-11.png")]
+        
+        let filler = SKAction.move(to: CGPoint(x: game.charInitialPos.x, y: game.charInitialPos.y), duration: 0)
+        
+        
+        let mainRunning = SKAction.animate(with: runAnimations, timePerFrame: 0.2)
+        let mainRepeater = SKAction.repeatForever(mainRunning)
+        
+        let fillerRepeater = SKAction.repeat(filler, count: 1)
+        
+        characterSprite.run(mainRepeater, withKey: "running")
+        characterSprite.run(fillerRepeater, completion: makeCharDynamic)
+   
+    }
+    
+    
     func didBegin(_ contact: SKPhysicsContact) {
         
-        print("contact.")
         game.contactDetected = true
                 
         let nodeA = contact.bodyA
         let nodeB = contact.bodyB
-        
+                
         if(((nodeA.node?.name == "character") && (nodeB.node?.name == "bat")) || ((nodeA.node?.name == "bat") && (nodeB.node?.name == "character")))
         {
+            if(isMasked)
+            {
+                removeMask()
+                game.contactDetected = false
+            }
+            else
+            {
+                characterSprite.physicsBody?.isDynamic = false
+                batDieAnimation()
+            }
+        }
+            
+        else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "mask")) || ((nodeA.node?.name == "mask") && (nodeB.node?.name == "character")))
+        {
             characterSprite.physicsBody?.isDynamic = false
-            batDieAnimation()
+            game.contactDetected = false
+            mask.isHidden = true
+            
+            let fillerAction = SKAction.resize(toWidth: mask.size.width, duration: 0.5)
+            
+            let fillerRepeater = SKAction.repeat(fillerAction, count: 1)
+            
+            soap.run(fillerRepeater, completion: addMaskToCharacter)
+            
         }
         
         else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "portal")) || ((nodeA.node?.name == "portal") && (nodeB.node?.name == "character")))
@@ -459,31 +584,71 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "soap")) || ((nodeA.node?.name == "soap") && (nodeB.node?.name == "character")))
         {
-            soap.physicsBody?.isDynamic = false
+            updateAndShowScore()
+            characterSprite.physicsBody?.isDynamic = false
             soap.isHidden = true
             game.contactDetected = false
+            
+            let fillerAction = SKAction.resize(toWidth: soap.size.width, duration: 0.5)
+            
+            let fillerRepeater = SKAction.repeat(fillerAction, count: 1)
+            
+            soap.run(fillerRepeater, completion: makeCharDynamic)
         }
         
         else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "banana")) || ((nodeA.node?.name == "banana") && (nodeB.node?.name == "character")))
         {
-            self.view?.gestureRecognizers?.removeAll()
-            peelDieAnimation()
+            if(isMasked)
+            {
+                removeMask()
+                game.contactDetected = false
+            }
+            else
+            {
+                self.view?.gestureRecognizers?.removeAll()
+                peelDieAnimation()
+            }
         }
-        else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "germ")) || ((nodeA.node?.name == "germ") && (nodeB.node?.name == "character")))
+        else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "bluegerms")) || ((nodeA.node?.name == "bluegerms") && (nodeB.node?.name == "character")))
         {
-            self.view?.gestureRecognizers?.removeAll()
-            germDieAnimation(germ: blueGermCloud)
+            if(isMasked)
+            {
+                removeMask()
+                game.contactDetected = false
+            }
+            else
+            {
+                characterSprite.physicsBody?.isDynamic = false
+                blueGerms.physicsBody?.isDynamic = false
+                self.view?.gestureRecognizers?.removeAll()
+                germDieAnimation(germ: blueGerms)
+            }
         }
-        else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "greengerm")) || ((nodeA.node?.name == "greengerm") && (nodeB.node?.name == "character")))
+        else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "greengerms")) || ((nodeA.node?.name == "greengerms") && (nodeB.node?.name == "character")))
         {
-            self.view?.gestureRecognizers?.removeAll()
-            germDieAnimation(germ: greenGermCloud)
+            if(isMasked)
+            {
+                removeMask()
+                game.contactDetected = false
+            }
+            else
+            {
+                characterSprite.physicsBody?.isDynamic = false
+                greenGerms.physicsBody?.isDynamic = false
+                self.view?.gestureRecognizers?.removeAll()
+                germDieAnimation(germ: greenGerms)
+            }
         }
-        else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "girl")) || ((nodeA.node?.name == "girl") && (nodeB.node?.name == "character")))
-        {
-            self.view?.gestureRecognizers?.removeAll()
-            girlDieAnimation()
-        }
+    }
+    
+    func addGracePeriod() {
+        
+        let gracePeriodDuration = SKAction.moveTo(x: game.charInitialPos.x, duration: 3)
+        characterSprite.physicsBody?.isDynamic = false
+        
+        let gracePeriodRepeater = SKAction.repeat(gracePeriodDuration, count: 1)
+        
+        characterSprite.run(gracePeriodRepeater, completion: makeCharDynamic)
     }
 
     func gameIsOver() -> Bool {
@@ -643,20 +808,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     }
 
     func pauseRunning() -> Void{
-        
-        let runningAction: SKAction? = characterSprite.action(forKey: "running")
-        
-        if let tmp = runningAction{
-            
-            characterSprite.removeAction(forKey: "running")
-            self.runAction = runningAction!
+                
+        if(isMasked)
+        {
+            characterSprite.removeAction(forKey: "maskedrunning")
         }
-        
+        else
+        {
+            characterSprite.removeAction(forKey: "running")
+        }
     }
     
     func resumeRunning() -> Void{
         
-        characterSprite.run(runAction, withKey: "running")
+        let runAnimations: [SKTexture]
+        let mainAnimated: SKAction
+        let mainRepeater: SKAction
+        
+        if(isMasked)
+        {
+            runAnimations = [SKTexture(imageNamed: "masked-bobby-6.png"), SKTexture(imageNamed: "masked-bobby-7.png"), SKTexture(imageNamed: "masked-bobby-8.png"), SKTexture(imageNamed: "masked-bobby-9.png"), SKTexture(imageNamed: "masked-bobby-10.png"), SKTexture(imageNamed: "masked-bobby-11.png")]
+            
+            mainAnimated = SKAction.animate(with: runAnimations, timePerFrame: 0.2)
+            mainRepeater = SKAction.repeatForever(mainAnimated)
+            characterSprite.run(mainRepeater, withKey: "maskedrunning")
+        }
+        else
+        {
+            runAnimations = [SKTexture(imageNamed: "bobby-6.png"), SKTexture(imageNamed: "bobby-7.png"), SKTexture(imageNamed: "bobby-8.png"), SKTexture(imageNamed: "bobby-9.png"), SKTexture(imageNamed: "bobby-10.png"), SKTexture(imageNamed: "bobby-11.png")]
+            
+            mainAnimated = SKAction.animate(with: runAnimations, timePerFrame: 0.2)
+            mainRepeater = SKAction.repeatForever(mainAnimated)
+            characterSprite.run(mainRepeater, withKey: "running")
+        }
     }
     
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
@@ -687,7 +871,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             return
         }
         
-        print("jumpUp")
         pauseRunning()
         
         if(!game.contactDetected)
@@ -703,7 +886,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             print("Cooldown on button")
             return
         }
-        print("jumpDown")
         pauseRunning()
         
         if(!game.contactDetected)
@@ -732,9 +914,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.physicsBody = SKPhysicsBody(circleOfRadius: characterSprite.size.width / 2.5)
         characterSprite.physicsBody?.affectedByGravity = false
         characterSprite.physicsBody?.categoryBitMask = ColliderType.character
-        characterSprite.physicsBody?.collisionBitMask = ColliderType.banana | ColliderType.germs
-        characterSprite.physicsBody?.contactTestBitMask = ColliderType.banana | ColliderType.germs
-        characterSprite.physicsBody?.usesPreciseCollisionDetection = true
+        characterSprite.physicsBody?.collisionBitMask = ColliderType.soap
         characterSprite.physicsBody?.isDynamic = true
         
         
@@ -856,21 +1036,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func batReversion() -> Void {
         
         batSprite.xScale = 1
-        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x, y: self.frame.midY + 100), duration: bgAnimatedInSecs)
+        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x, y: self.frame.maxY / 2), duration: bgAnimatedInSecs)
         batSprite.run(batReversion)
     }
     
     func bat2Reversion() -> Void {
         
         batSprite2.xScale = 1
-        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x - 100, y: self.frame.midY + 200), duration: bgAnimatedInSecs)
+        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x - 100, y: self.frame.maxY / 3), duration: bgAnimatedInSecs)
         batSprite2.run(batReversion)
     }
     
     func bat3Reversion() -> Void {
         
         batSprite3.xScale = 1
-        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x + 100, y: self.frame.midY + 200), duration: bgAnimatedInSecs)
+        let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x + 100, y: self.frame.maxY / 3), duration: bgAnimatedInSecs)
         batSprite3.run(batReversion)
     }
     
@@ -901,10 +1081,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             return
         }
         
+        characterSprite.removeAllActions()
         let upAction = SKAction.move(to: CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 12), duration: 0.5)
         let upRepeater = SKAction.repeat(upAction, count: 1)
         
-        characterSprite.texture = SKTexture(imageNamed: "bobby-12.png")
+        if(isMasked)
+        {
+            characterSprite.texture = SKTexture(imageNamed: "masked-bobby-12.png")
+        }
+        else
+        {
+            characterSprite.texture = SKTexture(imageNamed: "bobby-12.png")
+        }
         characterSprite.run(upRepeater, completion: jumpLanding)
     }
     
@@ -913,13 +1101,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let downAction = SKAction.move(to: CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.70), duration: 0.5)
         let downRepeater = SKAction.repeat(downAction, count: 1)
 
-        characterSprite.texture = SKTexture(imageNamed: "bobby-13.png")
+        if(isMasked)
+        {
+            characterSprite.texture = SKTexture(imageNamed: "masked-bobby-13.png")
+        }
+        else
+        {
+            characterSprite.texture = SKTexture(imageNamed: "bobby-13.png")
+        }
+        
         characterSprite.run(downRepeater, completion: resumeRunning)
     }
     
     func duckCharacter() -> Void {
         
-       let duckFrames:[SKTexture] = [SKTexture(imageNamed: "bobby-5.png")]
+        let duckFrames: [SKTexture]
+        
+        characterSprite.removeAllActions()
+
+        if(isMasked)
+        {
+            duckFrames = [SKTexture(imageNamed: "masked-bobby-5.png")]
+        }
+        else
+        {
+            duckFrames = [SKTexture(imageNamed: "bobby-5.png")]
+        }
                         
        let duckAnimation = SKAction.animate(with: duckFrames, timePerFrame: 0.25)
        let yShift = SKAction.move(to: CGPoint(x: characterSprite.position.x, y: characterSprite.position.y - 15), duration: 0.5)
@@ -942,6 +1149,60 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func initObjects() -> Void{
         
+        //Mask
+        
+        mask = SKSpriteNode(imageNamed: "mask.png")
+        mask.name = "mask"
+        mask.position = CGPoint(x: self.frame.width, y: game.charInitialPos.y)
+        mask.size = CGSize(width: mask.size.width / 8, height: mask.size.height / 8)
+        mask.zPosition = 5
+        
+        mask.physicsBody = SKPhysicsBody(circleOfRadius: mask.size.width / 2)
+        mask.physicsBody?.affectedByGravity = false
+        mask.physicsBody?.categoryBitMask = ColliderType.mask
+        mask.physicsBody?.collisionBitMask = ColliderType.character
+        mask.physicsBody?.contactTestBitMask = ColliderType.character
+        mask.physicsBody?.isDynamic = false
+        self.addChild(mask)
+        
+        //Zombies
+        
+        blondeZombie = SKSpriteNode(imageNamed: "blondezombie-1.png")
+        
+        blondeZombie.lightingBitMask = 50
+        blondeZombie.xScale = -1
+        blondeZombie.size = CGSize(width: blondeZombie.size.width, height: blondeZombie.size.height)
+        game.zombieInitalSize = blondeZombie.size
+        blondeZombie.position = CGPoint(x: self.size.width, y: game.charInitialPos.y)
+        blondeZombie.zPosition = 4
+        
+        self.addChild(blondeZombie)
+        
+        redZombie = SKSpriteNode(imageNamed: "redzombie-1.png")
+        redZombie.position = CGPoint(x: self.size.width, y: game.charInitialPos.y)
+
+        redZombie.lightingBitMask = 50
+        redZombie.xScale = -1
+        redZombie.size = CGSize(width: redZombie.size.width, height: redZombie.size.height)
+        redZombie.zPosition = 4
+        
+        self.addChild(redZombie)
+        
+        //Exclamation
+        exclamationMark = SKSpriteNode(imageNamed: "exclamation.png")
+        exclamationMark.zPosition = 5
+        exclamationMark.size = CGSize(width: exclamationMark.size.width / 1.25, height: exclamationMark.size.height / 1.25)
+        
+        exclamationShape = SKShapeNode(circleOfRadius: exclamationMark.size.width / 2)
+        exclamationShape.fillColor = .clear
+        exclamationShape.strokeColor = .clear
+        exclamationShape.lineWidth = 5
+        exclamationShape.isAntialiased = true
+        exclamationShape.addChild(exclamationMark)
+        exclamationShape.zPosition = 4
+        exclamationShape.alpha = 0.0
+        
+        self.addChild(exclamationShape)
         
         //BananaPeel
         bananaPeel = SKSpriteNode(imageNamed: "banana-peel.png")
@@ -955,25 +1216,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         bananaPeel.physicsBody?.categoryBitMask = ColliderType.banana
         bananaPeel.physicsBody?.collisionBitMask = ColliderType.character
         bananaPeel.physicsBody?.contactTestBitMask = ColliderType.character
-        bananaPeel.physicsBody?.isDynamic = true
+        bananaPeel.physicsBody?.isDynamic = false
         
         self.addChild(bananaPeel)
         
         //Germs
         blueGerms = SKEmitterNode(fileNamed: "sneezeblue.sks")!
+        blueGerms.name = "bluegerms"
         blueGerms.zPosition = 3
-        blueGerms.position = CGPoint(x: 0, y: characterSprite.position.y)
+        blueGerms.position = CGPoint(x: self.frame.width, y: characterSprite.position.y)
         blueGerms.isHidden = true
         
+        blueGerms.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 200, height: 100))
+        blueGerms.physicsBody?.affectedByGravity = false
+        blueGerms.physicsBody?.categoryBitMask = ColliderType.bluegerms
+        blueGerms.physicsBody?.collisionBitMask = ColliderType.character
+        blueGerms.physicsBody?.contactTestBitMask = ColliderType.character
+        blueGerms.physicsBody?.isDynamic = false
+    
         self.addChild(blueGerms)
         
         greenGerms = SKEmitterNode(fileNamed: "sneezegreen.sks")!
+        greenGerms.name = "greengerms"
         greenGerms.zPosition = 3
-        greenGerms.position = CGPoint(x: 0, y: characterSprite.position.y)
+        greenGerms.position = CGPoint(x: self.frame.width, y: characterSprite.position.y)
         greenGerms.isHidden = true
         
-        self.addChild(greenGerms)
+        greenGerms.physicsBody = SKPhysicsBody(circleOfRadius: 80)
+        greenGerms.physicsBody?.affectedByGravity = false
+        greenGerms.physicsBody?.categoryBitMask = ColliderType.greengerms
+        greenGerms.physicsBody?.collisionBitMask = ColliderType.character
+        greenGerms.physicsBody?.contactTestBitMask = ColliderType.character
+        greenGerms.physicsBody?.isDynamic = false
         
+        self.addChild(greenGerms)
         
         //Soap/Glitter
         soap = SKSpriteNode(imageNamed: "hand-sanitizer.png")
@@ -1061,21 +1337,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         let zombieSneezeFrames: [SKTexture] = [SKTexture(imageNamed: "redzombie-1.png"), SKTexture(imageNamed: "redzombie-2.png"), SKTexture(imageNamed: "redzombie-3.png"), SKTexture(imageNamed: "redzombie-4.png")]
         
-        redZombie = SKSpriteNode(imageNamed: "redzombie-1.png")
-        redZombie.position = CGPoint(x: self.size.width, y: game.charInitialPos.y)
-
-        redZombie.lightingBitMask = 50
-        redZombie.xScale = -1
-        redZombie.size = CGSize(width: redZombie.size.width, height: redZombie.size.height)
-        redZombie.zPosition = 4
-        
         let zombieAnim = SKAction.animate(with: zombieSneezeFrames, timePerFrame: 0.28)
         let zombieShift = SKAction.moveTo(x: -self.size.width, duration: bgAnimatedInSecs * 1.1)
         
         let animRepeater = SKAction.repeat(zombieAnim, count: 1)
         let shiftRepeater = SKAction.repeat(zombieShift, count: 1)
         
-        self.addChild(redZombie)
         redZombie.run(animRepeater, completion: pauseRedZombie)
         redZombie.run(shiftRepeater)
     }
@@ -1083,15 +1350,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func drawBlondeZombie() {
         
         let zombieSneezeFrames: [SKTexture] = [SKTexture(imageNamed: "blondezombie-1.png"), SKTexture(imageNamed: "blondezombie-2.png"), SKTexture(imageNamed: "blondezombie-3.png"), SKTexture(imageNamed: "blondezombie-4.png")]
-        
-        blondeZombie = SKSpriteNode(imageNamed: "blondezombie-1.png")
-        self.addChild(blondeZombie)
-        
-        blondeZombie.lightingBitMask = 50
-        blondeZombie.xScale = -1
-        blondeZombie.size = CGSize(width: blondeZombie.size.width, height: blondeZombie.size.height)
-        blondeZombie.position = CGPoint(x: self.size.width, y: game.charInitialPos.y)
-        blondeZombie.zPosition = 4
         
         let zombieAnim = SKAction.animate(with: zombieSneezeFrames, timePerFrame: 0.28)
         let zombieShift = SKAction.moveTo(x: -self.size.width, duration: bgAnimatedInSecs * 1.1)
@@ -1106,13 +1364,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func pauseRedZombie() {
         
-        //drawExclamation()
+        drawExclamation(zombie: redZombie)
         redZombie.texture = SKTexture(imageNamed: "redzombie-4.png")
         redZombie.removeAllActions()
         
         pauseGame()
         pauseRunning()
-        characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
+        if(!isMasked)
+        {
+            characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
+        }
         
         let zombieSneezeFrames: [SKTexture] = [SKTexture(imageNamed: "redzombie-4.png"), SKTexture(imageNamed: "redzombie-5.png")]
         
@@ -1126,13 +1387,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func pauseBlondeZombie() {
         
-        drawExclamation()
+        drawExclamation(zombie: blondeZombie)
         blondeZombie.texture = SKTexture(imageNamed: "blondezombie-4.png")
         blondeZombie.removeAllActions()
         
         pauseGame()
         pauseRunning()
-        characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
+        if(isMasked)
+        {
+            characterSprite.texture = SKTexture(imageNamed: "masked-bobby-15.png")
+        }
+        else
+        {
+            characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
+        }
         
         let zombieSneezeFrames: [SKTexture] = [SKTexture(imageNamed: "blondezombie-4.png"), SKTexture(imageNamed: "blondezombie-5.png")]
         
@@ -1144,28 +1412,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         blondeZombie.run(sneezeRepeater, completion: blondeZombieDieAnim)
     }
     
-    func drawExclamation() {
+    func drawExclamation(zombie: SKSpriteNode) {
+
+        exclamationShape.position = CGPoint(x: zombie.position.x, y: zombie.position.y + 150)
+
+        let exclamationFadeIn = SKAction.fadeIn(withDuration: bgAnimatedInSecs / 12)
+        let exclamationFadeOut = SKAction.fadeOut(withDuration: bgAnimatedInSecs / 12)
         
-        exclamationMark = SKSpriteNode(imageNamed: "exclamation.png")
-        exclamationMark.zPosition = 5
-        exclamationMark.size = CGSize(width: exclamationMark.size.width / 1.25, height: exclamationMark.size.height / 1.25)
+        let exclamationSeq = SKAction.sequence([exclamationFadeIn, exclamationFadeOut])
         
-        exclamationShape = SKShapeNode(circleOfRadius: exclamationMark.size.width / 2)
-        exclamationShape.fillColor = .clear
-        exclamationShape.strokeColor = .clear
-        exclamationShape.lineWidth = 5
-        exclamationShape.isAntialiased = true
-        exclamationShape.addChild(exclamationMark)
-        exclamationShape.position = CGPoint(x: blondeZombie.position.x, y: blondeZombie.position.y + 150)
-        exclamationShape.zPosition = 4
-        exclamationShape.alpha = 1.0
-            
-        let exclamationTrans = SKAction.fadeIn(withDuration: bgAnimatedInSecs / 12)
-        
-        let exclamationTransRepeater = SKAction.repeat(exclamationTrans, count: 1)
-        
-        
-        self.addChild(exclamationShape)
+        let exclamationTransRepeater = SKAction.repeat(exclamationSeq, count: 1)
         
         exclamationShape.run(exclamationTransRepeater)
     }
@@ -1181,17 +1437,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let yShift = SKAction.moveTo(y: CGFloat(randY), duration: bgAnimatedInSecs / 3)
         let rotation = SKAction.rotate(byAngle: -(2 * CGFloat.pi), duration: bgAnimatedInSecs / 4)
         let minimize = SKAction.resize(toWidth: 0, height: 0, duration: bgAnimatedInSecs / 4)
-        let exclamationFadeOut = SKAction.fadeOut(withDuration: bgAnimatedInSecs / 12)
         
         let yRepeater = SKAction.repeat(yShift, count: 1)
-        let rotationRepeater = SKAction.repeatForever(rotation)
+        let rotationRepeater = SKAction.repeat(rotation, count: 1)
         let minimizeRepeater = SKAction.repeat(minimize, count: 1)
-        let exclamationFadeRepeater = SKAction.repeat(exclamationFadeOut, count: 1)
         
-        exclamationShape.isHidden = true
-       
-        
-        exclamationShape.run(exclamationFadeRepeater)
         redZombie.run(rotationRepeater)
         redZombie.run(minimizeRepeater, completion: shiftGreenGerms)
         
@@ -1212,17 +1462,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let yShift = SKAction.moveTo(y: CGFloat(randY), duration: bgAnimatedInSecs / 3)
         let rotation = SKAction.rotate(byAngle: -(2 * CGFloat.pi), duration: bgAnimatedInSecs / 4)
         let minimize = SKAction.resize(toWidth: 0, height: 0, duration: bgAnimatedInSecs / 4)
-        let exclamationFadeOut = SKAction.fadeOut(withDuration: bgAnimatedInSecs / 12)
         
         let yRepeater = SKAction.repeat(yShift, count: 1)
-        let rotationRepeater = SKAction.repeatForever(rotation)
+        let rotationRepeater = SKAction.repeat(rotation, count: 1)
         let minimizeRepeater = SKAction.repeat(minimize, count: 1)
-        let exclamationFadeRepeater = SKAction.repeat(exclamationFadeOut, count: 1)
         
-        exclamationShape.isHidden = true
-       
-        
-        exclamationShape.run(exclamationFadeRepeater)
         blondeZombie.run(rotationRepeater)
         blondeZombie.run(minimizeRepeater, completion: shiftBlueGerms)
         
@@ -1235,19 +1479,49 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func shiftBlueGerms() {
         
         let germShift = SKAction.moveTo(x: -self.size.width, duration: bgAnimatedInSecs / 3)
+        let germReversion = SKAction.moveTo(x: self.size.width, duration: 0)
         
-        let germShiftRepeater = SKAction.repeat(germShift, count: 1)
+        let germSeq = SKAction.sequence([germShift, germReversion])
         
-        blueGerms.run(germShiftRepeater)
+        let germShiftRepeater = SKAction.repeat(germSeq, count: 1)
+        
+        blueGerms.run(germShiftRepeater, completion: revertBlondeZombie)
+    }
+    
+    func revertBlondeZombie() {
+        
+        let resizeReversion = SKAction.resize(toWidth: game.zombieInitalSize.width, height: game.zombieInitalSize.height, duration: 0)
+        let shiftReversion = SKAction.moveTo(x: self.frame.width, duration: 0)
+        
+        let resizeRepeater = SKAction.repeat(resizeReversion, count: 1)
+        let shiftRepeater = SKAction.repeat(shiftReversion, count: 1)
+        
+        blondeZombie.run(resizeRepeater)
+        blondeZombie.run(shiftRepeater)
+    }
+    
+    func revertRedZombie() {
+        
+        let resizeReversion = SKAction.resize(toWidth: game.zombieInitalSize.width, height: game.zombieInitalSize.height, duration: 0)
+        let shiftReversion = SKAction.moveTo(x: self.frame.width, duration: 0)
+        
+        let resizeRepeater = SKAction.repeat(resizeReversion, count: 1)
+        let shiftRepeater = SKAction.repeat(shiftReversion, count: 1)
+        
+        redZombie.run(resizeRepeater)
+        redZombie.run(shiftRepeater)
     }
     
     func shiftGreenGerms() {
         
         let germShift = SKAction.moveTo(x: -self.size.width, duration: bgAnimatedInSecs / 3)
+        let germReversion = SKAction.moveTo(x: self.size.width, duration: 0)
         
-        let germShiftRepeater = SKAction.repeat(germShift, count: 1)
+        let germSeq = SKAction.sequence([germShift, germReversion])
         
-        greenGerms.run(germShiftRepeater)
+        let germShiftRepeater = SKAction.repeat(germSeq, count: 1)
+        
+        greenGerms.run(germShiftRepeater, completion: revertRedZombie)
     }
     
     func drawBlueGerm() -> Void {
@@ -1343,11 +1617,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         self.view?.gestureRecognizers?.removeAll()
 
         bananaPeel.removeAllActions()
-        blueGermCloud.removeAllActions()
         characterSprite.removeAllActions()
-        littleGirl.removeAllActions()
+        
         
         characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
+        
         
         let bananaSlide = SKAction.move(to: CGPoint(x: self.frame.size.width * 2, y: self.frame.minX * 1.15), duration: 0.5)
         
@@ -1386,27 +1660,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.run(rotationAnim, completion: rotateBack)
     }
     
-    func germDieAnimation(germ: SKSpriteNode) -> Void {
+    func germDieAnimation(germ: SKEmitterNode) -> Void {
         
-        self.view?.gestureRecognizers?.removeAll()
-        characterSprite.physicsBody?.isDynamic = false
-
-        bananaPeel.removeAllActions()
         germ.removeAllActions()
         characterSprite.removeAllActions()
-        littleGirl.removeAllActions()
-        
-            
-        
-        let spinAnim = SKAction.rotate(byAngle: -(2 * CGFloat.pi), duration: 0.3)
-        let eatAnim = SKAction.move(to: CGPoint(x: characterSprite.position.x, y: characterSprite.position.y), duration: 0.3)
-        
-        let spinRepeater = SKAction.repeat(spinAnim, count: 1)
-        let eatRepeater = SKAction.repeat(eatAnim, count: 1)
-        
         characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
         
-        germ.run(eatRepeater)
+        let germAttraction = SKAction.move(to: CGPoint(x: germ.position.x, y: germ.position.y), duration: bgAnimatedInSecs / 6)
+        let spinAnim = SKAction.rotate(byAngle: -(2 * CGFloat.pi), duration: 0.3)
+        
+        let germAttractionRepeater = SKAction.repeat(germAttraction, count: 1)
+        let spinRepeater = SKAction.repeat(spinAnim, count: 1)
+        
+        characterSprite.run(germAttractionRepeater)
         characterSprite.run(spinRepeater, completion: disappearCharacter)
     }
     
@@ -1416,70 +1682,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         characterSprite.removeAllActions()
         characterSprite.isHidden = true
         endGame()
-    }
-    
-    func girlDieAnimation() -> Void {
-        
-        self.view?.gestureRecognizers?.removeAll()
-        characterSprite.physicsBody?.isDynamic = false
-        
-        bananaPeel.removeAllActions()
-        blueGermCloud.removeAllActions()
-        characterSprite.removeAllActions()
-        
-        characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
-        
-        let rotateAnim = SKAction.rotate(byAngle: ((3 * CGFloat.pi) / 2), duration: 0.3)
-        
-        characterSprite.run(rotateAnim, completion: rotateBack)
-    }
-    
-    func checkPhysics() {
-
-        // Create an array of all the nodes with physicsBodies
-        var physicsNodes = [SKNode]()
-
-        //Get all physics bodies
-        enumerateChildNodes(withName: "//.") { node, _ in
-            if let _ = node.physicsBody {
-                physicsNodes.append(node)
-            } else {
-                print("\(String(describing: node.name)) does not have a physics body so cannot collide or be involved in contacts.")
-            }
-        }
-
-        //For each node, check it's category against every other node's collion and contctTest bit mask
-        for node in physicsNodes {
-            let category = node.physicsBody!.categoryBitMask
-            // Identify the node by its category if the name is blank
-            let name = node.name != nil ? node.name! : "Category \(category)"
-
-            let collisionMask = node.physicsBody!.collisionBitMask
-            let contactMask = node.physicsBody!.contactTestBitMask
-
-            // If all bits of the collisonmask set, just say it collides with everything.
-            if collisionMask == UInt32.max {
-                print("\(name) collides with everything")
-            }
-
-            for otherNode in physicsNodes {
-                if (node.physicsBody?.isDynamic == false) {
-                print("This node \(name) is not dynamic")
-            }
-                if (node != otherNode) && (node.physicsBody?.isDynamic == true) {
-                    let otherCategory = otherNode.physicsBody!.categoryBitMask
-                    // Identify the node by its category if the name is blank
-                    let otherName = otherNode.name != nil ? otherNode.name! : "Category \(otherCategory)"
-
-                    // If the collisonmask and category match, they will collide
-                    if ((collisionMask & otherCategory) != 0) && (collisionMask != UInt32.max) {
-                        print("\(name) collides with \(otherName)")
-                    }
-                    // If the contactMAsk and category match, they will contact
-                    if (contactMask & otherCategory) != 0 {print("\(name) notifies when contacting \(otherName)")}
-                }
-            }
-        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -1547,33 +1749,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
      func endGame() -> Void{
         
-        batSprite.isHidden = true
-        batSprite2.isHidden = true
-        batSprite3.isHidden = true
-        if((batSprite.isHidden == false) || (batSprite2.isHidden == false) || (batSprite3.isHidden == false))
-        {
-            if(!isLevelPassed)
-            {
-                
-                let bat1ToOffscreen = SKAction.move(to: CGPoint(x: -self.frame.width, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
-                let bat2ToOffscreen = SKAction.move(to: CGPoint(x: 0, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
-                let bat3ToOffscreen = SKAction.move(to: CGPoint(x: self.frame.width, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
-                       
-                    
-                let bat1Movement = SKAction.repeat(bat1ToOffscreen, count: 1)
-                let bat2Movement = SKAction.repeat(bat2ToOffscreen, count: 1)
-                let bat3Movement = SKAction.repeat(bat3ToOffscreen, count: 1)
-                
-                batSprite.run(bat1Movement)
-                batSprite2.run(bat2Movement)
-                batSprite3.run(bat3Movement)
-            }
-        }
         
+        let bat1ToOffscreen = SKAction.move(to: CGPoint(x: -self.frame.width, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
+        let bat2ToOffscreen = SKAction.move(to: CGPoint(x: 0, y: self.frame.maxY * 2), duration: bgAnimatedInSecs / 9)
+        let bat3ToOffscreen = SKAction.move(to: CGPoint(x: self.frame.width, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
+               
+            
+        let bat1Movement = SKAction.repeat(bat1ToOffscreen, count: 1)
+        let bat2Movement = SKAction.repeat(bat2ToOffscreen, count: 1)
+        let bat3Movement = SKAction.repeat(bat3ToOffscreen, count: 1)
+        
+        batSprite.run(bat1Movement)
+        batSprite2.run(bat2Movement)
+        batSprite3.run(bat3Movement)
+         
+
+        GameScene.defaults.set(levelData.handSanitizerCount, forKey: "handsanitizer")
         timer.invalidate()
         self.showEndingMenu()
         pauseBackgAndPlatform()
-        handSanitizerScore = 0
         temp = 0
         isLevelPassed = false
         game.IsOver = true
