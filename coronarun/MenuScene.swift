@@ -8,10 +8,12 @@
 
 import Foundation
 import SpriteKit
+import SAConfettiView
 
 class MenuScene: SKScene
 {
     var levelScreen: SKSpriteNode = SKSpriteNode()
+    var confettiView = SAConfettiView()
     var worldDisplayShape: SKShapeNode = SKShapeNode()
     var worldDisplay: SKLabelNode = SKLabelNode()
     var futureLevelDisplay: SKLabelNode = SKLabelNode()
@@ -21,10 +23,23 @@ class MenuScene: SKScene
     
     override func didMove(to view: SKView) {
         
+        completionAnimation()
         makeCharVisible()
         blurBackground()
         drawWorldDisplay()
         drawLevelButtons()
+    }
+    
+    func completionAnimation() {
+        
+        if(levelData.hasMastered)
+        {
+            confettiView = SAConfettiView(frame: (self.view?.bounds)!)
+            confettiView.type = .Diamond
+            
+            view?.addSubview(confettiView)
+            confettiView.startConfetti()
+        }
     }
     
     func makeCharVisible() {
@@ -210,13 +225,13 @@ class MenuScene: SKScene
             let location = touch.previousLocation(in: self)
             let node = self.nodes(at: location).first
             
+            confettiView.removeFromSuperview()
             if((node?.name == "level-one") || (node?.name == "1"))
             {
                 print("level-one pressed")
                 levelData.levelSelected = 1
                 
                 cleanUp()
-                levelData.didLoadFromHome = false
                 let gameScene = GameScene(fileNamed: "GameScene")
                 gameScene?.scaleMode = .aspectFill
                 self.view?.presentScene(gameScene)
@@ -227,7 +242,6 @@ class MenuScene: SKScene
                 levelData.levelSelected = 2
                 
                 cleanUp()
-                levelData.didLoadFromHome = false
                 let gameScene = GameScene(fileNamed: "GameScene")
                 gameScene?.scaleMode = .aspectFill
                 self.view?.presentScene(gameScene)
@@ -238,7 +252,6 @@ class MenuScene: SKScene
                 levelData.levelSelected = 3
                 
                 cleanUp()
-                levelData.didLoadFromHome = false
                 let gameScene = GameScene(fileNamed: "GameScene")
                 gameScene?.scaleMode = .aspectFill
                 self.view?.presentScene(gameScene)
@@ -249,7 +262,6 @@ class MenuScene: SKScene
                 levelData.levelSelected = 4
                 
                 cleanUp()
-                levelData.didLoadFromHome = false
                 let gameScene = GameScene(fileNamed: "GameScene")
                 gameScene?.scaleMode = .aspectFill
                 self.view?.presentScene(gameScene)
@@ -260,7 +272,6 @@ class MenuScene: SKScene
                 levelData.levelSelected = 5
                 
                 cleanUp()
-                levelData.didLoadFromHome = false
                 let gameScene = GameScene(fileNamed: "GameScene")
                 gameScene?.scaleMode = .aspectFill
                 self.view?.presentScene(gameScene)

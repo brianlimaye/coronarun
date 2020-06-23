@@ -75,6 +75,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var menuButtonShape: SKShapeNode = SKShapeNode()
     var exclamationMark: SKSpriteNode = SKSpriteNode()
     var exclamationShape: SKShapeNode = SKShapeNode()
+    var pauseIcon: SKSpriteNode = SKSpriteNode()
+    var pauseIconShape: SKShapeNode = SKShapeNode()
     var handSanitizerScore: Int = 0
     var temp: Int = 0
     var objNum: Int = 0
@@ -108,6 +110,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         //GameScene.defaults.removeObject(forKey: "handsanitizer")
         
         initScore()
+        initPauseButton()
         drawCharacter()
         resumeNodes()
         initObjects()
@@ -138,6 +141,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         } catch let error as NSError {
             print(error.description)
         }
+    }
+    
+    func resetLevelStatus() {
+        
+        levelData.pressedNext = false
+        levelData.pressedReplay = false
     }
     
     func startLevel(level: String) {
@@ -248,15 +257,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         if(!levelData.didLoadFromHome)
         {
+            levelData.currentLevel = levelData.levelSelected
             levelDisplay.text = "World 1: Level " + String(levelData.levelSelected)
+            levelData.didLoadFromHome = true
         }
         else
         {
-            levelDisplay.text = "World 1: Level " + String(levelData.currentLevel)
+            if(levelData.pressedReplay)
+            {
+                levelDisplay.text = "World 1: Level " + String(levelData.currentLevel)
+            }
+            else
+            {
+                
+                levelData.currentLevel = levelData.reachedLevel
+                levelDisplay.text = "World 1: Level " + String(levelData.reachedLevel)
+            }
         }
         
-        
-        
+        resetLevelStatus()
         livesDisplay.fontColor = .white
         livesDisplay.fontSize = 48
         livesDisplay.text = " x 1"
@@ -488,10 +507,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
         portal.run(portalMinimizeRepeater)
         isLevelPassed = true
-        let i = levelData.currentLevel + 1
-        levelData.currentLevel = i
-        GameScene.defaults.set(levelData.handSanitizerCount, forKey: "handsanitizer")
-        GameScene.defaults.set(levelData.currentLevel, forKey: "maxlevel")
+        
+        if(levelData.currentLevel == levelData.reachedLevel)
+        {
+            levelData.reachedLevel += 1
+            //GameScene.defaults.set(levelData.handSanitizerCount, forKey: "handsanitizer")
+            //GameScene.defaults.set(levelData.reachedLevel, forKey: "maxlevel")
+        }
         
         endGame()
     }
@@ -678,6 +700,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         return (since1970 * 1000)
     }
     
+    func initPauseButton() -> Void {
+        
+        pauseIcon = SKSpriteNode(imageNamed: "pause-icon")
+        pauseIcon.size = CGSize(width: pauseIcon.size.width * 1.5, height: pauseIcon.size.height * 1.5)
+        pauseIcon.position = CGPoint(x: 0, y: 0)
+        pauseIcon.zPosition = 5
+        
+        if(UIDevice.current.userInterfaceIdiom == .phone)
+        {
+            pauseIcon.position.x = -self.frame.width / 3
+            pauseIcon.position.y = self.frame.height / 2.25
+        }
+        
+        if(UIDevice.current.userInterfaceIdiom == .pad)
+        {
+            pauseIcon.position.x = self.frame.width / 2
+            pauseIcon.position.y = self.frame.height / 2.75
+        }
+        
+        self.addChild(pauseIcon)
+    }
+    
     func initReplayButton() -> Void {
         
         replayButton = SKSpriteNode(imageNamed: "replay-button.png")
@@ -686,7 +730,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         replayButton.zPosition = 4
         //replayButton.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         
-        replayShape = SKShapeNode(circleOfRadius: replayButton.size.width / 2)
+        replayShape = SKShapeNode(circleOfRadius: 60)
         replayShape.name = "replayshape"
         replayShape.isUserInteractionEnabled = false
         replayShape.fillColor = .white
@@ -705,12 +749,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         nextLevelButton = SKSpriteNode(imageNamed: "next-level-icon")
         nextLevelButton.name = "nextlevelbutton"
         nextLevelButton.size = CGSize(width: nextLevelButton.size.width / 7, height: nextLevelButton.size.height / 7)
-        //nextLevelButton.color = .white
+        nextLevelButton.isUserInteractionEnabled = false
         nextLevelButton.zPosition = 4
-
-        //nextLevelButton.position = CGPoint(x: self.frame.midX + 230, y: self.frame.midY)
         
-        nextLevelShape = SKShapeNode(circleOfRadius: replayButton.size.width / 2)
+        nextLevelShape = SKShapeNode(circleOfRadius: 60)
         nextLevelShape.name = "nextlevelshape"
         nextLevelShape.isUserInteractionEnabled = false
         nextLevelShape.fillColor = .white
@@ -732,7 +774,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         homeButton.size = CGSize(width: homeButton.size.width / 7, height: homeButton.size.height / 7)
         homeButton.zPosition = 4
 
-        homeButtonShape = SKShapeNode(circleOfRadius: replayButton.size.width / 2)
+        homeButtonShape = SKShapeNode(circleOfRadius: 60)
         homeButtonShape.name = "homebuttonshape"
         homeButtonShape.isUserInteractionEnabled = false
         homeButtonShape.fillColor = .white
@@ -788,13 +830,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         if(isLevelPassed)
         {
-            self.initNextLevelButton()
+            initNextLevelButton()
             levelStatusAlert.fontColor = .green
             levelStatusAlert.text = "PASSED"
         }
+
         else
         {
-            self.initMenuButton()
+            initMenuButton()
             levelStatusAlert.fontColor = .red
             levelStatusAlert.text = "INCOMPLETE"
         }
@@ -872,8 +915,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         }
         
         pauseRunning()
+        characterSprite.removeAllActions()
         
-        if(!game.contactDetected)
+        if(game.contactDetected)
+        {
+            return
+        }
+        else
         {
             jumpCharacter()
         }
@@ -903,7 +951,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         characterSprite = SKSpriteNode(imageNamed: "bobby-6.png")
         characterSprite.name = "character"
-        characterSprite.position = CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.70)
+        characterSprite.position = CGPoint(x: self.frame.minX / 2.35, y: self.frame.minY / 1.70)
         characterSprite.size = CGSize(width: characterSprite.size.width / 2, height: characterSprite.size.height / 2)
         characterSprite.color = .black
         characterSprite.colorBlendFactor = 0.1
@@ -1082,7 +1130,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         }
         
         characterSprite.removeAllActions()
-        let upAction = SKAction.move(to: CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 12), duration: 0.5)
+        let upAction = SKAction.move(to: CGPoint(x: self.frame.minX / 2.35, y: self.frame.minY / 12), duration: 0.5)
         let upRepeater = SKAction.repeat(upAction, count: 1)
         
         if(isMasked)
@@ -1098,7 +1146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func jumpLanding() {
         
-        let downAction = SKAction.move(to: CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.70), duration: 0.5)
+        let downAction = SKAction.move(to: CGPoint(x: self.frame.minX / 2.35, y: self.frame.minY / 1.70), duration: 0.5)
         let downRepeater = SKAction.repeat(downAction, count: 1)
 
         if(isMasked)
@@ -1227,7 +1275,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         blueGerms.position = CGPoint(x: self.frame.width, y: characterSprite.position.y)
         blueGerms.isHidden = true
         
-        blueGerms.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 200, height: 100))
+        blueGerms.physicsBody = SKPhysicsBody(circleOfRadius: 80, center: CGPoint(x: -50, y: 0))
         blueGerms.physicsBody?.affectedByGravity = false
         blueGerms.physicsBody?.categoryBitMask = ColliderType.bluegerms
         blueGerms.physicsBody?.collisionBitMask = ColliderType.character
@@ -1364,16 +1412,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func pauseRedZombie() {
         
-        drawExclamation(zombie: redZombie)
-        redZombie.texture = SKTexture(imageNamed: "redzombie-4.png")
         redZombie.removeAllActions()
-        
-        pauseGame()
-        pauseRunning()
-        if(!isMasked)
-        {
-            characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
-        }
+        //drawExclamation(zombie: redZombie)
+        redZombie.texture = SKTexture(imageNamed: "redzombie-4.png")
         
         let zombieSneezeFrames: [SKTexture] = [SKTexture(imageNamed: "redzombie-4.png"), SKTexture(imageNamed: "redzombie-5.png")]
         
@@ -1387,25 +1428,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func pauseBlondeZombie() {
         
-        drawExclamation(zombie: blondeZombie)
-        blondeZombie.texture = SKTexture(imageNamed: "blondezombie-4.png")
         blondeZombie.removeAllActions()
-        
-        pauseGame()
-        pauseRunning()
-        if(isMasked)
-        {
-            characterSprite.texture = SKTexture(imageNamed: "masked-bobby-15.png")
-        }
-        else
-        {
-            characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
-        }
+        //drawExclamation(zombie: blondeZombie)
+        blondeZombie.texture = SKTexture(imageNamed: "blondezombie-4.png")
         
         let zombieSneezeFrames: [SKTexture] = [SKTexture(imageNamed: "blondezombie-4.png"), SKTexture(imageNamed: "blondezombie-5.png")]
         
         let sneezeAnim = SKAction.animate(with: zombieSneezeFrames, timePerFrame: 0.15)
-        
+
         let sneezeRepeater = SKAction.repeat(sneezeAnim, count: 1)
         
         playSneezeSound()
@@ -1428,13 +1458,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func redZombieDieAnim() {
         
-        resumeRunning()
-        resumeGame()
-        
-        let endRange = Int(game.charInitialPos.y) + 100
+        let endRange = Int(game.charInitialPos.y) + 250
         let randY = Int.random(in: Int(game.charInitialPos.y) ..< endRange)
         
-        let yShift = SKAction.moveTo(y: CGFloat(randY), duration: bgAnimatedInSecs / 3)
+        let yShift = SKAction.moveTo(y: CGFloat(randY), duration: 0.1)
         let rotation = SKAction.rotate(byAngle: -(2 * CGFloat.pi), duration: bgAnimatedInSecs / 4)
         let minimize = SKAction.resize(toWidth: 0, height: 0, duration: bgAnimatedInSecs / 4)
         
@@ -1443,23 +1470,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let minimizeRepeater = SKAction.repeat(minimize, count: 1)
         
         redZombie.run(rotationRepeater)
-        redZombie.run(minimizeRepeater, completion: shiftGreenGerms)
+        greenGerms.run(yRepeater, completion: shiftGreenGerms)
+        redZombie.run(minimizeRepeater)
         
         greenGerms.position = redZombie.position
-        greenGerms.run(yRepeater)
         
         greenGerms.isHidden = false
     }
     
     func blondeZombieDieAnim() {
         
-        resumeRunning()
-        resumeGame()
-        
-        let endRange = Int(game.charInitialPos.y) + 100
+        let endRange = Int(game.charInitialPos.y) + 250
         let randY = Int.random(in: Int(game.charInitialPos.y) ..< endRange)
         
-        let yShift = SKAction.moveTo(y: CGFloat(randY), duration: bgAnimatedInSecs / 3)
+        let yShift = SKAction.moveTo(y: CGFloat(randY), duration: 0.1)
         let rotation = SKAction.rotate(byAngle: -(2 * CGFloat.pi), duration: bgAnimatedInSecs / 4)
         let minimize = SKAction.resize(toWidth: 0, height: 0, duration: bgAnimatedInSecs / 4)
         
@@ -1468,17 +1492,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let minimizeRepeater = SKAction.repeat(minimize, count: 1)
         
         blondeZombie.run(rotationRepeater)
-        blondeZombie.run(minimizeRepeater, completion: shiftBlueGerms)
+        blueGerms.run(yRepeater, completion: shiftBlueGerms)
+        blondeZombie.run(minimizeRepeater)
         
         blueGerms.position = blondeZombie.position
-        blueGerms.run(yRepeater)
         
         blueGerms.isHidden = false
     }
     
     func shiftBlueGerms() {
         
-        let germShift = SKAction.moveTo(x: -self.size.width, duration: bgAnimatedInSecs / 3)
+        let germShift = SKAction.moveTo(x: -self.size.width, duration: bgAnimatedInSecs / 1.6)
         let germReversion = SKAction.moveTo(x: self.size.width, duration: 0)
         
         let germSeq = SKAction.sequence([germShift, germReversion])
@@ -1514,7 +1538,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func shiftGreenGerms() {
         
-        let germShift = SKAction.moveTo(x: -self.size.width, duration: bgAnimatedInSecs / 3)
+        let germShift = SKAction.moveTo(x: -self.size.width, duration: bgAnimatedInSecs / 1.6)
         let germReversion = SKAction.moveTo(x: self.size.width, duration: 0)
         
         let germSeq = SKAction.sequence([germShift, germReversion])
@@ -1527,7 +1551,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func drawBlueGerm() -> Void {
         
         blueGermCloud.isHidden = false
-        let germShift = SKAction.move(by: CGVector(dx: -self.frame.width * 2, dy: 0), duration: bgAnimatedInSecs / 1.75)
+        let germShift = SKAction.move(by: CGVector(dx: -self.frame.width * 2, dy: 0), duration: bgAnimatedInSecs / 2.25)
         
         let germAnimation = SKAction.repeat(germShift, count: 1)
         
@@ -1615,7 +1639,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func peelDieAnimation() -> Void {
 
         self.view?.gestureRecognizers?.removeAll()
-
         bananaPeel.removeAllActions()
         characterSprite.removeAllActions()
         
@@ -1638,7 +1661,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func rotateBack() {
         
         let rotationBack = SKAction.rotate(byAngle: (-(3 * CGFloat.pi) / 2), duration: 0)
-        let fall = SKAction.move(to: CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.70), duration: 0.3)
+        let fall = SKAction.move(to: CGPoint(x: self.frame.minX / 2.35, y: self.frame.minY / 1.70), duration: 0.3)
         
         let rotationBackAnim = SKAction.repeat(rotationBack, count: 1)
         let fallAnim = SKAction.repeat(fall, count: 1)
@@ -1697,10 +1720,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 {
                     print("replay-button pressed")
                     let scale = SKAction.scale(to: 0.9, duration: 0.3)
+                    levelData.pressedReplay = true
                     replayShape.run(scale, completion: startGame)
                 }
                 
                 else if((node?.name == "homebutton") || (node?.name == "homeshape")) {
+                    
+                    if(isLevelPassed)
+                    {
+                        print("home button")
+                        levelData.currentLevel += 1
+                    }
                     
                     print("home-button pressed")
                     let scale2 = SKAction.scale(to: 0.9, duration: 0.3)
@@ -1713,6 +1743,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                     let scale3 = SKAction.scale(to: 0.9, duration: 0.3)
                     menuButtonShape.run(scale3, completion: goToMenuScene)
                 }
+                
+                else if((node?.name == "nextlevelbutton") || (node?.name == "nextlevelshape"))
+                {
+                    print("next-level pressed")
+                    let scale4 = SKAction.scale(to: 0.9, duration: 0.3)
+                    levelData.pressedNext = true
+                    if(levelData.currentLevel == 5)
+                    {
+                        levelData.hasMastered = true
+                        goToMenuScene()
+                    }
+                    else
+                    {
+                        levelData.currentLevel += 1
+                        nextLevelShape.run(scale4, completion: startGame)
+                    }
+                }
+
             }
         }
     }
@@ -1731,6 +1779,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         game.contactDetected = false
         game.IsOver = false
+        levelData.didLoadFromHome = false
         cleanUp()
         let menuScene = MenuScene(fileNamed: "MenuScene")
         menuScene?.scaleMode = .aspectFill
@@ -1749,19 +1798,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
      func endGame() -> Void{
         
+        print("Current level is: " + String(levelData.currentLevel))
+        print("Reached level is: " + String(levelData.reachedLevel))
         
-        let bat1ToOffscreen = SKAction.move(to: CGPoint(x: -self.frame.width, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
-        let bat2ToOffscreen = SKAction.move(to: CGPoint(x: 0, y: self.frame.maxY * 2), duration: bgAnimatedInSecs / 9)
-        let bat3ToOffscreen = SKAction.move(to: CGPoint(x: self.frame.width, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
-               
+        if(!isLevelPassed)
+        {
+            let bat1ToOffscreen = SKAction.move(to: CGPoint(x: -self.frame.width, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
+            let bat2ToOffscreen = SKAction.move(to: CGPoint(x: 0, y: self.frame.maxY * 2), duration: bgAnimatedInSecs / 9)
+            let bat3ToOffscreen = SKAction.move(to: CGPoint(x: self.frame.width, y: self.frame.maxY), duration: bgAnimatedInSecs / 9)
+                   
+                
+            let bat1Movement = SKAction.repeat(bat1ToOffscreen, count: 1)
+            let bat2Movement = SKAction.repeat(bat2ToOffscreen, count: 1)
+            let bat3Movement = SKAction.repeat(bat3ToOffscreen, count: 1)
             
-        let bat1Movement = SKAction.repeat(bat1ToOffscreen, count: 1)
-        let bat2Movement = SKAction.repeat(bat2ToOffscreen, count: 1)
-        let bat3Movement = SKAction.repeat(bat3ToOffscreen, count: 1)
-        
-        batSprite.run(bat1Movement)
-        batSprite2.run(bat2Movement)
-        batSprite3.run(bat3Movement)
+            batSprite.run(bat1Movement)
+            batSprite2.run(bat2Movement)
+            batSprite3.run(bat3Movement)
+        }
          
 
         GameScene.defaults.set(levelData.handSanitizerCount, forKey: "handsanitizer")

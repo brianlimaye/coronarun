@@ -18,10 +18,14 @@ var backGBlur: SKEffectNode = SKEffectNode()
 struct levelData
 {
     static var maxLevel: Int = 5
+    static var reachedLevel: Int = 1
     static var currentLevel: Int = 1
     static var levelSelected: Int = -1
     static var handSanitizerCount: Int = 0
     static var didLoadFromHome: Bool = false
+    static var hasMastered: Bool = false
+    static var pressedReplay: Bool = false
+    static var pressedNext: Bool = false
 }
 
 class HomeScene: SKScene
@@ -61,7 +65,6 @@ class HomeScene: SKScene
         }
         
         initBlurEffect()
-        drawGreenSplat()
         initTitleScreen()
         addBackgFreezeFrame()
         addPlatformFreezeFrame()
@@ -76,7 +79,7 @@ class HomeScene: SKScene
         
         if(Int(str) ?? 0 > 1)
         {
-            levelData.currentLevel = GameScene.defaults.integer(forKey: "maxlevel")
+            levelData.reachedLevel = GameScene.defaults.integer(forKey: "maxlevel")
         }
         
         levelData.handSanitizerCount = count
@@ -221,7 +224,7 @@ class HomeScene: SKScene
         //idleCharacter.removeAllActions()
         idleCharacter = SKSpriteNode(imageNamed: "(b)obby-1.png")
         
-        idleCharacter.position = CGPoint(x: self.frame.minX / 3, y: self.frame.minY / 1.71)
+        idleCharacter.position = CGPoint(x: self.frame.minX / 2.35, y: self.frame.minY / 1.71)
         idleCharacter.name = "character"
         idleCharacter.size = CGSize(width: idleCharacter.size.width / 2, height: idleCharacter.size.height / 2)
         idleCharacter.color = .black
@@ -249,26 +252,19 @@ class HomeScene: SKScene
             {
                 cleanUp()
                 let menuScene = MenuScene(fileNamed: "MenuScene")
+                levelData.didLoadFromHome = false
                 menuScene?.scaleMode = .aspectFill
                 self.view?.presentScene(menuScene)
             }
-            /*
             else
             {
                 cleanUp()
+                levelData.didLoadFromHome = true
                 let gameScene = GameScene(fileNamed: "GameScene")
                 gameScene?.scaleMode = .aspectFill
-                self.view?.presentScene(gameScene)
+                self.view?.presentScene(gameScene!, transition: SKTransition.crossFade(withDuration: 0.5))
             }
- */
         }
-        
-        
-        cleanUp()
-        levelData.didLoadFromHome = true
-        let gameScene = GameScene(fileNamed: "GameScene")
-        gameScene?.scaleMode = .aspectFill
-        self.view?.presentScene(gameScene!, transition: SKTransition.crossFade(withDuration: 0.5))
     }
     
     func initTitleScreen() {

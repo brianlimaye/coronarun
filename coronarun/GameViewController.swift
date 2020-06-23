@@ -46,9 +46,9 @@ class GameViewController: UIViewController {
                 notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
 
                 view.ignoresSiblingOrder = true
-                view.showsFPS = true
-                view.showsNodeCount = true
-                view.showsPhysics = true
+                //view.showsFPS = true
+                //view.showsNodeCount = true
+                //view.showsPhysics = true
         }
     }
 
@@ -58,13 +58,6 @@ class GameViewController: UIViewController {
 
            switch key.keyCode {
 
-           case .keyboardC:
-
-               if isDebug
-               {
-                   print("c pressed")
-                   //gameScene.closingScene()
-               }
            case .keyboardP:
            
                if isDebug
@@ -72,6 +65,14 @@ class GameViewController: UIViewController {
                     print("p was pressed")
                     GameViewController.gameScene?.drawPeel()
                }
+            
+           case .keyboardS:
+            
+            if isDebug
+            {
+                print("s was pressed")
+                GameViewController.gameScene?.addSoap()
+            }
 
            case .keyboardUpArrow:
                
@@ -154,10 +155,9 @@ class GameViewController: UIViewController {
         return true
     }
     
-
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone || UIDevice.current.userInterfaceIdiom == .pad {
-            return .portrait
+            return .allButUpsideDown
         } else {
             return .all
         }
