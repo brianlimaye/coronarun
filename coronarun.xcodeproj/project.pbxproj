@@ -98,6 +98,7 @@
 		B4814796249C189400E74EC7 /* redzombie-7.png in Resources */ = {isa = PBXBuildFile; fileRef = B481478E249C189400E74EC7 /* redzombie-7.png */; };
 		B4814797249C189400E74EC7 /* redzombie-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B481478F249C189400E74EC7 /* redzombie-1.png */; };
 		B4814798249C189400E74EC7 /* redzombie-8.png in Resources */ = {isa = PBXBuildFile; fileRef = B4814790249C189400E74EC7 /* redzombie-8.png */; };
+		B48BBF5524A4033D00075EFE /* lock.png in Resources */ = {isa = PBXBuildFile; fileRef = B48BBF5424A4033D00075EFE /* lock.png */; };
 		B495F71824A2E2E800BA8EEE /* chill-background-music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B495F71724A2E2E800BA8EEE /* chill-background-music.mp3 */; };
 		B495F71B24A3C4B300BA8EEE /* swipe-up.png in Resources */ = {isa = PBXBuildFile; fileRef = B495F71924A3C4B300BA8EEE /* swipe-up.png */; };
 		B495F71C24A3C4B300BA8EEE /* swipe-below.png in Resources */ = {isa = PBXBuildFile; fileRef = B495F71A24A3C4B300BA8EEE /* swipe-below.png */; };
@@ -256,6 +257,7 @@
 		B481478E249C189400E74EC7 /* redzombie-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-7.png"; path = "animation/redzombie-7.png"; sourceTree = "<group>"; };
 		B481478F249C189400E74EC7 /* redzombie-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-1.png"; path = "animation/redzombie-1.png"; sourceTree = "<group>"; };
 		B4814790249C189400E74EC7 /* redzombie-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-8.png"; path = "animation/redzombie-8.png"; sourceTree = "<group>"; };
+		B48BBF5424A4033D00075EFE /* lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lock.png; path = animation/lock.png; sourceTree = "<group>"; };
 		B495F71724A2E2E800BA8EEE /* chill-background-music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "chill-background-music.mp3"; sourceTree = "<group>"; };
 		B495F71924A3C4B300BA8EEE /* swipe-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "swipe-up.png"; path = "animation/swipe-up.png"; sourceTree = "<group>"; };
 		B495F71A24A3C4B300BA8EEE /* swipe-below.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "swipe-below.png"; path = "animation/swipe-below.png"; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				B402FE712484530B000AB014 /* HomeScene.swift */,
 				B4BCA8E22486C5C000EE3735 /* MenuScene.swift */,
 				B42BF969246BC24F00AD9292 /* GameScene.swift */,
+				B48BBF5424A4033D00075EFE /* lock.png */,
 				B495F71D24A3E37F00BA8EEE /* close-icon.png */,
 				B4577EDD24A15144006D3291 /* pause-icon.png */,
 				B495F71A24A3C4B300BA8EEE /* swipe-below.png */,
@@ -721,6 +724,7 @@
 				B4BAD2ED24870E950008ED87 /* Maassslicer3D.ps in Resources */,
 				B4763B4C2492B5EB00665A99 /* batframe-1.png in Resources */,
 				B402FE842484AFD5000AB014 /* like-icon.png in Resources */,
+				B48BBF5524A4033D00075EFE /* lock.png in Resources */,
 				B402FE902484C7BA000AB014 /* (b)obby-4.png in Resources */,
 				B46F061124706F730002CCEB /* grounds.png in Resources */,
 				B402FE8224846DCF000AB014 /* BubbleLoveDemo.ps in Resources */,

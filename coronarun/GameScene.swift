@@ -506,6 +506,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func gameSuccession() {
         
+        if(levelData.currentLevel <= levelData.maxLevel - 1)
+        {
+            levelData.hasLocks[levelData.currentLevel] = false
+        }
+        
         characterSprite.isHidden = true
         
         let portalMinimize = SKAction.resize(toWidth: 0, height: 0, duration: bgAnimatedInSecs / 10)

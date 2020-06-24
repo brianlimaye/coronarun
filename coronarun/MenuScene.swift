@@ -18,19 +18,108 @@ class MenuScene: SKScene
     var worldDisplay: SKLabelNode = SKLabelNode()
     var futureLevelDisplay: SKLabelNode = SKLabelNode()
     var levelBox: SKShapeNode = SKShapeNode()
-    var levelButtons = [SKShapeNode]()
-    var levelNumerals = [SKLabelNode]()
+    var levelButtons = [SKSpriteNode?](repeating: nil, count: 5)
+    var levelNumerals = [SKLabelNode?](repeating: nil, count: 5)
+    
+    var levelOne: SKShapeNode = SKShapeNode()
+    var levelTwo: SKShapeNode = SKShapeNode()
+    var levelThree: SKShapeNode = SKShapeNode()
+    var levelFour: SKShapeNode = SKShapeNode()
+    var levelFive: SKShapeNode = SKShapeNode()
+    var oneNumeral: SKLabelNode = SKLabelNode()
+    var twoNumeral: SKLabelNode = SKLabelNode()
+    var threeNumeral: SKLabelNode = SKLabelNode()
+    var fourNumeral: SKLabelNode = SKLabelNode()
+    var fiveNumeral: SKLabelNode = SKLabelNode()
+    
+    var levelTwoLock: SKSpriteNode = SKSpriteNode()
+    var levelThreeLock: SKSpriteNode = SKSpriteNode()
+    var levelFourLock: SKSpriteNode = SKSpriteNode()
+    var levelFiveLock: SKSpriteNode = SKSpriteNode()
     
     override func didMove(to view: SKView) {
         
-        completionAnimation()
+        attemptEndAnimation()
         makeCharVisible()
         blurBackground()
         drawWorldDisplay()
         drawLevelButtons()
+        //updateLocks()
+        removeLocks()
     }
     
-    func completionAnimation() {
+    /*
+    func updateLocks() {
+        
+            if(levelData.currentLevel >= levelData.maxLevel)
+            {
+                return
+            }
+        
+            else
+            {
+                for i in 0 ... levelData.currentLevel - 1 {
+                    levelData.hasLocks[i] = false
+                }
+                
+               
+                for j in levelData.currentLevel...levelData.maxLevel-1 {
+                    levelData.hasLocks[j] = true
+                }
+            }
+            
+    }
+    */
+    func removeLocks() {
+        
+
+            for i in 0 ... levelData.maxLevel - 1 {
+                
+                if(!levelData.hasLocks[i])
+                {
+                    updateLockDisplay(level: String(i + 1))
+                }
+            }
+    }
+    
+    func updateLockDisplay(level: String) {
+        
+        switch(level)
+        {
+            case "2":
+                if(levelTwoLock.parent != nil)
+                {
+                    levelTwoLock.removeFromParent()
+                    levelTwo.name = "level-two"
+                    twoNumeral.name = "2"
+                }
+            case "3":
+                if(levelThreeLock.parent != nil)
+                {
+                    levelThreeLock.removeFromParent()
+                    levelThree.name = "level-three"
+                    threeNumeral.name = "3"
+                }
+            case "4":
+                if(levelFourLock.parent != nil)
+                {
+                    levelFourLock.removeFromParent()
+                    levelFour.name = "level-four"
+                    fourNumeral.name = "4"
+                }
+            case "5":
+                if(levelFiveLock.parent != nil)
+                {
+                    levelFiveLock.removeFromParent()
+                    levelFive.name = "level-five"
+                    fiveNumeral.name = "5"
+                }
+            default:
+                print("other lol")
+        }
+    }
+    
+    func attemptEndAnimation() {
         
         if(levelData.hasMastered)
         {
@@ -85,7 +174,7 @@ class MenuScene: SKScene
     func drawLevelButtons() {
         
         //Level One Button
-        let oneNumeral = SKLabelNode(fontNamed: "KeyVirtueRegular")
+        oneNumeral = SKLabelNode(fontNamed: "KeyVirtueRegular")
         oneNumeral.fontColor = .white
         oneNumeral.fontSize = 100
         oneNumeral.text = "1"
@@ -94,7 +183,7 @@ class MenuScene: SKScene
         oneNumeral.isUserInteractionEnabled = false
 
         
-        let levelOne = SKShapeNode(rect: CGRect(x: 0, y: 0, width: self.frame.height / 12, height: self.frame.height / 12), cornerRadius: 25)
+        levelOne = SKShapeNode(rect: CGRect(x: 0, y: 0, width: self.frame.height / 12, height: self.frame.height / 12), cornerRadius: 25)
         levelOne.name = "level-one"
         levelOne.fillColor = .black
         levelOne.strokeColor = .white
@@ -104,17 +193,16 @@ class MenuScene: SKScene
         levelOne.isUserInteractionEnabled = false
         
         //Level Two Button
-        let twoNumeral = SKLabelNode(fontNamed: "KeyVirtueRegular")
+        twoNumeral = SKLabelNode(fontNamed: "KeyVirtueRegular")
         twoNumeral.fontColor = .white
         twoNumeral.fontSize = 100
         twoNumeral.text = "2"
-        twoNumeral.name = "2"
+        twoNumeral.name = "locked"
         twoNumeral.position = CGPoint(x: (self.frame.height / 24), y: (self.frame.height / 48))
         twoNumeral.isUserInteractionEnabled = false
-
         
-        let levelTwo = SKShapeNode(rect: CGRect(x: 0, y: 0, width: self.frame.height / 12, height: self.frame.height / 12), cornerRadius: 25)
-        levelTwo.name = "level-two"
+        levelTwo = SKShapeNode(rect: CGRect(x: 0, y: 0, width: self.frame.height / 12, height: self.frame.height / 12), cornerRadius: 25)
+        levelTwo.name = "locked"
         levelTwo.fillColor = .black
         levelTwo.strokeColor = .white
         levelTwo.lineWidth = 10
@@ -122,18 +210,24 @@ class MenuScene: SKScene
         levelTwo.position = CGPoint(x: self.frame.midX - 50, y: self.frame.midY + 150)
         levelTwo.isUserInteractionEnabled = false
         
+        levelTwoLock = SKSpriteNode(imageNamed: "lock.png")
+        levelTwoLock.size = CGSize(width: levelTwoLock.size.width / 8, height: levelTwoLock.size.height / 8)
+        levelTwo.addChild(levelTwoLock)
+        levelTwoLock.position = CGPoint(x: levelTwoLock.frame.width / 2.25, y: levelTwoLock.frame.height / 2.25)
+        levelTwoLock.zPosition = 1
+        
         //Level Three Button
-        let threeNumeral = SKLabelNode(fontNamed: "KeyVirtueRegular")
+        threeNumeral = SKLabelNode(fontNamed: "KeyVirtueRegular")
         threeNumeral.fontColor = .white
         threeNumeral.fontSize = 100
         threeNumeral.text = "3"
-        threeNumeral.name = "3"
+        threeNumeral.name = "locked"
         threeNumeral.position = CGPoint(x: (self.frame.height / 24), y: (self.frame.height / 48))
         threeNumeral.isUserInteractionEnabled = false
 
         
-        let levelThree = SKShapeNode(rect: CGRect(x: 0, y: 0, width: self.frame.height / 12, height: self.frame.height / 12), cornerRadius: 25)
-        levelThree.name = "level-three"
+        levelThree = SKShapeNode(rect: CGRect(x: 0, y: 0, width: self.frame.height / 12, height: self.frame.height / 12), cornerRadius: 25)
+        levelThree.name = "locked"
         levelThree.fillColor = .black
         levelThree.strokeColor = .white
         levelThree.lineWidth = 10
@@ -141,19 +235,25 @@ class MenuScene: SKScene
         levelThree.position = CGPoint(x: self.frame.midX + 100, y: self.frame.midY + 150)
         levelThree.isUserInteractionEnabled = false
         
+        levelThreeLock = SKSpriteNode(imageNamed: "lock.png")
+        levelThreeLock.size = CGSize(width: levelThreeLock.size.width / 8, height: levelThreeLock.size.height / 8)
+        levelThree.addChild(levelThreeLock)
+        levelThreeLock.position = CGPoint(x: levelThreeLock.frame.width / 2.25, y: levelThreeLock.frame.height / 2.25)
+        levelThreeLock.zPosition = 1
+        
         //Level Four Button
         
-        let fourNumeral = SKLabelNode(fontNamed: "KeyVirtueRegular")
+        fourNumeral = SKLabelNode(fontNamed: "KeyVirtueRegular")
         fourNumeral.fontColor = .white
         fourNumeral.fontSize = 100
         fourNumeral.text = "4"
-        fourNumeral.name = "4"
+        fourNumeral.name = "locked"
         fourNumeral.position = CGPoint(x: (self.frame.height / 24), y: (self.frame.height / 48))
         fourNumeral.isUserInteractionEnabled = false
 
         
-        let levelFour = SKShapeNode(rect: CGRect(x: 0, y: 0, width: self.frame.height / 12, height: self.frame.height / 12), cornerRadius: 25)
-        levelFour.name = "level-four"
+        levelFour = SKShapeNode(rect: CGRect(x: 0, y: 0, width: self.frame.height / 12, height: self.frame.height / 12), cornerRadius: 25)
+        levelFour.name = "locked"
         levelFour.fillColor = .black
         levelFour.strokeColor = .white
         levelFour.lineWidth = 10
@@ -161,19 +261,27 @@ class MenuScene: SKScene
         levelFour.position = CGPoint(x: self.frame.midX - 200, y: self.frame.midY)
         levelFour.isUserInteractionEnabled = false
         
+        levelFourLock = SKSpriteNode(imageNamed: "lock.png")
+        levelFourLock.size = CGSize(width: levelFourLock.size.width / 8, height: levelFourLock.size.height / 8)
+        levelFour.addChild(levelFourLock)
+        levelFourLock.position = CGPoint(x: levelFourLock.frame.width / 2.25, y: levelFourLock.frame.height / 2.25)
+        levelFourLock.zPosition = 1
+        
+        
+        
         //Level Five Button
         
-        let fiveNumeral = SKLabelNode(fontNamed: "KeyVirtueRegular")
+        fiveNumeral = SKLabelNode(fontNamed: "KeyVirtueRegular")
         fiveNumeral.fontColor = .white
         fiveNumeral.fontSize = 100
         fiveNumeral.text = "5"
-        fiveNumeral.name = "5"
+        fiveNumeral.name = "locked"
         fiveNumeral.position = CGPoint(x: (self.frame.height / 24), y: (self.frame.height / 48))
         fiveNumeral.isUserInteractionEnabled = false
 
         
-        let levelFive = SKShapeNode(rect: CGRect(x: 0, y: 0, width: self.frame.height / 12, height: self.frame.height / 12), cornerRadius: 25)
-        levelFive.name = "level-five"
+        levelFive = SKShapeNode(rect: CGRect(x: 0, y: 0, width: self.frame.height / 12, height: self.frame.height / 12), cornerRadius: 25)
+        levelFive.name = "locked"
         levelFive.fillColor = .black
         levelFive.strokeColor = .white
         levelFive.lineWidth = 10
@@ -181,12 +289,17 @@ class MenuScene: SKScene
         levelFive.position = CGPoint(x: self.frame.midX - 50, y: self.frame.midY)
         levelFive.isUserInteractionEnabled = false
         
+        levelFiveLock = SKSpriteNode(imageNamed: "lock.png")
+        levelFiveLock.size = CGSize(width: levelFiveLock.size.width / 8, height: levelFiveLock.size.height / 8)
+        levelFive.addChild(levelFiveLock)
+        levelFiveLock.position = CGPoint(x: levelFiveLock.frame.width / 2.25, y: levelFiveLock.frame.height / 2.25)
+        levelFiveLock.zPosition = 1
+        
         futureLevelDisplay = SKLabelNode(fontNamed: "DKHand-Regular")
         futureLevelDisplay.fontColor = .white
         futureLevelDisplay.fontSize = 64
         futureLevelDisplay.text = "New Levels Coming Soon..."
         futureLevelDisplay.position = CGPoint(x: 0, y: self.frame.midY - 150)
-        
         
         
         levelBox = SKShapeNode(rect: CGRect(x: -self.frame.width / 3, y: self.frame.midY - 400, width: ((2 * self.frame.width) / 3), height: 700))

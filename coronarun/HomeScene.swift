@@ -23,6 +23,7 @@ struct levelData
     static var currentLevel: Int = 1
     static var levelSelected: Int = -1
     static var handSanitizerCount: Int = 0
+    static var hasLocks: [Bool] = [false, true, true, true, true]
     static var didLoadFromHome: Bool = false
     static var hasMastered: Bool = false
     static var pressedReplay: Bool = false
