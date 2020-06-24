@@ -17,6 +17,7 @@ var backGBlur: SKEffectNode = SKEffectNode()
 
 struct levelData
 {
+    static var isMusicPlaying: Bool = true
     static var maxLevel: Int = 5
     static var reachedLevel: Int = 1
     static var currentLevel: Int = 1
@@ -256,6 +257,20 @@ class HomeScene: SKScene
                 menuScene?.scaleMode = .aspectFill
                 self.view?.presentScene(menuScene)
             }
+            if((node?.name == "soundbutton") || (node?.name == "soundshape"))
+            {
+                levelData.isMusicPlaying = !levelData.isMusicPlaying
+                
+                if(levelData.isMusicPlaying)
+                {
+                    GameViewController.audioPlayer.currentTime = 0
+                    GameViewController.audioPlayer.play()
+                }
+                else
+                {
+                    GameViewController.audioPlayer.pause()
+                }
+            }
             else
             {
                 cleanUp()
@@ -368,10 +383,12 @@ class HomeScene: SKScene
     func drawSoundButton() {
         
         soundButton = SKSpriteNode(imageNamed: "volume-on.png")
+        soundButton.name = "soundbutton"
         soundButton.size = CGSize(width: soundButton.size.width / 6 , height: soundButton.size.height / 6)
         soundButton.position = CGPoint(x: 0, y: 0)
         
         soundButtonShape = SKShapeNode(circleOfRadius: 55)
+        soundButton.name = "soundshape"
         soundButtonShape.fillColor = .white
         soundButtonShape.isAntialiased = true
         soundButtonShape.isUserInteractionEnabled = false
@@ -450,5 +467,3 @@ class HomeScene: SKScene
         return frozenPlatform
     }
 }
-
-

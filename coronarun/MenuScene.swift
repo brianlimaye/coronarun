@@ -225,9 +225,9 @@ class MenuScene: SKScene
             let location = touch.previousLocation(in: self)
             let node = self.nodes(at: location).first
             
-            confettiView.removeFromSuperview()
             if((node?.name == "level-one") || (node?.name == "1"))
             {
+                confettiView.removeFromSuperview()
                 print("level-one pressed")
                 levelData.levelSelected = 1
                 
@@ -238,6 +238,7 @@ class MenuScene: SKScene
             }
             else if((node?.name == "level-two") || (node?.name == "2"))
             {
+                confettiView.removeFromSuperview()
                 print("level-two pressed")
                 levelData.levelSelected = 2
                 
@@ -248,6 +249,7 @@ class MenuScene: SKScene
             }
             else if((node?.name == "level-three") || (node?.name == "3"))
             {
+                confettiView.removeFromSuperview()
                 print("level-three pressed")
                 levelData.levelSelected = 3
                 
@@ -258,6 +260,7 @@ class MenuScene: SKScene
             }
             else if((node?.name == "level-four") || (node?.name == "4"))
             {
+                confettiView.removeFromSuperview()
                 print("level-four pressed")
                 levelData.levelSelected = 4
                 
@@ -268,6 +271,7 @@ class MenuScene: SKScene
             }
             else if((node?.name == "level-five") || (node?.name == "5"))
             {
+                confettiView.removeFromSuperview()
                 print("level-five pressed")
                 levelData.levelSelected = 5
                 

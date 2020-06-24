@@ -9,12 +9,15 @@
 import UIKit
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 class GameViewController: UIViewController {
     
     static var homeScene: HomeScene?
     static var menuScene: MenuScene?
     static var gameScene: GameScene?
+    
+    static var audioPlayer = AVAudioPlayer()
 
     let isDebug: Bool = {
            
@@ -35,6 +38,18 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        do
+        {
+            GameViewController.audioPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "chill-background-music", ofType: "mp3")!))
+                GameViewController.audioPlayer.prepareToPlay()
+        }
+        catch {
+            print(error)
+        }
+        
+        playBackgroundMusic()
+        
+        
         if let view = self.view as! SKView? {
             
                 let homeScene = HomeScene(fileNamed: "HomeScene")
@@ -46,10 +61,40 @@ class GameViewController: UIViewController {
                 notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
 
                 view.ignoresSiblingOrder = true
-                //view.showsFPS = true
-                //view.showsNodeCount = true
+                view.showsFPS = true
+                view.showsNodeCount = true
                 //view.showsPhysics = true
         }
+    }
+    
+    func playBackgroundMusic() -> Void {
+        
+        GameViewController.audioPlayer.play()
+    }
+    
+    func pause() -> Void {
+        
+        if(GameViewController.audioPlayer.isPlaying)
+        {
+            GameViewController.audioPlayer.stop()
+        }
+        else
+        {
+
+        }
+    }
+    
+    func restart() -> Void {
+        
+           if(GameViewController.audioPlayer.isPlaying)
+           {
+               GameViewController.audioPlayer.currentTime = 0
+               GameViewController.audioPlayer.play()
+           }
+           else
+           {
+               GameViewController.audioPlayer.play()
+           }
     }
 
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
@@ -176,11 +221,13 @@ class GameViewController: UIViewController {
 
         print("App moved to background!")
         GameViewController.gameScene?.isPaused = true
+        pause()
     }
     
     @objc func appMovedToForeground() {
         
         print("App moved to foreground!")
         GameViewController.gameScene?.isPaused = false
+        playBackgroundMusic()
     }
 }

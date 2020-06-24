@@ -31,7 +31,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
        static var contactDetected: Bool = false
        static var i: Int = 0
        static var charInitialPos: CGPoint = CGPoint(x: 0, y: 0)
-       static var zombieInitalSize: CGSize = CGSize(width: 0, height: 0)
+       static var zombieInitialSize: CGSize = CGSize(width: 0, height: 0)
        
        static var levelOneObjects: [Int] = [2, 8, 4, 2, 5, 8, 2, 1, 2, 1, 6, 8, 3, 7]
        static var levelTwoObjects: [Int] = [4, 3, 2, 8, 3, 3, 8, 5, 1, 2, 6, 1, 8, 7]
@@ -45,6 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     let maxTimeMoving: CGFloat = 2
     let bgAnimatedInSecs: TimeInterval = 3
     let MIN_THRESHOLD_MS: Double = 1000
+    
     static let defaults = UserDefaults.standard
     
     var isMasked: Bool = false
@@ -64,7 +65,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var blueGermCloud: SKSpriteNode = SKSpriteNode()
     var greenGermCloud: SKSpriteNode = SKSpriteNode()
     var bananaPeel: SKSpriteNode = SKSpriteNode()
-    var littleGirl: SKSpriteNode = SKSpriteNode()
     var replayButton: SKSpriteNode = SKSpriteNode()
     var replayShape: SKShapeNode = SKShapeNode()
     var nextLevelButton: SKSpriteNode = SKSpriteNode()
@@ -75,16 +75,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var menuButtonShape: SKShapeNode = SKShapeNode()
     var exclamationMark: SKSpriteNode = SKSpriteNode()
     var exclamationShape: SKShapeNode = SKShapeNode()
-    var pauseIcon: SKSpriteNode = SKSpriteNode()
-    var pauseIconShape: SKShapeNode = SKShapeNode()
     var handSanitizerScore: Int = 0
     var temp: Int = 0
     var objNum: Int = 0
-    var lives: Int = 1
     var isLevelPassed: Bool = false
+    var gameIsPaused: Bool = false
     var timer: Timer = Timer()
-    var runAction: SKAction = SKAction()
-    var maskedRunAction: SKAction = SKAction()
     var lastTime: Double = 0
     var gameOverDisplay: SKShapeNode = SKShapeNode()
     var levelAlert: SKLabelNode = SKLabelNode()
@@ -96,6 +92,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var miniHandSanitizer: SKSpriteNode = SKSpriteNode()
     var scoreLabelShape: SKShapeNode = SKShapeNode()
     var scoreLabel: SKLabelNode = SKLabelNode()
+    /*
+    var pauseIcon: SKSpriteNode = SKSpriteNode()
+    var pauseIconShape: SKShapeNode = SKShapeNode()
+    var pauseDisplay: SKShapeNode = SKShapeNode()
+    var pauseLevelDisplay: SKLabelNode = SKLabelNode()
+    var pauseStatus: SKLabelNode = SKLabelNode()
+    var tapToContinue: SKLabelNode = SKLabelNode()
+ */
     
     override func didMove(to view: SKView) -> Void {
 
@@ -110,7 +114,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         //GameScene.defaults.removeObject(forKey: "handsanitizer")
         
         initScore()
-        initPauseButton()
         drawCharacter()
         resumeNodes()
         initObjects()
@@ -124,8 +127,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(slideDown))
         swipeDown.direction = .down
         self.view?.addGestureRecognizer(swipeDown)
-        
-        print(self.children.count)
     }
     
     func playSneezeSound() {
@@ -249,7 +250,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func showCurrentLevel() {
         
-       
         levelDisplay.fontColor = .white
         levelDisplay.fontSize = 60
         levelDisplay.position = CGPoint(x: 0, y: self.frame.height / 14)
@@ -263,15 +263,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         }
         else
         {
+            
             if(levelData.pressedReplay)
             {
                 levelDisplay.text = "World 1: Level " + String(levelData.currentLevel)
             }
             else
             {
-                
-                levelData.currentLevel = levelData.reachedLevel
-                levelDisplay.text = "World 1: Level " + String(levelData.reachedLevel)
+                if(!levelData.hasMastered)
+                {
+                    levelData.currentLevel = levelData.reachedLevel
+                    levelDisplay.text = "World 1: Level " + String(levelData.reachedLevel)
+                }
+                else
+                {
+                    levelDisplay.text = "World 1: Level " + String(levelData.currentLevel)
+                }
             }
         }
         
@@ -700,27 +707,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         return (since1970 * 1000)
     }
     
+    /*
     func initPauseButton() -> Void {
         
         pauseIcon = SKSpriteNode(imageNamed: "pause-icon")
+        pauseIcon.name = "pausebutton"
         pauseIcon.size = CGSize(width: pauseIcon.size.width * 1.5, height: pauseIcon.size.height * 1.5)
+        pauseIcon.isUserInteractionEnabled = false
         pauseIcon.position = CGPoint(x: 0, y: 0)
         pauseIcon.zPosition = 5
         
         if(UIDevice.current.userInterfaceIdiom == .phone)
         {
-            pauseIcon.position.x = -self.frame.width / 3
-            pauseIcon.position.y = self.frame.height / 2.25
+            pauseIcon.position.x = self.frame.minX / 1.48
+            pauseIcon.position.y = self.frame.maxY / 1.18
         }
         
         if(UIDevice.current.userInterfaceIdiom == .pad)
         {
-            pauseIcon.position.x = self.frame.width / 2
-            pauseIcon.position.y = self.frame.height / 2.75
+            pauseIcon.position.x = -self.frame.width / 2.7
+            pauseIcon.position.y = self.frame.height / 3.25
         }
         
         self.addChild(pauseIcon)
     }
+ */
     
     func initReplayButton() -> Void {
         
@@ -822,7 +833,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         levelAlert.fontColor = .white
         levelAlert.fontSize = 72
         levelAlert.position = CGPoint(x: 0, y: 200)
-        levelAlert.text = "Level Beta:"
+        levelAlert.text = "Level " + String(levelData.currentLevel) + ":"
         
         levelStatusAlert = SKLabelNode(fontNamed: "CarbonBl-Regular")
         levelStatusAlert.fontSize = 72
@@ -842,8 +853,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             levelStatusAlert.text = "INCOMPLETE"
         }
         
-        self.initReplayButton()
-        self.initHomeButton()
+        initReplayButton()
+        initHomeButton()
         
         self.addChild(gameOverDisplay)
         self.addChild(levelAlert)
@@ -1197,6 +1208,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func initObjects() -> Void{
         
+         /*
+         tapToContinue = SKLabelNode(fontNamed: "Balibold-Regular")
+         tapToContinue.fontColor = .white
+         tapToContinue.fontSize = 30
+         tapToContinue.text = "Click to continue"
+         tapToContinue.position = CGPoint(x: 0, y: 0)
+         tapToContinue.alpha = 1
+         
+         tapToContinue.isHidden = true
+         self.addChild(tapToContinue)
+         
+        
+        pauseDisplay = SKShapeNode(rect: CGRect(x: -self.frame.width, y: self.frame.midY - 20 + (self.frame.height / 4.5), width: self.frame.width * 2, height: -self.frame.height / 8))
+        pauseDisplay.fillColor = .black
+        pauseDisplay.alpha = 0.5
+                
+        pauseLevelDisplay = SKLabelNode(fontNamed: "CarbonBl-Regular")
+        pauseLevelDisplay.fontColor = .white
+        pauseLevelDisplay.fontSize = 72
+        pauseLevelDisplay.position = CGPoint(x: 0, y: 200)
+        pauseLevelDisplay.text = "Level Beta:"
+        
+        pauseStatus = SKLabelNode(fontNamed: "CarbonBl-Regular")
+        pauseStatus.text = "PAUSED"
+        pauseStatus.fontColor = .gray
+        pauseStatus.fontSize = 72
+        pauseStatus.position = CGPoint(x: 0, y: 125)
+        
+        self.addChild(pauseDisplay)
+        pauseDisplay.isHidden = true
+        self.addChild(pauseLevelDisplay)
+        pauseLevelDisplay.isHidden = true
+        self.addChild(pauseStatus)
+        pauseStatus.isHidden = true
+ */
+        
         //Mask
         
         mask = SKSpriteNode(imageNamed: "mask.png")
@@ -1220,7 +1267,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         blondeZombie.lightingBitMask = 50
         blondeZombie.xScale = -1
         blondeZombie.size = CGSize(width: blondeZombie.size.width, height: blondeZombie.size.height)
-        game.zombieInitalSize = blondeZombie.size
+        game.zombieInitialSize = blondeZombie.size
         blondeZombie.position = CGPoint(x: self.size.width, y: game.charInitialPos.y)
         blondeZombie.zPosition = 4
         
@@ -1514,7 +1561,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func revertBlondeZombie() {
         
-        let resizeReversion = SKAction.resize(toWidth: game.zombieInitalSize.width, height: game.zombieInitalSize.height, duration: 0)
+        let resizeReversion = SKAction.resize(toWidth: game.zombieInitialSize.width, height: game.zombieInitialSize.height, duration: 0)
         let shiftReversion = SKAction.moveTo(x: self.frame.width, duration: 0)
         
         let resizeRepeater = SKAction.repeat(resizeReversion, count: 1)
@@ -1526,7 +1573,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func revertRedZombie() {
         
-        let resizeReversion = SKAction.resize(toWidth: game.zombieInitalSize.width, height: game.zombieInitalSize.height, duration: 0)
+        let resizeReversion = SKAction.resize(toWidth: game.zombieInitialSize.width, height: game.zombieInitialSize.height, duration: 0)
         let shiftReversion = SKAction.moveTo(x: self.frame.width, duration: 0)
         
         let resizeRepeater = SKAction.repeat(resizeReversion, count: 1)
@@ -1613,29 +1660,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
     }
     
-    func drawGirl() -> Void {
-    
-        let girlFrames:[SKTexture] = [SKTexture(imageNamed: "jessica-1.png"), SKTexture(imageNamed: "jessica-2.png"), SKTexture(imageNamed: "jessica-3.png"), SKTexture(imageNamed: "jessica-4.png"), SKTexture(imageNamed: "jessica-5.png"), SKTexture(imageNamed: "jessica-6.png")]
-
-        let runningGirl = SKAction.animate(with: girlFrames, timePerFrame: 0.25)
-        let girlShift = SKAction.moveTo(x: -self.frame.size.width * 2, duration: bgAnimatedInSecs * 1.9)
-        
-        //let girlAction = SKAction.sequence([girlShift, girlReversion])
-        
-        let moveForever = SKAction.repeat(girlShift, count: 1)
-        let runForever = SKAction.repeatForever(runningGirl)
-    
-        littleGirl.run(runForever, completion: girlReversion)
-        littleGirl.run(moveForever)
-    }
-    
-    func girlReversion() {
-        
-        let girlReversion = SKAction.moveTo(x: self.frame.size.width * 2, duration: 0)
-        let peelRevert = SKAction.repeat(girlReversion, count: 1)
-        littleGirl.run(peelRevert)
-    }
-    
     func peelDieAnimation() -> Void {
 
         self.view?.gestureRecognizers?.removeAll()
@@ -1707,6 +1731,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         endGame()
     }
     
+    /*
+    func showPauseMenu() {
+        
+        gameIsPaused = true
+        pauseDisplay.isHidden = false
+        pauseLevelDisplay.isHidden = false
+        pauseStatus.isHidden = false
+        
+        showClickToContinue()
+    }
+    
+    func showClickToContinue() {
+        
+         
+         let fadeIn = SKAction.fadeIn(withDuration: 1)
+         let fadeOut = SKAction.fadeOut(withDuration: 1)
+        
+         let fadeSequence = SKAction.sequence([fadeIn, fadeOut])
+         
+         let fadeForever = SKAction.repeatForever(fadeSequence)
+        
+         tapToContinue.isHidden = false
+         tapToContinue.run(fadeForever)
+    }
+ */
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         if let touch = touches.first {
@@ -1714,6 +1764,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             let location = touch.previousLocation(in: self)
             let node = self.nodes(at: location).first
             
+            /*
+            if(node?.name == "pausebutton")
+            {
+                if(gameIsPaused)
+                {
+                    return
+                }
+                else
+                {
+                    print("pause-button pressed")
+                    let scale = SKAction.scale(to: 0.9, duration: 0.3)
+                    pauseGame()
+                    pauseIcon.run(scale, completion: showPauseMenu)
+                }
+            }
+ */
+
             if(game.IsOver == true)
             {
                 if((node?.name == "replaybutton") || (node?.name == "replayshape"))
@@ -1817,13 +1884,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             batSprite3.run(bat3Movement)
         }
          
-
         GameScene.defaults.set(levelData.handSanitizerCount, forKey: "handsanitizer")
         timer.invalidate()
         self.showEndingMenu()
         pauseBackgAndPlatform()
         temp = 0
-        isLevelPassed = false
+        if(!isLevelPassed)
+        {
+            isLevelPassed = false
+        }
         game.IsOver = true
     }
     
@@ -1862,6 +1931,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func pauseGame() {
         
+        pauseAllObjects()
+        characterSprite.isPaused = true
+        timer.invalidate()
         for child in cameraNode.children
         {
             if(child.isEqual(to: backGBlur))
@@ -1879,8 +1951,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         }
     }
     
+    func pauseAllObjects() {
+        
+        bananaPeel.isPaused = true
+        redZombie.isPaused = true
+        blondeZombie.isPaused = true
+        batSprite.isPaused = true
+        batSprite2.isPaused = true
+        batSprite3.isPaused = true
+        blueGerms.isPaused = true
+        greenGerms.isPaused = true
+        soap.isPaused = true
+        glitter.isPaused = true
+        mask.isPaused = true
+    }
+    
+    func resumeAllObjects() {
+        
+        bananaPeel.isPaused = false
+        redZombie.isPaused = false
+        blondeZombie.isPaused = false
+        batSprite.isPaused = false
+        batSprite2.isPaused = false
+        batSprite3.isPaused = false
+        blueGerms.isPaused = false
+        greenGerms.isPaused = false
+        soap.isPaused = false
+        glitter.isPaused = false
+        mask.isPaused = false
+    }
+    
     func resumeGame() {
         
+        resumeAllObjects()
+        characterSprite.isPaused = false
         for child in cameraNode.children
         {
             if(child.isEqual(to: backGBlur))
@@ -1897,12 +2001,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             }
         }
     }
-    
-    
-    
-    /*
-    override func update(_ currentTime: CFTimeInterval) {
-        
-    }
- */
 }

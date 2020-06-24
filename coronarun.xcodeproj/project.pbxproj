@@ -98,6 +98,7 @@
 		B4814796249C189400E74EC7 /* redzombie-7.png in Resources */ = {isa = PBXBuildFile; fileRef = B481478E249C189400E74EC7 /* redzombie-7.png */; };
 		B4814797249C189400E74EC7 /* redzombie-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B481478F249C189400E74EC7 /* redzombie-1.png */; };
 		B4814798249C189400E74EC7 /* redzombie-8.png in Resources */ = {isa = PBXBuildFile; fileRef = B4814790249C189400E74EC7 /* redzombie-8.png */; };
+		B495F71824A2E2E800BA8EEE /* chill-background-music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B495F71724A2E2E800BA8EEE /* chill-background-music.mp3 */; };
 		B49EE9F024A1A85400AECD41 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = B49EE9EF24A1A85400AECD41 /* Podfile */; };
 		B49EEC052481E8CD001309E2 /* menu-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B49EEC042481E8CC001309E2 /* menu-icon.png */; };
 		B4B581FD247B660D0043CEEB /* bobby-8.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B581ED247B660C0043CEEB /* bobby-8.png */; };
@@ -252,6 +253,7 @@
 		B481478E249C189400E74EC7 /* redzombie-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-7.png"; path = "animation/redzombie-7.png"; sourceTree = "<group>"; };
 		B481478F249C189400E74EC7 /* redzombie-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-1.png"; path = "animation/redzombie-1.png"; sourceTree = "<group>"; };
 		B4814790249C189400E74EC7 /* redzombie-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-8.png"; path = "animation/redzombie-8.png"; sourceTree = "<group>"; };
+		B495F71724A2E2E800BA8EEE /* chill-background-music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "chill-background-music.mp3"; sourceTree = "<group>"; };
 		B49EE9EF24A1A85400AECD41 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B49EEC042481E8CC001309E2 /* menu-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu-icon.png"; path = "animation/menu-icon.png"; sourceTree = "<group>"; };
 		B4B581ED247B660C0043CEEB /* bobby-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bobby-8.png"; path = "animation/bobby-8.png"; sourceTree = "<group>"; };
@@ -480,6 +482,7 @@
 				B42BF96D246BC24F00AD9292 /* Main.storyboard */,
 				B42BF972246BC25100AD9292 /* LaunchScreen.storyboard */,
 				B42BF975246BC25100AD9292 /* Info.plist */,
+				B495F71624A2E20900BA8EEE /* Music */,
 			);
 			path = coronarun;
 			sourceTree = "<group>";
@@ -500,6 +503,14 @@
 				B42BF98B246BC25100AD9292 /* Info.plist */,
 			);
 			path = coronarunUITests;
+			sourceTree = "<group>";
+		};
+		B495F71624A2E20900BA8EEE /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				B495F71724A2E2E800BA8EEE /* chill-background-music.mp3 */,
+			);
+			path = Music;
 			sourceTree = "<group>";
 		};
 		E0C3E1AB7E10D9EBB9356807 /* Pods */ = {
@@ -626,6 +637,7 @@
 				B4BCA8DF2486C52500EE3735 /* MenuScene.sks in Resources */,
 				B4B7DB822472356600D8C129 /* bandit-11.png in Resources */,
 				B4FFE52E249A79FE00DAC9EE /* blondezombie-8.png in Resources */,
+				B495F71824A2E2E800BA8EEE /* chill-background-music.mp3 in Resources */,
 				B46F060A24706F730002CCEB /* bandit-2.png in Resources */,
 				B4B73A4B2470FE3B004200E9 /* up-arrow.png in Resources */,
 				B46F060E24706F730002CCEB /* bandit-8.png in Resources */,
