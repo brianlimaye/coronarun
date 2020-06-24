@@ -99,6 +99,9 @@
 		B4814797249C189400E74EC7 /* redzombie-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B481478F249C189400E74EC7 /* redzombie-1.png */; };
 		B4814798249C189400E74EC7 /* redzombie-8.png in Resources */ = {isa = PBXBuildFile; fileRef = B4814790249C189400E74EC7 /* redzombie-8.png */; };
 		B495F71824A2E2E800BA8EEE /* chill-background-music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B495F71724A2E2E800BA8EEE /* chill-background-music.mp3 */; };
+		B495F71B24A3C4B300BA8EEE /* swipe-up.png in Resources */ = {isa = PBXBuildFile; fileRef = B495F71924A3C4B300BA8EEE /* swipe-up.png */; };
+		B495F71C24A3C4B300BA8EEE /* swipe-below.png in Resources */ = {isa = PBXBuildFile; fileRef = B495F71A24A3C4B300BA8EEE /* swipe-below.png */; };
+		B495F71E24A3E37F00BA8EEE /* close-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B495F71D24A3E37F00BA8EEE /* close-icon.png */; };
 		B49EE9F024A1A85400AECD41 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = B49EE9EF24A1A85400AECD41 /* Podfile */; };
 		B49EEC052481E8CD001309E2 /* menu-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B49EEC042481E8CC001309E2 /* menu-icon.png */; };
 		B4B581FD247B660D0043CEEB /* bobby-8.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B581ED247B660C0043CEEB /* bobby-8.png */; };
@@ -254,6 +257,9 @@
 		B481478F249C189400E74EC7 /* redzombie-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-1.png"; path = "animation/redzombie-1.png"; sourceTree = "<group>"; };
 		B4814790249C189400E74EC7 /* redzombie-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "redzombie-8.png"; path = "animation/redzombie-8.png"; sourceTree = "<group>"; };
 		B495F71724A2E2E800BA8EEE /* chill-background-music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "chill-background-music.mp3"; sourceTree = "<group>"; };
+		B495F71924A3C4B300BA8EEE /* swipe-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "swipe-up.png"; path = "animation/swipe-up.png"; sourceTree = "<group>"; };
+		B495F71A24A3C4B300BA8EEE /* swipe-below.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "swipe-below.png"; path = "animation/swipe-below.png"; sourceTree = "<group>"; };
+		B495F71D24A3E37F00BA8EEE /* close-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close-icon.png"; path = "animation/close-icon.png"; sourceTree = "<group>"; };
 		B49EE9EF24A1A85400AECD41 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B49EEC042481E8CC001309E2 /* menu-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu-icon.png"; path = "animation/menu-icon.png"; sourceTree = "<group>"; };
 		B4B581ED247B660C0043CEEB /* bobby-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bobby-8.png"; path = "animation/bobby-8.png"; sourceTree = "<group>"; };
@@ -370,7 +376,10 @@
 				B402FE712484530B000AB014 /* HomeScene.swift */,
 				B4BCA8E22486C5C000EE3735 /* MenuScene.swift */,
 				B42BF969246BC24F00AD9292 /* GameScene.swift */,
+				B495F71D24A3E37F00BA8EEE /* close-icon.png */,
 				B4577EDD24A15144006D3291 /* pause-icon.png */,
+				B495F71A24A3C4B300BA8EEE /* swipe-below.png */,
+				B495F71924A3C4B300BA8EEE /* swipe-up.png */,
 				B45B6BA2249FF67C005577B6 /* mask.png */,
 				B45B6B8E249EC734005577B6 /* MotionControl-BoldItalic.ps */,
 				B4814785249AE8EA00E74EC7 /* exclamation-mark.png */,
@@ -654,11 +663,13 @@
 				B463048B2485BBF5004CC114 /* idle-4.png in Resources */,
 				B46304832485AD0D004CC114 /* (b)obby-2 (1).png in Resources */,
 				B46304852485AD0D004CC114 /* (b)obby-4 (1).png in Resources */,
+				B495F71C24A3C4B300BA8EEE /* swipe-below.png in Resources */,
 				B402FE782484617F000AB014 /* green-splat.png in Resources */,
 				B42BF96F246BC24F00AD9292 /* Main.storyboard in Resources */,
 				B45B6B99249FBF8C005577B6 /* masked-bobby-8.png in Resources */,
 				B4701F0E24958DD400A3CED8 /* world1.png in Resources */,
 				B4B58205247B660D0043CEEB /* bobby-10.png in Resources */,
+				B495F71B24A3C4B300BA8EEE /* swipe-up.png in Resources */,
 				B42E335B24953D3900AB9C18 /* Assets.xcassets in Resources */,
 				B4814794249C189400E74EC7 /* redzombie-6.png in Resources */,
 				B45B6B9B249FBF8C005577B6 /* masked-bobby-9.png in Resources */,
@@ -724,6 +735,7 @@
 				B402FE70248452EB000AB014 /* HomeScene.sks in Resources */,
 				B45B6BA1249FBF8C005577B6 /* masked-bobby-13.png in Resources */,
 				B421044524983235005AC764 /* HABESHAPIXELS-Bold.ps in Resources */,
+				B495F71E24A3E37F00BA8EEE /* close-icon.png in Resources */,
 				B49EEC052481E8CD001309E2 /* menu-icon.png in Resources */,
 				B402FE8024846BA6000AB014 /* Balibold-Regular.ps in Resources */,
 				B42BF974246BC25100AD9292 /* LaunchScreen.storyboard in Resources */,

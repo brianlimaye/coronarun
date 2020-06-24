@@ -31,6 +31,25 @@ struct levelData
 
 class HomeScene: SKScene
 {
+    var tutorialPopup: SKShapeNode = SKShapeNode()
+    var tutorialText: SKLabelNode = SKLabelNode()
+    var miniPeel: SKSpriteNode = SKSpriteNode()
+    var swipeUpIcon: SKSpriteNode = SKSpriteNode()
+    var swipeUpText: SKLabelNode = SKLabelNode()
+    var miniBat: SKSpriteNode = SKSpriteNode()
+    var swipeDownIcon: SKSpriteNode = SKSpriteNode()
+    var swipeDownText: SKLabelNode = SKLabelNode()
+    var miniSoap: SKSpriteNode = SKSpriteNode()
+    var soapText: SKLabelNode = SKLabelNode()
+    var miniZombie: SKSpriteNode = SKSpriteNode()
+    var zombieText: SKLabelNode = SKLabelNode()
+    var miniMask: SKSpriteNode = SKSpriteNode()
+    var maskText: SKLabelNode = SKLabelNode()
+    var swipeUp: SKSpriteNode = SKSpriteNode()
+    var swipeDown: SKSpriteNode = SKSpriteNode()
+    var closeIcon: SKSpriteNode = SKSpriteNode()
+    var closeShape: SKShapeNode = SKShapeNode()
+    
     var frozenBackground: SKSpriteNode = SKSpriteNode()
     var frozenPlatform: SKSpriteNode = SKSpriteNode()
     var idleCharacter: SKSpriteNode = SKSpriteNode()
@@ -65,6 +84,7 @@ class HomeScene: SKScene
             backGBlur.removeAllChildren()
         }
         
+        initTutorial()
         initBlurEffect()
         initTitleScreen()
         addBackgFreezeFrame()
@@ -88,8 +108,150 @@ class HomeScene: SKScene
 
     }
     
-    func convert(point: CGPoint)->CGPoint {
-        return self.view!.convert(CGPoint(x: point.x, y:self.view!.frame.height-point.y), to:self)
+    func initText() {
+        
+        swipeUpText = SKLabelNode(fontNamed: "DKHand-Regular")
+        swipeUpText.fontColor = .white
+        swipeUpText.fontSize = 30
+        swipeUpText.text = "Swipe up to jump and dodge peels"
+        swipeUpText.zPosition = 5
+        tutorialPopup.addChild(swipeUpText)
+        swipeUpText.position = CGPoint(x: -10, y: tutorialPopup.frame.size.height / 4.5)
+
+        
+        swipeDownText = SKLabelNode(fontNamed: "DKHand-Regular")
+        swipeDownText.fontColor = .white
+        swipeDownText.fontSize = 30
+        swipeDownText.text = "Swipe down to slide and dodge bats"
+        swipeDownText.zPosition = 5
+        tutorialPopup.addChild(swipeDownText)
+        swipeDownText.position = CGPoint(x: -5, y: tutorialPopup.frame.size.height / 9.5)
+        
+        zombieText = SKLabelNode(fontNamed: "DKHand-Regular")
+        zombieText.fontColor = .white
+        zombieText.fontSize = 30
+        zombieText.text = "Swipe up/down to dodge the zombie's sneeze"
+        zombieText.zPosition = 5
+        tutorialPopup.addChild(zombieText)
+        zombieText.position = CGPoint(x: -46, y: -tutorialPopup.frame.size.height / 12)
+        
+        soapText = SKLabelNode(fontNamed: "DKHand-Regular")
+        soapText.fontColor = .white
+        soapText.fontSize = 30
+        soapText.text = "Collect bottles to trade in for future rewards"
+        soapText.zPosition = 5
+        tutorialPopup.addChild(soapText)
+        soapText.position = CGPoint(x: -42, y: -tutorialPopup.frame.size.height / 4)
+        
+        
+        maskText = SKLabelNode(fontNamed: "DKHand-Regular")
+        maskText.fontColor = .white
+        maskText.fontSize = 30
+        maskText.text = "Collect masks in-game for an extra life"
+        maskText.zPosition = 5
+        tutorialPopup.addChild(maskText)
+        maskText.position = CGPoint(x: -70, y: -tutorialPopup.frame.size.height / 2.5)
+
+    }
+    
+    func initMiniObjects() {
+        
+        miniZombie = SKSpriteNode(imageNamed: "blondezombie-5.png")
+        miniZombie.size = CGSize(width: miniZombie.size.width / 2.5, height: miniZombie.size.height / 2.5)
+        miniZombie.position = CGPoint(x: tutorialPopup.frame.size.width / 2.75, y: -15)
+
+        miniZombie.zPosition = 5
+        tutorialPopup.addChild(miniZombie)
+        
+        miniPeel = SKSpriteNode(imageNamed: "banana-peel.png")
+        miniPeel.size = CGSize(width: miniPeel.size.width / 10, height: miniPeel.size.height / 10)
+        miniPeel.position = CGPoint(x: tutorialPopup.frame.size.width / 2.75, y: tutorialPopup.frame.size.height / 4)
+        miniPeel.zPosition = 5
+        tutorialPopup.addChild(miniPeel)
+        
+        //miniPeel.isHidden = true
+        
+        miniBat = SKSpriteNode(imageNamed: "batframe-1.png")
+        miniBat.size = CGSize(width: miniBat.size.width / 4, height: miniBat.size.height / 4)
+        miniBat.position = CGPoint(x: tutorialPopup.frame.size.width / 2.75, y: tutorialPopup.frame.size.height / 8)
+        miniBat.zPosition = 5
+        //miniBat.isHidden = true
+        tutorialPopup.addChild(miniBat)
+        
+        miniSoap = SKSpriteNode(imageNamed: "hand-sanitizer.png")
+        miniSoap.size = CGSize(width: miniSoap.size.width / 12, height: miniSoap.size.height / 12)
+        miniSoap.position = CGPoint(x: tutorialPopup.frame.size.width / 2.75, y: -tutorialPopup.frame.size.height / 4.25)
+        miniSoap.zPosition = 5
+        //miniSoap.isHidden = true
+        tutorialPopup.addChild(miniSoap)
+        
+        miniMask = SKSpriteNode(imageNamed: "mask.png")
+        miniMask.xScale = -1
+        miniMask.size = CGSize(width: miniMask.size.width / 10, height: miniMask.size.height / 10)
+        miniMask.position = CGPoint(x: tutorialPopup.frame.size.width / 3.25, y: -tutorialPopup.frame.size.height / 2.5)
+        miniMask.zPosition = 5
+        //miniSoap.isHidden = true
+        tutorialPopup.addChild(miniMask)
+        
+        swipeUp = SKSpriteNode(imageNamed: "swipe-up")
+        swipeUp.size = CGSize(width: swipeUp.size.width / 10, height: swipeUp.size.height / 10)
+        swipeUp.position = CGPoint(x: -tutorialPopup.frame.size.width / 2.5, y: tutorialPopup.frame.size.height / 4)
+        swipeUp.zPosition = 5
+        tutorialPopup.addChild(swipeUp)
+        
+        swipeDown = SKSpriteNode(imageNamed: "swipe-below")
+        swipeDown.size = CGSize(width: swipeDown.size.width / 10, height: swipeDown.size.height / 10)
+        swipeDown.position = CGPoint(x: -tutorialPopup.frame.size.width / 2.5, y: tutorialPopup.frame.size.height / 8)
+        swipeDown.zPosition = 5
+        tutorialPopup.addChild(swipeDown)
+        
+        closeIcon = SKSpriteNode(imageNamed: "close-icon.png")
+        closeIcon.name = "closebutton"
+        closeIcon.isUserInteractionEnabled = false
+        closeIcon.size = CGSize(width: closeIcon.size.width / 40, height: closeIcon.size.height / 40)
+        closeIcon.zPosition = 5
+        closeIcon.position = CGPoint(x: tutorialPopup.frame.size.width / 2.25, y: tutorialPopup.frame.size.height / 2.3)
+        tutorialPopup.addChild(closeIcon)
+        
+    }
+    
+    func initTutorial() {
+        
+        tutorialPopup = SKShapeNode(rect: CGRect(x: -self.frame.width / 3, y: -self.frame.height / 6, width: (2 * self.frame.width) / 3, height: (self.frame.height) / 3))
+        tutorialPopup.fillColor = .orange
+        tutorialPopup.strokeColor = .white
+        tutorialPopup.lineWidth = 5
+        tutorialPopup.zPosition = 4
+        
+        tutorialText = SKLabelNode(fontNamed: "DKHand-Regular")
+        tutorialText.fontColor = .white
+        tutorialText.fontSize = 40
+        tutorialText.text = "Help Bobby Escape The Sick World"
+        tutorialPopup.addChild(tutorialText)
+        tutorialText.position.y = tutorialPopup.frame.size.height / 3
+        
+        initMiniObjects()
+        initText()
+        tutorialPopup.alpha = 0.0
+        self.addChild(tutorialPopup)
+    }
+    
+    func showTutorial() {
+       
+        let fadeIn = SKAction.fadeIn(withDuration: 0.5)
+        
+        let fadeRepeater = SKAction.repeat(fadeIn, count: 1)
+        
+        tutorialPopup.run(fadeRepeater)
+    }
+    
+    func hideTutorial() {
+        
+        let fadeOut = SKAction.fadeOut(withDuration: 0)
+        
+        let fadeRepeater = SKAction.repeat(fadeOut, count: 1)
+        
+        tutorialPopup.run(fadeRepeater)
     }
     
     func showScore() {
@@ -257,20 +419,32 @@ class HomeScene: SKScene
                 menuScene?.scaleMode = .aspectFill
                 self.view?.presentScene(menuScene)
             }
-            if((node?.name == "soundbutton") || (node?.name == "soundshape"))
+            else if((node?.name == "soundbutton") || (node?.name == "soundshape"))
             {
                 levelData.isMusicPlaying = !levelData.isMusicPlaying
                 
                 if(levelData.isMusicPlaying)
                 {
+                    soundButton.texture = SKTexture(imageNamed: "volume-off")
                     GameViewController.audioPlayer.currentTime = 0
                     GameViewController.audioPlayer.play()
                 }
                 else
                 {
+                    soundButton.texture = SKTexture(imageNamed: "volume-on")
                     GameViewController.audioPlayer.pause()
                 }
             }
+            else if((node?.name == "tutorialbutton") || (node?.name == "tutorialshape"))
+            {
+                showTutorial()
+            }
+                
+            else if(node?.name == "closebutton")
+            {
+                hideTutorial()
+            }
+            
             else
             {
                 cleanUp()
@@ -364,10 +538,14 @@ class HomeScene: SKScene
     func drawTutorialButton() {
         
         tutorialButton = SKSpriteNode(imageNamed: "question-mark.png")
+        tutorialButton.name = "tutorialbutton"
         tutorialButton.size = CGSize(width: tutorialButton.size.width / 7 , height: tutorialButton.size.height / 7)
+        tutorialButton.isUserInteractionEnabled = false
         tutorialButton.position = CGPoint(x: 0, y: 0)
         
         tutorialButtonShape = SKShapeNode(circleOfRadius: 55)
+        tutorialButtonShape.isUserInteractionEnabled = false
+        tutorialButtonShape.name = "tutorialshape"
         tutorialButtonShape.fillColor = .white
         tutorialButtonShape.isAntialiased = true
         tutorialButtonShape.isUserInteractionEnabled = false
@@ -382,9 +560,10 @@ class HomeScene: SKScene
     
     func drawSoundButton() {
         
-        soundButton = SKSpriteNode(imageNamed: "volume-on.png")
+        soundButton = SKSpriteNode(imageNamed: "volume-off.png")
         soundButton.name = "soundbutton"
         soundButton.size = CGSize(width: soundButton.size.width / 6 , height: soundButton.size.height / 6)
+        soundButton.isUserInteractionEnabled = false
         soundButton.position = CGPoint(x: 0, y: 0)
         
         soundButtonShape = SKShapeNode(circleOfRadius: 55)
