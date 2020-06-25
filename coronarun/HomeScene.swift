@@ -448,11 +448,25 @@ class HomeScene: SKScene
             
             else
             {
+                
+                
                 cleanUp()
                 levelData.didLoadFromHome = true
-                let gameScene = GameScene(fileNamed: "GameScene")
-                gameScene?.scaleMode = .aspectFill
-                self.view?.presentScene(gameScene!, transition: SKTransition.crossFade(withDuration: 0.5))
+                
+                if(levelData.currentLevel == 6)
+                {
+                    levelData.hasMastered = true
+                    let menuScene = MenuScene(fileNamed: "MenuScene")
+                    levelData.didLoadFromHome = false
+                    menuScene?.scaleMode = .aspectFill
+                    self.view?.presentScene(menuScene)
+                }
+                else
+                {
+                    let gameScene = GameScene(fileNamed: "GameScene")
+                    gameScene?.scaleMode = .aspectFill
+                    self.view?.presentScene(gameScene!, transition: SKTransition.crossFade(withDuration: 0.5))
+                }
             }
         }
     }
