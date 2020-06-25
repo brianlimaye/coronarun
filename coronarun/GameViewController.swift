@@ -63,12 +63,13 @@ class GameViewController: UIViewController {
                 view.ignoresSiblingOrder = true
                 view.showsFPS = true
                 view.showsNodeCount = true
-                //view.showsPhysics = true
+                view.showsPhysics = true
         }
     }
     
     func playBackgroundMusic() -> Void {
         
+        GameViewController.audioPlayer.numberOfLoops = -1
         GameViewController.audioPlayer.play()
     }
     
@@ -89,10 +90,12 @@ class GameViewController: UIViewController {
            if(GameViewController.audioPlayer.isPlaying)
            {
                GameViewController.audioPlayer.currentTime = 0
+               GameViewController.audioPlayer.numberOfLoops = -1
                GameViewController.audioPlayer.play()
            }
            else
            {
+               GameViewController.audioPlayer.numberOfLoops = -1
                GameViewController.audioPlayer.play()
            }
     }

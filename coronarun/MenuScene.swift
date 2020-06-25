@@ -12,14 +12,11 @@ import SAConfettiView
 
 class MenuScene: SKScene
 {
-    var levelScreen: SKSpriteNode = SKSpriteNode()
     var confettiView = SAConfettiView()
     var worldDisplayShape: SKShapeNode = SKShapeNode()
     var worldDisplay: SKLabelNode = SKLabelNode()
     var futureLevelDisplay: SKLabelNode = SKLabelNode()
     var levelBox: SKShapeNode = SKShapeNode()
-    var levelButtons = [SKSpriteNode?](repeating: nil, count: 5)
-    var levelNumerals = [SKLabelNode?](repeating: nil, count: 5)
     
     var levelOne: SKShapeNode = SKShapeNode()
     var levelTwo: SKShapeNode = SKShapeNode()
@@ -36,50 +33,26 @@ class MenuScene: SKScene
     var levelThreeLock: SKSpriteNode = SKSpriteNode()
     var levelFourLock: SKSpriteNode = SKSpriteNode()
     var levelFiveLock: SKSpriteNode = SKSpriteNode()
-    
+        
     override func didMove(to view: SKView) {
         
         attemptEndAnimation()
         makeCharVisible()
-        blurBackground()
+        showBackground()
         drawWorldDisplay()
         drawLevelButtons()
-        //updateLocks()
         removeLocks()
     }
     
-    /*
-    func updateLocks() {
-        
-            if(levelData.currentLevel >= levelData.maxLevel)
-            {
-                return
-            }
-        
-            else
-            {
-                for i in 0 ... levelData.currentLevel - 1 {
-                    levelData.hasLocks[i] = false
-                }
-                
-               
-                for j in levelData.currentLevel...levelData.maxLevel-1 {
-                    levelData.hasLocks[j] = true
-                }
-            }
-            
-    }
-    */
     func removeLocks() {
         
-
-            for i in 0 ... levelData.maxLevel - 1 {
-                
-                if(!levelData.hasLocks[i])
-                {
-                    updateLockDisplay(level: String(i + 1))
-                }
+        for i in 0 ... levelData.maxLevel - 1 {
+            
+            if(!levelData.hasLocks[i])
+            {
+                updateLockDisplay(level: String(i + 1))
             }
+        }
     }
     
     func updateLockDisplay(level: String) {
@@ -142,9 +115,8 @@ class MenuScene: SKScene
         }
     }
     
-    func blurBackground() {
+    func showBackground() {
         
-        backGBlur.shouldEnableEffects = true
         self.addChild(cameraNode)
     }
     

@@ -13,7 +13,6 @@ import Foundation
 import SpriteKit
 
 var cameraNode: SKCameraNode = SKCameraNode()
-var backGBlur: SKEffectNode = SKEffectNode()
 
 struct levelData
 {
@@ -79,17 +78,16 @@ class HomeScene: SKScene
         GameScene.defaults.removeObject(forKey: "maxlevel")
         GameScene.defaults.removeObject(forKey: "handsanitizer")
         
-        if((cameraNode.children.count > 0) && (backGBlur.children.count > 0))
+        if(cameraNode.children.count > 0)
         {
             cameraNode.removeAllChildren()
-            backGBlur.removeAllChildren()
         }
         
         initTutorial()
-        initBlurEffect()
         initTitleScreen()
         addBackgFreezeFrame()
         addPlatformFreezeFrame()
+        showBackground()
         addIdleCharacter()
         drawSoundButton()
     }
@@ -107,6 +105,11 @@ class HomeScene: SKScene
         levelData.handSanitizerCount = count
         
 
+    }
+    
+    func showBackground() {
+        
+        self.addChild(cameraNode)
     }
     
     func initText() {
@@ -292,20 +295,6 @@ class HomeScene: SKScene
        self.addChild(scoreLabelShape)
   }
     
-    func initBlurEffect() {
-        
-        let filter = CIFilter(name: "CIGaussianBlur")
-        // Set the blur amount. Adjust this to achieve the desired effect
-        let blurAmount = 20.0
-        filter?.setValue(blurAmount, forKey: kCIInputRadiusKey)
-
-        backGBlur.filter = filter
-        backGBlur.shouldEnableEffects = false
-        backGBlur.blendMode = .alpha
-        cameraNode.addChild(backGBlur)
-        self.addChild(cameraNode)
-    }
-    
     func addBackgFreezeFrame()
     {
         if(cameraNode.contains(frozenBackground))
@@ -331,7 +320,7 @@ class HomeScene: SKScene
             frozenBackground.size.height = self.frame.height
             frozenBackground.run(infiniteBackg, withKey: "background")
 
-            backGBlur.addChild(frozenBackground)
+            cameraNode.addChild(frozenBackground)
 
             i += 1
 
