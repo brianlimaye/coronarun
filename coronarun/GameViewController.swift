@@ -17,7 +17,7 @@ class GameViewController: UIViewController {
     static var menuScene: MenuScene?
     static var gameScene: GameScene?
     
-    static var audioPlayer = AVAudioPlayer()
+    static var audioPlayer: AVAudioPlayer?
 
     let isDebug: Bool = {
            
@@ -41,7 +41,7 @@ class GameViewController: UIViewController {
         do
         {
             GameViewController.audioPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "chill-background-music", ofType: "mp3")!))
-                GameViewController.audioPlayer.prepareToPlay()
+            GameViewController.audioPlayer?.prepareToPlay()
         }
         catch {
             print(error)
@@ -69,15 +69,15 @@ class GameViewController: UIViewController {
     
     func playBackgroundMusic() -> Void {
         
-        GameViewController.audioPlayer.numberOfLoops = -1
-        GameViewController.audioPlayer.play()
+        GameViewController.audioPlayer?.numberOfLoops = -1
+        GameViewController.audioPlayer?.play()
     }
     
     func pause() -> Void {
         
-        if(GameViewController.audioPlayer.isPlaying)
+        if((GameViewController.audioPlayer?.isPlaying) != nil)
         {
-            GameViewController.audioPlayer.stop()
+            GameViewController.audioPlayer?.stop()
         }
         else
         {
@@ -87,17 +87,17 @@ class GameViewController: UIViewController {
     
     func restart() -> Void {
         
-           if(GameViewController.audioPlayer.isPlaying)
-           {
-               GameViewController.audioPlayer.currentTime = 0
-               GameViewController.audioPlayer.numberOfLoops = -1
-               GameViewController.audioPlayer.play()
-           }
-           else
-           {
-               GameViewController.audioPlayer.numberOfLoops = -1
-               GameViewController.audioPlayer.play()
-           }
+        if((GameViewController.audioPlayer?.isPlaying) != nil)
+        {
+            GameViewController.audioPlayer?.currentTime = 0
+            GameViewController.audioPlayer?.numberOfLoops = -1
+            GameViewController.audioPlayer?.play()
+        }
+        else
+        {
+            GameViewController.audioPlayer?.numberOfLoops = -1
+            GameViewController.audioPlayer?.play()
+        }
     }
 
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {

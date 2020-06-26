@@ -73,10 +73,7 @@ class HomeScene: SKScene
         
     override func didMove(to view: SKView) {
         
-        //pullSavedData()
-        
-        GameScene.defaults.removeObject(forKey: "maxlevel")
-        GameScene.defaults.removeObject(forKey: "handsanitizer")
+        pullSavedData()
         
         if(cameraNode.children.count > 0)
         {
@@ -92,19 +89,46 @@ class HomeScene: SKScene
         drawSoundButton()
     }
     
+    func wipeData() {
+        
+        GameScene.defaults.removeObject(forKey: "reachedlevel")
+        GameScene.defaults.removeObject(forKey: "handsanitizercount")
+        GameScene.defaults.removeObject(forKey: "currentlevel")
+        GameScene.defaults.removeObject(forKey: "haslocks")
+        GameScene.defaults.removeObject(forKey: "hasmastered")
+    }
+    
     func pullSavedData() {
         
-        let str = String(GameScene.defaults.integer(forKey: "maxlevel"))
-        let count = GameScene.defaults.integer(forKey: "handsanitizer")
+        let reached = GameScene.defaults.integer(forKey: "reachedlevel")
+        let count = GameScene.defaults.integer(forKey: "handsanitizercount")
+        let currentLevel = GameScene.defaults.integer(forKey: "currentlevel")
+        let locks = GameScene.defaults.array(forKey: "haslocks") as? [Bool]
+        let mastered = GameScene.defaults.bool(forKey: "hasmastered")
         
-        if(Int(str) ?? 0 > 1)
+        if(reached > 0)
         {
-            levelData.reachedLevel = GameScene.defaults.integer(forKey: "maxlevel")
+            levelData.reachedLevel = reached
         }
+        if(count > 0)
+        {
+            levelData.handSanitizerCount = count
+        }
+        if(currentLevel > 0)
+        {
+            levelData.currentLevel = currentLevel
+        }
+        if(locks != nil)
+        {
+            levelData.hasLocks = locks ?? [false, true, true, true, true]
+        }
+        levelData.hasMastered = mastered
         
-        levelData.handSanitizerCount = count
-        
-
+        print(levelData.reachedLevel)
+        print(levelData.handSanitizerCount)
+        print(levelData.currentLevel)
+        print(levelData.hasLocks)
+        print(levelData.hasMastered)
     }
     
     func showBackground() {
@@ -172,21 +196,17 @@ class HomeScene: SKScene
         miniPeel.position = CGPoint(x: tutorialPopup.frame.size.width / 2.75, y: tutorialPopup.frame.size.height / 4)
         miniPeel.zPosition = 5
         tutorialPopup.addChild(miniPeel)
-        
-        //miniPeel.isHidden = true
-        
+                
         miniBat = SKSpriteNode(imageNamed: "batframe-1.png")
         miniBat.size = CGSize(width: miniBat.size.width / 4, height: miniBat.size.height / 4)
         miniBat.position = CGPoint(x: tutorialPopup.frame.size.width / 2.75, y: tutorialPopup.frame.size.height / 8)
         miniBat.zPosition = 5
-        //miniBat.isHidden = true
         tutorialPopup.addChild(miniBat)
         
         miniSoap = SKSpriteNode(imageNamed: "hand-sanitizer.png")
         miniSoap.size = CGSize(width: miniSoap.size.width / 12, height: miniSoap.size.height / 12)
         miniSoap.position = CGPoint(x: tutorialPopup.frame.size.width / 2.75, y: -tutorialPopup.frame.size.height / 4.25)
         miniSoap.zPosition = 5
-        //miniSoap.isHidden = true
         tutorialPopup.addChild(miniSoap)
         
         miniMask = SKSpriteNode(imageNamed: "mask.png")
@@ -194,7 +214,6 @@ class HomeScene: SKScene
         miniMask.size = CGSize(width: miniMask.size.width / 10, height: miniMask.size.height / 10)
         miniMask.position = CGPoint(x: tutorialPopup.frame.size.width / 3.25, y: -tutorialPopup.frame.size.height / 2.5)
         miniMask.zPosition = 5
-        //miniSoap.isHidden = true
         tutorialPopup.addChild(miniMask)
         
         swipeUp = SKSpriteNode(imageNamed: "swipe-up")
@@ -351,10 +370,10 @@ class HomeScene: SKScene
         while i < 2 {
                 
             frozenPlatform = SKSpriteNode(imageNamed: "world1.png")
-            
+            frozenPlatform.size.width = self.frame.width * 2
             frozenPlatform.position = CGPoint(x: i * pfTexture.size().width, y: -(self.frame.height / 2.5))
             frozenPlatform.name = "platform" + String(format: "%.0f", Double(i))
-            frozenPlatform.size = CGSize(width: self.frame.width * 2, height: self.frame.height / 3.5)
+            frozenPlatform.size.height = self.frame.height / 3.5
     
             frozenPlatform.run(movePfForever, withKey: "platform")
             
@@ -416,13 +435,13 @@ class HomeScene: SKScene
                 if(levelData.isMusicPlaying)
                 {
                     soundButton.texture = SKTexture(imageNamed: "volume-off")
-                    GameViewController.audioPlayer.currentTime = 0
-                    GameViewController.audioPlayer.play()
+                    GameViewController.audioPlayer?.currentTime = 0
+                    GameViewController.audioPlayer?.play()
                 }
                 else
                 {
                     soundButton.texture = SKTexture(imageNamed: "volume-on")
-                    GameViewController.audioPlayer.pause()
+                    GameViewController.audioPlayer?.pause()
                 }
             }
             else if((node?.name == "tutorialbutton") || (node?.name == "tutorialshape"))

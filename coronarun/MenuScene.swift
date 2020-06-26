@@ -88,7 +88,7 @@ class MenuScene: SKScene
                     fiveNumeral.name = "5"
                 }
             default:
-                print("other lol")
+                print("other")
         }
     }
     
