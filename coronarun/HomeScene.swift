@@ -18,13 +18,13 @@ struct levelData
 {
     static var isMusicPlaying: Bool = true
     static var maxLevel: Int = 5
-    static var reachedLevel: Int = 1
-    static var currentLevel: Int = 1
+    static var reachedLevel: Int = 1 //P
+    static var currentLevel: Int = 1 //P
     static var levelSelected: Int = -1
-    static var handSanitizerCount: Int = 0
-    static var hasLocks: [Bool] = [false, true, true, true, true]
+    static var handSanitizerCount: Int = 0 //P
+    static var hasLocks: [Bool] = [false, true, true, true, true] //P
     static var didLoadFromHome: Bool = false
-    static var hasMastered: Bool = false
+    static var hasMastered: Bool = false //P
     static var pressedReplay: Bool = false
     static var pressedNext: Bool = false
 }
@@ -72,6 +72,8 @@ class HomeScene: SKScene
     var scoreLabelShape: SKShapeNode = SKShapeNode()
         
     override func didMove(to view: SKView) {
+        
+        print("yo")
         
         pullSavedData()
         
@@ -124,11 +126,11 @@ class HomeScene: SKScene
         }
         levelData.hasMastered = mastered
         
-        print(levelData.reachedLevel)
-        print(levelData.handSanitizerCount)
-        print(levelData.currentLevel)
-        print(levelData.hasLocks)
-        print(levelData.hasMastered)
+        //print(levelData.reachedLevel)
+        //print(levelData.handSanitizerCount)
+        //print(levelData.currentLevel)
+        //print(levelData.hasLocks)
+        //print(levelData.hasMastered)
     }
     
     func showBackground() {
@@ -639,7 +641,7 @@ class HomeScene: SKScene
        
         let fadeSequence = SKAction.sequence([fadeIn, fadeOut])
         
-        let fadeForever = SKAction.repeatForever(fadeSequence)
+        let fadeForever = SKAction.repeat(fadeSequence, count: 1)
         
         self.addChild(clickToStart)
         clickToStart.run(fadeForever)

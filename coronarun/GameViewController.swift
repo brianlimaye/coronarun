@@ -47,9 +47,6 @@ class GameViewController: UIViewController {
             print(error)
         }
         
-        playBackgroundMusic()
-        
-        
         if let view = self.view as! SKView? {
             
                 let homeScene = HomeScene(fileNamed: "HomeScene")
@@ -108,11 +105,10 @@ class GameViewController: UIViewController {
 
            case .keyboardP:
            
-               if isDebug
-               {
+               
                     print("p was pressed")
                     GameViewController.gameScene?.drawPeel()
-               }
+               
             
            case .keyboardS:
             
@@ -180,12 +176,13 @@ class GameViewController: UIViewController {
                 }
             
            case .keyboardM:
-                
+                /*
                 if isDebug
                 {
+ */
                     print("M was pressed")
                     GameViewController.gameScene?.drawMask()
-                }
+                
             default:
                 
                if isDebug

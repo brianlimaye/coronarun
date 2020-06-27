@@ -180,7 +180,7 @@
 		B4114022249A733500358238 /* blondezombie-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-1.png"; path = "animation/blondezombie-1.png"; sourceTree = "<group>"; };
 		B421044224982B99005AC764 /* NightinTokyo-Bold.ps */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NightinTokyo-Bold.ps"; path = "animation/NightinTokyo-Bold.ps"; sourceTree = "<group>"; };
 		B421044424983235005AC764 /* HABESHAPIXELS-Bold.ps */ = {isa = PBXFileReference; lastKnownFileType = file; name = "HABESHAPIXELS-Bold.ps"; path = "animation/HABESHAPIXELS-Bold.ps"; sourceTree = "<group>"; };
-		B42BF960246BC24F00AD9292 /* coronarun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coronarun.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B42BF960246BC24F00AD9292 /* Corona Run.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Corona Run.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B42BF963246BC24F00AD9292 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B42BF965246BC24F00AD9292 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		B42BF967246BC24F00AD9292 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -358,7 +358,7 @@
 		B42BF961246BC24F00AD9292 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B42BF960246BC24F00AD9292 /* coronarun.app */,
+				B42BF960246BC24F00AD9292 /* Corona Run.app */,
 				B42BF97A246BC25100AD9292 /* coronarunTests.xctest */,
 				B42BF985246BC25100AD9292 /* coronarunUITests.xctest */,
 			);
@@ -556,7 +556,7 @@
 			);
 			name = coronarun;
 			productName = coronarun;
-			productReference = B42BF960246BC24F00AD9292 /* coronarun.app */;
+			productReference = B42BF960246BC24F00AD9292 /* Corona Run.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B42BF979246BC25100AD9292 /* coronarunTests */ = {
@@ -1016,13 +1016,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B84H6528K6;
 				INFOPLIST_FILE = coronarun/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = bl.coronarun;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Corona Run";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1034,13 +1035,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = B84H6528K6;
 				INFOPLIST_FILE = coronarun/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = bl.coronarun;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Corona Run";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

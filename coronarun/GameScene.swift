@@ -76,6 +76,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var handSanitizerScore: Int = 0
     var temp: Int = 0
     var objNum: Int = 0
+    var lastJumpTime: Double = 0.0
     var isLevelPassed: Bool = false
     var gameIsPaused: Bool = false
     var timer: Timer = Timer()
@@ -108,6 +109,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func initializeGame() -> Void {
         
+        
+        objNum = 0
+        lastTime = 0.0
         isMasked = false
         isLevelPassed = false
         initScore()
@@ -115,7 +119,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         resumeNodes()
         initObjects()
         showCurrentLevel()
-        objNum = 0
+       
         
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(jumpUp))
         swipeUp.direction = .up
@@ -336,6 +340,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         miniCharacter.alpha = 1
         levelDisplay.alpha = 1
     
+        /*
         if(levelData.didLoadFromHome)
         {
             startLevel(level: String(levelData.currentLevel))
@@ -344,6 +349,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         {
             startLevel(level: String(levelData.levelSelected))
         }
+ */
     }
     
     func resumeNodes() {
@@ -613,6 +619,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func removeMask() {
         
         isMasked = false
+        characterSprite.physicsBody?.isDynamic = false
         
         let runAnimations:[SKTexture] = [SKTexture(imageNamed: "bobby-6"), SKTexture(imageNamed: "bobby-7.png"), SKTexture(imageNamed: "bobby-8.png"), SKTexture(imageNamed: "bobby-9.png"), SKTexture(imageNamed: "bobby-10.png"), SKTexture(imageNamed: "bobby-11.png")]
         
@@ -667,14 +674,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "portal")) || ((nodeA.node?.name == "portal") && (nodeB.node?.name == "character")))
         {
             characterSprite.physicsBody?.isDynamic = false
-            portal.physicsBody?.isDynamic = false
             minimizeChar()
         }
         
         else if(((nodeA.node?.name == "character") && (nodeB.node?.name == "soap")) || ((nodeA.node?.name == "soap") && (nodeB.node?.name == "character")))
         {
-            updateAndShowScore()
             characterSprite.physicsBody?.isDynamic = false
+            updateAndShowScore()
             soap.isHidden = true
             game.contactDetected = false
             
@@ -702,13 +708,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         {
             if(isMasked)
             {
-                removeMask()
                 game.contactDetected = false
+                removeMask()
             }
             else
             {
                 characterSprite.physicsBody?.isDynamic = false
-                blueGerms.physicsBody?.isDynamic = false
                 self.view?.gestureRecognizers?.removeAll()
                 germDieAnimation(germ: blueGerms)
             }
@@ -723,7 +728,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             else
             {
                 characterSprite.physicsBody?.isDynamic = false
-                greenGerms.physicsBody?.isDynamic = false
                 self.view?.gestureRecognizers?.removeAll()
                 germDieAnimation(germ: greenGerms)
             }
@@ -732,8 +736,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func addGracePeriod() {
         
-        characterSprite.physicsBody?.isDynamic = false
-        let gracePeriodDuration = SKAction.resize(toWidth: characterSprite.size.width, height: characterSprite.size.height, duration: 1.5)
+        let gracePeriodDuration = SKAction.resize(toWidth: characterSprite.size.width, height: characterSprite.size.height, duration: 3.0)
         let gracePeriodRepeater = SKAction.repeat(gracePeriodDuration, count: 1)
         
         characterSprite.run(gracePeriodRepeater, completion: makeCharDynamic)
@@ -744,16 +747,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         return game.IsOver
     }
     
-    func isReady() -> Bool{
+    func readyToPerform() -> Bool {
         
-        var isReady: Bool = true
         let currentTime = currentTimeInMilliSeconds()
-    
-        if((lastTime > 0) && (currentTime - lastTime) <= 1001)
+        var isReady: Bool = false
+        
+        if(lastJumpTime == 0.0)
         {
-            isReady = false
+            lastJumpTime = currentTime
+            isReady = true
         }
-        lastTime = currentTime
+        
+        else if(abs(currentTime - lastJumpTime) >= 1000)
+        {
+            lastJumpTime = currentTime
+            isReady = true
+        }
+        
         return isReady
     }
     
@@ -938,6 +948,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let mainAnimated: SKAction
         let mainRepeater: SKAction
         
+        if(characterSprite.physicsBody?.isDynamic == false)
+        {
+            characterSprite.physicsBody?.isDynamic = true
+        }
+        
         if(isMasked)
         {
             runAnimations = [SKTexture(imageNamed: "masked-bobby-6.png"), SKTexture(imageNamed: "masked-bobby-7.png"), SKTexture(imageNamed: "masked-bobby-8.png"), SKTexture(imageNamed: "masked-bobby-9.png"), SKTexture(imageNamed: "masked-bobby-10.png"), SKTexture(imageNamed: "masked-bobby-11.png")]
@@ -978,38 +993,45 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     @objc func jumpUp() {
                 
-        if(!isReady())
+        if(!readyToPerform())
         {
             print("Cooldown on button")
             return
         }
         
-        pauseRunning()
-        characterSprite.removeAllActions()
-        
+        /*
         if(game.contactDetected)
         {
             return
         }
         else
         {
+         */
+            pauseRunning()
+            characterSprite.removeAllActions()
             jumpCharacter()
-        }
     }
     
     @objc func slideDown() {
                 
-        if(!isReady())
+        if(!readyToPerform())
         {
             print("Cooldown on button")
             return
         }
-        pauseRunning()
         
-        if(!game.contactDetected)
+        /*
+        if(game.contactDetected)
         {
-            duckCharacter()
+            return
         }
+        else
+        {
+ */
+            pauseRunning()
+            characterSprite.removeAllActions()
+            duckCharacter()
+        
     }
 
     func drawCharacter() -> Void{
@@ -1170,11 +1192,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
        
     
     func jumpCharacter() -> Void{
-                
+                        
+        /*
         if(game.contactDetected)
         {
             return
         }
+ */
         
         characterSprite.removeAllActions()
         let upAction = SKAction.move(to: CGPoint(x: self.frame.minX / 2.35, y: self.frame.minY / 12), duration: 0.5)
@@ -1187,16 +1211,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         else
         {
             characterSprite.texture = SKTexture(imageNamed: "bobby-12.png")
+            print(characterSprite.physicsBody?.isDynamic as Any)
         }
         characterSprite.run(upRepeater, completion: jumpLanding)
     }
     
     func jumpLanding() {
-        
-        if(characterSprite.physicsBody?.isDynamic == false)
-        {
-            characterSprite.physicsBody?.isDynamic = true
-        }
         
         let downAction = SKAction.move(to: CGPoint(x: self.frame.minX / 2.35, y: self.frame.minY / 1.70), duration: 0.5)
         let downRepeater = SKAction.repeat(downAction, count: 1)
@@ -1209,6 +1229,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         {
             characterSprite.texture = SKTexture(imageNamed: "bobby-13.png")
         }
+        print("jumpcharacter finished...")
         
         characterSprite.run(downRepeater, completion: resumeRunning)
     }

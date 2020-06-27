@@ -36,7 +36,7 @@ class MenuScene: SKScene
         
     override func didMove(to view: SKView) {
         
-        attemptEndAnimation()
+        //attemptEndAnimation()
         makeCharVisible()
         showBackground()
         drawWorldDisplay()
@@ -238,8 +238,6 @@ class MenuScene: SKScene
         levelFour.addChild(levelFourLock)
         levelFourLock.position = CGPoint(x: levelFourLock.frame.width / 2.25, y: levelFourLock.frame.height / 2.25)
         levelFourLock.zPosition = 1
-        
-        
         
         //Level Five Button
         
