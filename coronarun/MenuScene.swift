@@ -311,7 +311,6 @@ class MenuScene: SKScene
             if((node?.name == "level-one") || (node?.name == "1"))
             {
                 confettiView.removeFromSuperview()
-                print("level-one pressed")
                 levelData.levelSelected = 1
                 
                 cleanUp()
@@ -322,7 +321,6 @@ class MenuScene: SKScene
             else if((node?.name == "level-two") || (node?.name == "2"))
             {
                 confettiView.removeFromSuperview()
-                print("level-two pressed")
                 levelData.levelSelected = 2
                 
                 cleanUp()
@@ -333,7 +331,6 @@ class MenuScene: SKScene
             else if((node?.name == "level-three") || (node?.name == "3"))
             {
                 confettiView.removeFromSuperview()
-                print("level-three pressed")
                 levelData.levelSelected = 3
                 
                 cleanUp()
@@ -344,7 +341,6 @@ class MenuScene: SKScene
             else if((node?.name == "level-four") || (node?.name == "4"))
             {
                 confettiView.removeFromSuperview()
-                print("level-four pressed")
                 levelData.levelSelected = 4
                 
                 cleanUp()
@@ -355,7 +351,6 @@ class MenuScene: SKScene
             else if((node?.name == "level-five") || (node?.name == "5"))
             {
                 confettiView.removeFromSuperview()
-                print("level-five pressed")
                 levelData.levelSelected = 5
                 
                 cleanUp()

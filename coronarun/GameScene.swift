@@ -109,7 +109,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func initializeGame() -> Void {
         
-        
         objNum = 0
         lastTime = 0.0
         isMasked = false
@@ -149,6 +148,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         levelData.pressedNext = false
         levelData.pressedReplay = false
+        levelData.gameIsPaused = false
     }
     
     func startLevel(level: String) {
@@ -168,6 +168,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             default:
                 print("other..")
         }
+        timer.tolerance = Double(timer.timeInterval) * 0.1
     }
     
     func drawMask() {
@@ -340,7 +341,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         miniCharacter.alpha = 1
         levelDisplay.alpha = 1
     
-        /*
         if(levelData.didLoadFromHome)
         {
             startLevel(level: String(levelData.currentLevel))
@@ -349,7 +349,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         {
             startLevel(level: String(levelData.levelSelected))
         }
- */
     }
     
     func resumeNodes() {
@@ -417,7 +416,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         else
         {
             let rand = Int.random(in: 1...8)
-                   
+            
             if((rand == 1) && (!isMasked))
             {
                 drawMask()
@@ -428,7 +427,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 
                 runCorrespondingAction(num: currentObj)
                 
-                objNum += 1
             }
         }
     }
@@ -443,7 +441,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         else
         {
             let rand = Int.random(in: 1...8)
-                   
+            
             if((rand == 2) && (!isMasked))
             {
                 drawMask()
@@ -454,8 +452,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 let currentObj = game.levelTwoObjects[objNum]
                 
                 runCorrespondingAction(num: currentObj)
-                
-                objNum += 1
             }
         }
     }
@@ -470,7 +466,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         else
         {
             let rand = Int.random(in: 1...8)
-                   
+            
             if((rand == 3) && (!isMasked))
             {
                 drawMask()
@@ -480,8 +476,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 let currentObj = game.levelThreeObjects[objNum]
 
                 runCorrespondingAction(num: currentObj)
-                
-                objNum += 1
             }
         }
     }
@@ -506,8 +500,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 let currentObj = game.levelFourObjects[objNum]
                 
                 runCorrespondingAction(num: currentObj)
-                
-                objNum += 1
             }
         }
     }
@@ -532,8 +524,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 let currentObj = game.levelFiveObjects[objNum]
                 
                 runCorrespondingAction(num: currentObj)
-                
-                objNum += 1
             }
         }
     }
@@ -971,31 +961,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         }
     }
     
-    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-
-            switch swipeGesture.direction {
-            case .right:
-                print("Swiped right")
-            case .down:
-                print("Swiped down")
-            case .left:
-                print("Swiped left")
-            case .up:
-                print("Swiped up")
-            default:
-                break
-            }
-    
-        }
-    }
-    
     @objc func jumpUp() {
                 
         if(!readyToPerform())
         {
-            print("Cooldown on button")
             return
         }
         
@@ -1016,7 +985,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                 
         if(!readyToPerform())
         {
-            print("Cooldown on button")
             return
         }
         
@@ -1119,7 +1087,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let xSequencer = SKAction.sequence([xShift, xReversion])
         let xRepeater = SKAction.repeat(xSequencer, count: 1)
         
-        glitter.run(xRepeater)
+        glitter.run(xRepeater, completion: incrementObj)
+    }
+    
+    func incrementObj() {
+        
+        objNum += 1
     }
     
     func addSoap() {
@@ -1159,6 +1132,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         batSprite.xScale = 1
         let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x + 50, y: self.frame.maxY / 2), duration: bgAnimatedInSecs)
         batSprite.run(batReversion)
+        objNum += 1
     }
     
     func bat2Reversion() -> Void {
@@ -1166,6 +1140,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         batSprite2.xScale = 1
         let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x - 50, y: self.frame.maxY / 1.5), duration: bgAnimatedInSecs)
         batSprite2.run(batReversion)
+        objNum += 1
     }
     
     func bat3Reversion() -> Void {
@@ -1173,6 +1148,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         batSprite3.xScale = 1
         let batReversion = SKAction.move(to: CGPoint(x: characterSprite.position.x + 150, y: self.frame.maxY / 1.5), duration: bgAnimatedInSecs)
         batSprite3.run(batReversion)
+        objNum += 1
     }
     
     
@@ -1211,7 +1187,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         else
         {
             characterSprite.texture = SKTexture(imageNamed: "bobby-12.png")
-            print(characterSprite.physicsBody?.isDynamic as Any)
         }
         characterSprite.run(upRepeater, completion: jumpLanding)
     }
@@ -1229,7 +1204,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         {
             characterSprite.texture = SKTexture(imageNamed: "bobby-13.png")
         }
-        print("jumpcharacter finished...")
         
         characterSprite.run(downRepeater, completion: resumeRunning)
     }
@@ -1386,7 +1360,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         blueGerms.zPosition = 3
         blueGerms.position = CGPoint(x: self.frame.width, y: characterSprite.position.y)
 
-        blueGerms.physicsBody = SKPhysicsBody(circleOfRadius: 60, center: CGPoint(x: -60, y: 0))
+        blueGerms.physicsBody = SKPhysicsBody(circleOfRadius: 60, center: CGPoint(x: -50, y: -10))
         blueGerms.physicsBody?.affectedByGravity = false
         blueGerms.physicsBody?.categoryBitMask = ColliderType.bluegerms
         blueGerms.physicsBody?.collisionBitMask = ColliderType.character
@@ -1400,7 +1374,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         greenGerms.zPosition = 3
         greenGerms.position = CGPoint(x: self.frame.width, y: characterSprite.position.y)
         
-        greenGerms.physicsBody = SKPhysicsBody(circleOfRadius: 75)
+        greenGerms.physicsBody = SKPhysicsBody(circleOfRadius: 70, center: CGPoint(x: -25, y: 0))
         greenGerms.physicsBody?.affectedByGravity = false
         greenGerms.physicsBody?.categoryBitMask = ColliderType.greengerms
         greenGerms.physicsBody?.collisionBitMask = ColliderType.character
@@ -1610,6 +1584,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         blondeZombie.run(resizeRepeater)
         blondeZombie.run(shiftRepeater)
+        objNum += 1
     }
     
     func revertRedZombie() {
@@ -1622,6 +1597,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         
         redZombie.run(resizeRepeater)
         redZombie.run(shiftRepeater)
+        objNum += 1
     }
     
     func shiftGreenGerms() {
@@ -1651,11 +1627,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         let peelRevert = SKAction.repeat(peelReversion, count: 1)
         
         bananaPeel.run(peelRevert)
+        objNum += 1
     }
     
     func peelDieAnimation() -> Void {
 
         self.view?.gestureRecognizers?.removeAll()
+        timer.invalidate()
         bananaPeel.removeAllActions()
         characterSprite.removeAllActions()
         
@@ -1691,6 +1669,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func batDieAnimation() {
         
         self.view?.gestureRecognizers?.removeAll()
+        timer.invalidate()
         characterSprite.removeAllActions()
         
         let rotation = SKAction.rotate(byAngle: ((3 * CGFloat.pi) / 2), duration: 0.3)
@@ -1703,6 +1682,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func germDieAnimation(germ: SKEmitterNode) -> Void {
         
         germ.removeAllActions()
+        timer.invalidate()
         characterSprite.removeAllActions()
         characterSprite.texture = SKTexture(imageNamed: "bobby-15.png")
         
@@ -1778,7 +1758,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             {
                 if((node?.name == "replaybutton") || (node?.name == "replayshape"))
                 {
-                    print("replay-button pressed")
                     let scale = SKAction.scale(to: 0.9, duration: 0.3)
                     levelData.pressedReplay = true
                     replayShape.run(scale, completion: startGame)
@@ -1788,26 +1767,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate
                     
                     if(isLevelPassed)
                     {
-                        print("home button")
                         levelData.currentLevel += 1
                         GameScene.defaults.set(levelData.currentLevel, forKey: "currentlevel")
                     }
                     
-                    print("home-button pressed")
                     let scale2 = SKAction.scale(to: 0.9, duration: 0.3)
                     homeButtonShape.run(scale2, completion: goToHomeScene)
                 }
                 
                 else if((node?.name == "menubutton") || (node?.name == "menubuttonshape")) {
                     
-                    print("menu-button pressed")
                     let scale3 = SKAction.scale(to: 0.9, duration: 0.3)
                     menuButtonShape.run(scale3, completion: goToMenuScene)
                 }
                 
                 else if((node?.name == "nextlevelbutton") || (node?.name == "nextlevelshape"))
                 {
-                    print("next-level pressed")
                     let scale4 = SKAction.scale(to: 0.9, duration: 0.3)
                     levelData.pressedNext = true
                     if(levelData.currentLevel == 5)
@@ -1877,8 +1852,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             
             GameScene.defaults.set(levelData.handSanitizerCount, forKey: "handsanitizercount")
         }
-         
-        timer.invalidate()
+        
+        if(timer.isValid)
+        {
+            timer.invalidate()
+        }
         self.showEndingMenu()
         pauseBackgAndPlatform()
         temp = 0

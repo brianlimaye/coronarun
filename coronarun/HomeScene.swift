@@ -16,6 +16,7 @@ var cameraNode: SKCameraNode = SKCameraNode()
 
 struct levelData
 {
+    static var gameIsPaused: Bool = false
     static var isMusicPlaying: Bool = true
     static var maxLevel: Int = 5
     static var reachedLevel: Int = 1 //P
@@ -72,9 +73,7 @@ class HomeScene: SKScene
     var scoreLabelShape: SKShapeNode = SKShapeNode()
         
     override func didMove(to view: SKView) {
-        
-        print("yo")
-        
+                
         pullSavedData()
         
         if(cameraNode.children.count > 0)
@@ -641,7 +640,7 @@ class HomeScene: SKScene
        
         let fadeSequence = SKAction.sequence([fadeIn, fadeOut])
         
-        let fadeForever = SKAction.repeat(fadeSequence, count: 1)
+        let fadeForever = SKAction.repeatForever(fadeSequence)
         
         self.addChild(clickToStart)
         clickToStart.run(fadeForever)

@@ -105,16 +105,16 @@ class GameViewController: UIViewController {
 
            case .keyboardP:
            
-               
-                    print("p was pressed")
-                    GameViewController.gameScene?.drawPeel()
+            if isDebug
+            {
+                GameViewController.gameScene?.drawPeel()
+            }
                
             
            case .keyboardS:
             
             if isDebug
             {
-                print("s was pressed")
                 GameViewController.gameScene?.addSoap()
             }
 
@@ -122,72 +122,63 @@ class GameViewController: UIViewController {
                
                if isDebug
                {
-                    print("up-arrow was pressed")
                     GameViewController.gameScene?.jumpUp()
                }
             case .keyboardDownArrow:
                 
                 if isDebug
                 {
-                     print("down-arrow was pressed")
                      GameViewController.gameScene?.slideDown()
                 }
             case .keyboardB:
 
                 if isDebug
                 {
-                     print("B was pressed")
                      GameViewController.gameScene?.drawBat1()
                 }
             case .keyboard2:
 
                 if isDebug
                 {
-                     print("2 was pressed")
                      GameViewController.gameScene?.drawBat2()
                 }
             case .keyboard3:
 
                 if isDebug
                 {
-                     print("3 was pressed")
                      GameViewController.gameScene?.drawBat3()
                 }
             case .keyboardE:
 
                 if isDebug
                 {
-                     print("E was pressed")
                      GameViewController.gameScene?.drawPortal()
                 }
             case .keyboardZ:
 
                 if isDebug
                 {
-                     print("Z was pressed")
                      GameViewController.gameScene?.drawBlondeZombie()
                 }
             case .keyboardR:
                 
                 if isDebug
                 {
-                     print("R was pressed")
                      GameViewController.gameScene?.drawRedZombie()
                 }
             
            case .keyboardM:
-                /*
+            
                 if isDebug
                 {
- */
-                    print("M was pressed")
                     GameViewController.gameScene?.drawMask()
+            }
                 
             default:
                 
                if isDebug
                {
-                    print("different key detected")
+               
                }
 
             super.pressesBegan(presses, with: event)
@@ -197,12 +188,12 @@ class GameViewController: UIViewController {
     }
 
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone || UIDevice.current.userInterfaceIdiom == .pad {
-            return .allButUpsideDown
+            return .portrait
         } else {
             return .all
         }
@@ -219,15 +210,15 @@ class GameViewController: UIViewController {
     
     @objc func appMovedToBackground() {
 
-        print("App moved to background!")
         GameViewController.gameScene?.isPaused = true
+        GameViewController.gameScene?.timer.invalidate()
         pause()
     }
     
     @objc func appMovedToForeground() {
         
-        print("App moved to foreground!")
         GameViewController.gameScene?.isPaused = false
+        GameViewController.gameScene?.startLevel(level: String(levelData.currentLevel))
         playBackgroundMusic()
     }
 }
