@@ -132,6 +132,7 @@
 		B4BCA8DF2486C52500EE3735 /* MenuScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4BCA8DE2486C52500EE3735 /* MenuScene.sks */; };
 		B4BCA8E32486C5C000EE3735 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BCA8E22486C5C000EE3735 /* MenuScene.swift */; };
 		B4BCA8E52486E36F00EE3735 /* orange-menu.png in Resources */ = {isa = PBXBuildFile; fileRef = B4BCA8E42486E36F00EE3735 /* orange-menu.png */; };
+		B4BD269E24AC314300FA3C6F /* sneeze-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4BD269D24AC314300FA3C6F /* sneeze-sound.mp3 */; };
 		B4EDE0782488703700B33711 /* DKHand-Regular.ps in Resources */ = {isa = PBXBuildFile; fileRef = B4EDE0772488703700B33711 /* DKHand-Regular.ps */; };
 		B4FFE519249A773800DAC9EE /* blondezombie-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE518249A773800DAC9EE /* blondezombie-2.png */; };
 		B4FFE52C249A79FE00DAC9EE /* blondezombie-3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE526249A79FE00DAC9EE /* blondezombie-3.png */; };
@@ -140,7 +141,6 @@
 		B4FFE52F249A79FE00DAC9EE /* blondezombie-7.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE529249A79FE00DAC9EE /* blondezombie-7.png */; };
 		B4FFE530249A79FE00DAC9EE /* blondezombie-5.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE52A249A79FE00DAC9EE /* blondezombie-5.png */; };
 		B4FFE531249A79FE00DAC9EE /* blondezombie-6.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE52B249A79FE00DAC9EE /* blondezombie-6.png */; };
-		B4FFE533249A803600DAC9EE /* sneeze-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE532249A803600DAC9EE /* sneeze-sound.mp3 */; };
 		B4FFE535249A882900DAC9EE /* sneezeblue.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE534249A882900DAC9EE /* sneezeblue.sks */; };
 		B4FFE537249A912400DAC9EE /* exclamation.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE536249A912400DAC9EE /* exclamation.png */; };
 /* End PBXBuildFile section */
@@ -292,6 +292,7 @@
 		B4BCA8DE2486C52500EE3735 /* MenuScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MenuScene.sks; sourceTree = "<group>"; };
 		B4BCA8E22486C5C000EE3735 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		B4BCA8E42486E36F00EE3735 /* orange-menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "orange-menu.png"; path = "animation/orange-menu.png"; sourceTree = "<group>"; };
+		B4BD269D24AC314300FA3C6F /* sneeze-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "sneeze-sound.mp3"; path = "animation/sneeze-sound.mp3"; sourceTree = "<group>"; };
 		B4EDE0772488703700B33711 /* DKHand-Regular.ps */ = {isa = PBXFileReference; lastKnownFileType = file; name = "DKHand-Regular.ps"; path = "animation/DKHand-Regular.ps"; sourceTree = "<group>"; };
 		B4FFE518249A773800DAC9EE /* blondezombie-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-2.png"; path = "animation/blondezombie-2.png"; sourceTree = "<group>"; };
 		B4FFE526249A79FE00DAC9EE /* blondezombie-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-3.png"; path = "animation/blondezombie-3.png"; sourceTree = "<group>"; };
@@ -300,7 +301,6 @@
 		B4FFE529249A79FE00DAC9EE /* blondezombie-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-7.png"; path = "animation/blondezombie-7.png"; sourceTree = "<group>"; };
 		B4FFE52A249A79FE00DAC9EE /* blondezombie-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-5.png"; path = "animation/blondezombie-5.png"; sourceTree = "<group>"; };
 		B4FFE52B249A79FE00DAC9EE /* blondezombie-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-6.png"; path = "animation/blondezombie-6.png"; sourceTree = "<group>"; };
-		B4FFE532249A803600DAC9EE /* sneeze-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "sneeze-sound.mp3"; path = "../../../../../Downloads/sneeze-sound.mp3"; sourceTree = "<group>"; };
 		B4FFE534249A882900DAC9EE /* sneezeblue.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sneezeblue.sks; sourceTree = "<group>"; };
 		B4FFE536249A912400DAC9EE /* exclamation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exclamation.png; path = animation/exclamation.png; sourceTree = "<group>"; };
 		BDAE8EDCFDD65001997D9986 /* Pods_coronarun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coronarun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -390,8 +390,8 @@
 				B45B6B8E249EC734005577B6 /* MotionControl-BoldItalic.ps */,
 				B4814785249AE8EA00E74EC7 /* exclamation-mark.png */,
 				B4FFE536249A912400DAC9EE /* exclamation.png */,
-				B4FFE532249A803600DAC9EE /* sneeze-sound.mp3 */,
 				B4114022249A733500358238 /* blondezombie-1.png */,
+				B4BD269D24AC314300FA3C6F /* sneeze-sound.mp3 */,
 				B4FFE518249A773800DAC9EE /* blondezombie-2.png */,
 				B4FFE526249A79FE00DAC9EE /* blondezombie-3.png */,
 				B4FFE527249A79FE00DAC9EE /* blondezombie-4.png */,
@@ -717,12 +717,12 @@
 				B402FE8A2484BCD2000AB014 /* volume-on.png in Resources */,
 				B49EE9F024A1A85400AECD41 /* Podfile in Resources */,
 				B42E335F2495587400AB9C18 /* cool-portal.png in Resources */,
-				B4FFE533249A803600DAC9EE /* sneeze-sound.mp3 in Resources */,
 				B4114023249A733500358238 /* blondezombie-1.png in Resources */,
 				B4763B6A249347B500665A99 /* shimmer.sks in Resources */,
 				B4401CCD24803F5400B49192 /* CarbonBl-Regular.ps in Resources */,
 				B421044324982B99005AC764 /* NightinTokyo-Bold.ps in Resources */,
 				B45B6B8F249EC734005577B6 /* MotionControl-BoldItalic.ps in Resources */,
+				B4BD269E24AC314300FA3C6F /* sneeze-sound.mp3 in Resources */,
 				B4401CC5247EE83800B49192 /* next-level-icon.png in Resources */,
 				B463048D2485BBF5004CC114 /* idle-3.png in Resources */,
 				B4BAD2ED24870E950008ED87 /* Maassslicer3D.ps in Resources */,
@@ -1015,6 +1015,7 @@
 			baseConfigurationReference = CEDE1F4654B9B96DCF12C657 /* Pods-coronarun.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B84H6528K6;
 				INFOPLIST_FILE = coronarun/Info.plist;
@@ -1024,6 +1025,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = bl.coronarun;
 				PRODUCT_NAME = "Corona Run";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1034,6 +1036,7 @@
 			baseConfigurationReference = 817A43B3177B2AD5BB88106B /* Pods-coronarun.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B84H6528K6;
 				INFOPLIST_FILE = coronarun/Info.plist;
@@ -1043,6 +1046,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = bl.coronarun;
 				PRODUCT_NAME = "Corona Run";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
