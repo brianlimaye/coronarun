@@ -78,6 +78,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     var objNum: Int = 0
     var lastJumpTime: Double = 0.0
     var isLevelPassed: Bool = false
+    var isLevelStarted: Bool = false
     var gameIsPaused: Bool = false
     var timer: Timer = Timer()
     var lastTime: Double = 0
@@ -109,8 +110,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func initializeGame() -> Void {
         
+        timer.invalidate()
         objNum = 0
         lastTime = 0.0
+        isLevelStarted = false
         isMasked = false
         isLevelPassed = false
         initScore()
@@ -152,6 +155,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     }
     
     func startLevel(level: String) {
+        
+        if(!isLevelStarted)
+        {
+            return
+        }
         
         switch(level)
         {
@@ -246,6 +254,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func fadeOut() {
         
+        
         let fadeOut = SKAction.fadeOut(withDuration: bgAnimatedInSecs / 6)
         
         let fadeRepeater = SKAction.repeat(fadeOut, count: 1)
@@ -256,6 +265,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func fadeReversion() {
         
         scoreLabelShape.alpha = 0.0
+       
     }
     
     func showCurrentLevel() {
@@ -340,6 +350,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         livesDisplay.alpha = 1
         miniCharacter.alpha = 1
         levelDisplay.alpha = 1
+        
+        isLevelStarted = true
     
         if(levelData.didLoadFromHome)
         {

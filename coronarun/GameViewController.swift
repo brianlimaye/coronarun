@@ -58,9 +58,9 @@ class GameViewController: UIViewController {
                 notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
 
                 view.ignoresSiblingOrder = true
-                view.showsFPS = true
-                view.showsNodeCount = true
-                view.showsPhysics = true
+                //view.showsFPS = true
+                //view.showsNodeCount = true
+                //view.showsPhysics = true
         }
     }
     
@@ -218,6 +218,7 @@ class GameViewController: UIViewController {
     @objc func appMovedToForeground() {
         
         GameViewController.gameScene?.isPaused = false
+        GameViewController.gameScene?.timer.invalidate()
         GameViewController.gameScene?.startLevel(level: String(levelData.currentLevel))
         playBackgroundMusic()
     }
