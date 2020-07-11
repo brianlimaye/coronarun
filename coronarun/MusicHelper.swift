@@ -14,6 +14,7 @@ class MusicHelper {
     var audioPlayer: AVAudioPlayer?
 
     func prepareToPlay() {
+        
         let aSound = NSURL(fileURLWithPath: Bundle.main.path(forResource: "chill-background-music", ofType: "mp3")!)
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: aSound as URL)

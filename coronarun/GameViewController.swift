@@ -212,7 +212,7 @@ class GameViewController: UIViewController {
         GameViewController.gameScene?.isPaused = false
         GameViewController.gameScene?.timer.invalidate()
         GameViewController.gameScene?.startLevel(level: String(levelData.currentLevel))
-        if(MusicHelper.sharedHelper.audioPlayer != nil)
+        if((MusicHelper.sharedHelper.audioPlayer != nil) && (!levelData.isMusicDisabled))
         {
             playBackgroundMusic()
         }

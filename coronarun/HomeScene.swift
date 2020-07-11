@@ -11,6 +11,7 @@
 
 import Foundation
 import SpriteKit
+import AVFoundation
 import StoreKit
 
 var cameraNode: SKCameraNode = SKCameraNode()
@@ -29,6 +30,7 @@ struct levelData
     static var hasMastered: Bool = false //P
     static var pressedReplay: Bool = false
     static var pressedNext: Bool = false
+    static var isMusicDisabled: Bool = false
 }
 
 class HomeScene: SKScene
@@ -443,11 +445,31 @@ class HomeScene: SKScene
                     soundButton.texture = SKTexture(imageNamed: "volume-off")
                     MusicHelper.sharedHelper.audioPlayer?.currentTime = 0
                     MusicHelper.sharedHelper.audioPlayer?.play()
+                    do
+                    {
+                        levelData.isMusicDisabled = false
+                        try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+                        try AVAudioSession.sharedInstance().setActive(true)
+                    }
+                    catch let error as NSError
+                    {
+                        print(error)
+                    }
                 }
                 else
                 {
                     soundButton.texture = SKTexture(imageNamed: "volume-on")
                     MusicHelper.sharedHelper.audioPlayer?.pause()
+                    do
+                    {
+                        levelData.isMusicDisabled = true
+                        try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.ambient)
+                        try AVAudioSession.sharedInstance().setActive(true)
+                    }
+                    catch let error as NSError
+                    {
+                        print(error)
+                    }
                 }
             }
             else if((node?.name == "tutorialbutton") || (node?.name == "tutorialshape"))
