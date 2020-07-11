@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  coronarun
+//  ronarun
 //
 //  Created by Brian Limaye on 5/13/20.
 //  Copyright © 2020 Brian Limaye. All rights reserved.

@@ -3,28 +3,28 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B984B02BF5B405D385514440F4EB018 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 950B64BEB39CC506B65115EE95302D64 /* Foundation.framework */; };
 		2885BF86B17E77C31CC449E94D905D5E /* SAConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A143C3344DE1AA7054C203DD2C4CF259 /* SAConfettiView.swift */; };
-		2F1678FBAFE2CB80915081D014664F2A /* Pods-coronarun-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D7FA76B4CDF83FD8E0337D573BBDA246 /* Pods-coronarun-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		51B2A47EFFA504C930DD0D3A07D41A97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 950B64BEB39CC506B65115EE95302D64 /* Foundation.framework */; };
 		57F37DD405B0396BD3A01BED15319498 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = A60A19CFB45F9DF1614BC61700CB3B5B /* star.png */; };
-		9175E7BF125EC8C7B38624AC8F7FF9A2 /* Pods-coronarun-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DFB0B1B0F2A9C3D7311E8F802B879AA /* Pods-coronarun-dummy.m */; };
+		87938892E176B087BD895DBC995B1F5C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 950B64BEB39CC506B65115EE95302D64 /* Foundation.framework */; };
 		9CFAB854962E317C47482C5D1BBC5BE2 /* SAConfettiView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F534DADEBCAF4B7302ABB6A78C9797A /* SAConfettiView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ACEB5AF735575B0EAD107A19A613D405 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49F545AB76C9016ECAD7D83A1129E704 /* UIKit.framework */; };
 		AD26D912CBABAAECE26E4A9F07715244 /* confetti.png in Resources */ = {isa = PBXBuildFile; fileRef = 47945ACAFD4A200FE4A4AC93F2D3F5CF /* confetti.png */; };
 		BD3B3022FBE87617DAA05607894F7AD8 /* SAConfettiView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD1AAA60A3B95E24A4EB6B00ECF1828 /* SAConfettiView-dummy.m */; };
+		C9DAF70B34C98B85704B1E63E940BF33 /* Pods-ronarun-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 767841FEA85C99CD85ADB1848BFC25E8 /* Pods-ronarun-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CAFDB48B0C912CFC3C47AD42EFD54AB8 /* diamond.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F4C5BCB6D37B2B10666C40A047FA6E6 /* diamond.png */; };
+		D15BD5511705CACFAA4740485D2F87DC /* Pods-ronarun-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B435A1C96942FA09AC8C557A945EA81 /* Pods-ronarun-dummy.m */; };
 		D78BF0367236E7EEFE72777A5243BAD6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBCD5169B524477639A9A41855A47F99 /* QuartzCore.framework */; };
 		DCA2688D1EF02B7DC7378A73A6B75345 /* SAConfettiView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E94B64C2BD13E14D90FC9CA3977F42AF /* SAConfettiView.bundle */; };
 		F2E42841DC1D5202BF1EF52CA6F633B5 /* triangle.png in Resources */ = {isa = PBXBuildFile; fileRef = EFCE7800A8717C9BFD512AA03B4C23CB /* triangle.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		7234BD32DA2A50A1626921B619E542FE /* PBXContainerItemProxy */ = {
+		59096593DA79953672E95C92D4808BD2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -41,43 +41,43 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00D78BD422CBA39BFDE053EF15840377 /* Pods_ronarun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ronarun.framework; path = "Pods-ronarun.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0125666709D86BCEED8D6D4E28E73EAD /* SAConfettiView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SAConfettiView.modulemap; sourceTree = "<group>"; };
-		10CCB084B2C651D9159E9BA0517E45AC /* Pods-coronarun-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-coronarun-Info.plist"; sourceTree = "<group>"; };
 		11B9C8C30670B03F5F3AC3C52C9099A8 /* SAConfettiView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SAConfettiView-prefix.pch"; sourceTree = "<group>"; };
+		196E191E2CA34D6EB5569620E694707F /* Pods-ronarun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ronarun.release.xcconfig"; sourceTree = "<group>"; };
+		2B435A1C96942FA09AC8C557A945EA81 /* Pods-ronarun-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ronarun-dummy.m"; sourceTree = "<group>"; };
+		33FBCD4D885C0A0525CCEA6C96082262 /* Pods-ronarun-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ronarun-frameworks.sh"; sourceTree = "<group>"; };
 		39D86838B59A04A29C83C2C32615DD9C /* SAConfettiView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SAConfettiView.debug.xcconfig; sourceTree = "<group>"; };
 		47945ACAFD4A200FE4A4AC93F2D3F5CF /* confetti.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = confetti.png; path = Pod/Assets/confetti.png; sourceTree = "<group>"; };
 		49F545AB76C9016ECAD7D83A1129E704 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		4CFF2E4058F858816365EC642C6DD990 /* SAConfettiView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SAConfettiView.framework; path = SAConfettiView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F534DADEBCAF4B7302ABB6A78C9797A /* SAConfettiView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SAConfettiView-umbrella.h"; sourceTree = "<group>"; };
 		5F4C5BCB6D37B2B10666C40A047FA6E6 /* diamond.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = diamond.png; path = Pod/Assets/diamond.png; sourceTree = "<group>"; };
-		63B352C1855FF3D669A7A97BE2D9F249 /* Pods-coronarun-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-coronarun-acknowledgements.plist"; sourceTree = "<group>"; };
-		684D51852A2B192AB7E5B37CE8E02C1C /* Pods-coronarun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-coronarun.release.xcconfig"; sourceTree = "<group>"; };
-		6F8E9425F49216BE0B9FE3C2A9DF3C95 /* Pods-coronarun-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-coronarun-acknowledgements.markdown"; sourceTree = "<group>"; };
+		767841FEA85C99CD85ADB1848BFC25E8 /* Pods-ronarun-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ronarun-umbrella.h"; sourceTree = "<group>"; };
+		7EC9FFB73FDDF91399213650335F5425 /* Pods-ronarun-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ronarun-acknowledgements.markdown"; sourceTree = "<group>"; };
+		90674A056317BFF806D5EB43BF425A4F /* Pods-ronarun-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ronarun-acknowledgements.plist"; sourceTree = "<group>"; };
 		950B64BEB39CC506B65115EE95302D64 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9DFB0B1B0F2A9C3D7311E8F802B879AA /* Pods-coronarun-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-coronarun-dummy.m"; sourceTree = "<group>"; };
 		A143C3344DE1AA7054C203DD2C4CF259 /* SAConfettiView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SAConfettiView.swift; path = Pod/Classes/SAConfettiView.swift; sourceTree = "<group>"; };
 		A60A19CFB45F9DF1614BC61700CB3B5B /* star.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = star.png; path = Pod/Assets/star.png; sourceTree = "<group>"; };
-		BEF0ED0071A4F304A263B65C9EC64B13 /* Pods-coronarun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-coronarun.debug.xcconfig"; sourceTree = "<group>"; };
+		C2B2C63E3050F4E13E712A4F6CA8EA17 /* Pods-ronarun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ronarun.debug.xcconfig"; sourceTree = "<group>"; };
+		C6CF6BBB69321A1EF76FB48EF5146975 /* Pods-ronarun-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ronarun-Info.plist"; sourceTree = "<group>"; };
 		CBCD5169B524477639A9A41855A47F99 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		CFE7D7E07E5D11C35C5375E9A74E38E7 /* SAConfettiView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SAConfettiView.release.xcconfig; sourceTree = "<group>"; };
-		D7FA76B4CDF83FD8E0337D573BBDA246 /* Pods-coronarun-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-coronarun-umbrella.h"; sourceTree = "<group>"; };
 		DA2E0E14B7D019F96A6D091037F6269B /* SAConfettiView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SAConfettiView-Info.plist"; sourceTree = "<group>"; };
 		DBD1AAA60A3B95E24A4EB6B00ECF1828 /* SAConfettiView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SAConfettiView-dummy.m"; sourceTree = "<group>"; };
+		DD7306F83A0D0FB63E8F7A23C3117E8B /* Pods-ronarun.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ronarun.modulemap"; sourceTree = "<group>"; };
 		E94B64C2BD13E14D90FC9CA3977F42AF /* SAConfettiView.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = SAConfettiView.bundle; path = "SAConfettiView-SAConfettiView.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E9AFC03E072A447162507EDAFFCFE526 /* Pods_coronarun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_coronarun.framework; path = "Pods-coronarun.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EEF6236F1248678D515D05980DE78491 /* Pods-coronarun-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-coronarun-frameworks.sh"; sourceTree = "<group>"; };
-		EF332D4BFD41412780F2CDD4D5E73EC8 /* Pods-coronarun.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-coronarun.modulemap"; sourceTree = "<group>"; };
 		EFCE7800A8717C9BFD512AA03B4C23CB /* triangle.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = triangle.png; path = Pod/Assets/triangle.png; sourceTree = "<group>"; };
 		F9E5427876C2E0772155541E43F07010 /* ResourceBundle-SAConfettiView-SAConfettiView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-SAConfettiView-SAConfettiView-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		0985A483857B96F712224DC9520A3D4B /* Frameworks */ = {
+		0965D0FBD169B5E3394B89811772D776 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B984B02BF5B405D385514440F4EB018 /* Foundation.framework in Frameworks */,
+				87938892E176B087BD895DBC995B1F5C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,37 +120,30 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		14D265BB406B041CCDCED974F58C4293 /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				4129743E35374DA027EBC81F1A3EB820 /* Pods-coronarun */,
-			);
-			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		4129743E35374DA027EBC81F1A3EB820 /* Pods-coronarun */ = {
-			isa = PBXGroup;
-			children = (
-				EF332D4BFD41412780F2CDD4D5E73EC8 /* Pods-coronarun.modulemap */,
-				6F8E9425F49216BE0B9FE3C2A9DF3C95 /* Pods-coronarun-acknowledgements.markdown */,
-				63B352C1855FF3D669A7A97BE2D9F249 /* Pods-coronarun-acknowledgements.plist */,
-				9DFB0B1B0F2A9C3D7311E8F802B879AA /* Pods-coronarun-dummy.m */,
-				EEF6236F1248678D515D05980DE78491 /* Pods-coronarun-frameworks.sh */,
-				10CCB084B2C651D9159E9BA0517E45AC /* Pods-coronarun-Info.plist */,
-				D7FA76B4CDF83FD8E0337D573BBDA246 /* Pods-coronarun-umbrella.h */,
-				BEF0ED0071A4F304A263B65C9EC64B13 /* Pods-coronarun.debug.xcconfig */,
-				684D51852A2B192AB7E5B37CE8E02C1C /* Pods-coronarun.release.xcconfig */,
-			);
-			name = "Pods-coronarun";
-			path = "Target Support Files/Pods-coronarun";
-			sourceTree = "<group>";
-		};
 		42CD8526D6AA365A013E9792BAD2478F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				B3A6DA9465B23F1B58FFECB783045AE8 /* SAConfettiView */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		48067E5B613B9EED55BBBE287DAED259 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				D6097828A49F33F1CD7C707035EEE49C /* Pods-ronarun */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		6AC019D488DADDEC8C1DF113C8324A49 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				00D78BD422CBA39BFDE053EF15840377 /* Pods_ronarun.framework */,
+				E94B64C2BD13E14D90FC9CA3977F42AF /* SAConfettiView.bundle */,
+				4CFF2E4058F858816365EC642C6DD990 /* SAConfettiView.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		B3A6DA9465B23F1B58FFECB783045AE8 /* SAConfettiView */ = {
@@ -180,19 +173,26 @@
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				03C5C200A0787E300053CFA8F53CA094 /* Frameworks */,
 				42CD8526D6AA365A013E9792BAD2478F /* Pods */,
-				E008F620849B04822E58246D5897FB12 /* Products */,
-				14D265BB406B041CCDCED974F58C4293 /* Targets Support Files */,
+				6AC019D488DADDEC8C1DF113C8324A49 /* Products */,
+				48067E5B613B9EED55BBBE287DAED259 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
-		E008F620849B04822E58246D5897FB12 /* Products */ = {
+		D6097828A49F33F1CD7C707035EEE49C /* Pods-ronarun */ = {
 			isa = PBXGroup;
 			children = (
-				E9AFC03E072A447162507EDAFFCFE526 /* Pods_coronarun.framework */,
-				E94B64C2BD13E14D90FC9CA3977F42AF /* SAConfettiView.bundle */,
-				4CFF2E4058F858816365EC642C6DD990 /* SAConfettiView.framework */,
+				DD7306F83A0D0FB63E8F7A23C3117E8B /* Pods-ronarun.modulemap */,
+				7EC9FFB73FDDF91399213650335F5425 /* Pods-ronarun-acknowledgements.markdown */,
+				90674A056317BFF806D5EB43BF425A4F /* Pods-ronarun-acknowledgements.plist */,
+				2B435A1C96942FA09AC8C557A945EA81 /* Pods-ronarun-dummy.m */,
+				33FBCD4D885C0A0525CCEA6C96082262 /* Pods-ronarun-frameworks.sh */,
+				C6CF6BBB69321A1EF76FB48EF5146975 /* Pods-ronarun-Info.plist */,
+				767841FEA85C99CD85ADB1848BFC25E8 /* Pods-ronarun-umbrella.h */,
+				C2B2C63E3050F4E13E712A4F6CA8EA17 /* Pods-ronarun.debug.xcconfig */,
+				196E191E2CA34D6EB5569620E694707F /* Pods-ronarun.release.xcconfig */,
 			);
-			name = Products;
+			name = "Pods-ronarun";
+			path = "Target Support Files/Pods-ronarun";
 			sourceTree = "<group>";
 		};
 		E5250D21B5FBA0EFE5B5AE3A2C0099CB /* Support Files */ = {
@@ -214,11 +214,11 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		498AF92D055704FBD63CA66CB3607753 /* Headers */ = {
+		33BE9C268FBEFBBC6EB685B93A1B064A /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F1678FBAFE2CB80915081D014664F2A /* Pods-coronarun-umbrella.h in Headers */,
+				C9DAF70B34C98B85704B1E63E940BF33 /* Pods-ronarun-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,23 +250,23 @@
 			productReference = E94B64C2BD13E14D90FC9CA3977F42AF /* SAConfettiView.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
-		6FF700DE1D82B21923E12FDF6572E6EC /* Pods-coronarun */ = {
+		D51F86322B94876F42A3A6DA131A206F /* Pods-ronarun */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 49D77710797393F88C84A4CC5CC1B966 /* Build configuration list for PBXNativeTarget "Pods-coronarun" */;
+			buildConfigurationList = 16B653E0851B4984DE824F514E156BE1 /* Build configuration list for PBXNativeTarget "Pods-ronarun" */;
 			buildPhases = (
-				498AF92D055704FBD63CA66CB3607753 /* Headers */,
-				D731E6EA30B8F2AEE740F8B7147F6AD5 /* Sources */,
-				0985A483857B96F712224DC9520A3D4B /* Frameworks */,
-				CA3DB65241589566B8E322C832707E99 /* Resources */,
+				33BE9C268FBEFBBC6EB685B93A1B064A /* Headers */,
+				BE75B5A11E0371DB5731F8A3F1BF9CDC /* Sources */,
+				0965D0FBD169B5E3394B89811772D776 /* Frameworks */,
+				8231AE47122DE1A743A5406FE1DC4E7A /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				38B2CD7E8E4E9EBCB2164C861FE4346F /* PBXTargetDependency */,
+				FC27340FD5A3F739EA720599ADCA5911 /* PBXTargetDependency */,
 			);
-			name = "Pods-coronarun";
-			productName = "Pods-coronarun";
-			productReference = E9AFC03E072A447162507EDAFFCFE526 /* Pods_coronarun.framework */;
+			name = "Pods-ronarun";
+			productName = "Pods-ronarun";
+			productReference = 00D78BD422CBA39BFDE053EF15840377 /* Pods_ronarun.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		DEF5EC9A82178D0D695682390F2DE2F1 /* SAConfettiView */ = {
@@ -298,7 +298,7 @@
 				LastUpgradeCheck = 1100;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -306,11 +306,11 @@
 				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = E008F620849B04822E58246D5897FB12 /* Products */;
+			productRefGroup = 6AC019D488DADDEC8C1DF113C8324A49 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6FF700DE1D82B21923E12FDF6572E6EC /* Pods-coronarun */,
+				D51F86322B94876F42A3A6DA131A206F /* Pods-ronarun */,
 				DEF5EC9A82178D0D695682390F2DE2F1 /* SAConfettiView */,
 				1E488B4A8341D4A1374B44B7D0191BC4 /* SAConfettiView-SAConfettiView */,
 			);
@@ -326,7 +326,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CA3DB65241589566B8E322C832707E99 /* Resources */ = {
+		8231AE47122DE1A743A5406FE1DC4E7A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -363,28 +363,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D731E6EA30B8F2AEE740F8B7147F6AD5 /* Sources */ = {
+		BE75B5A11E0371DB5731F8A3F1BF9CDC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9175E7BF125EC8C7B38624AC8F7FF9A2 /* Pods-coronarun-dummy.m in Sources */,
+				D15BD5511705CACFAA4740485D2F87DC /* Pods-ronarun-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		38B2CD7E8E4E9EBCB2164C861FE4346F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SAConfettiView;
-			target = DEF5EC9A82178D0D695682390F2DE2F1 /* SAConfettiView */;
-			targetProxy = 7234BD32DA2A50A1626921B619E542FE /* PBXContainerItemProxy */;
-		};
 		D6FBD21DCE9C01D2D5BB115579036771 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "SAConfettiView-SAConfettiView";
 			target = 1E488B4A8341D4A1374B44B7D0191BC4 /* SAConfettiView-SAConfettiView */;
 			targetProxy = 7948B86A8D61A4D6373FC3EC81EDB4C0 /* PBXContainerItemProxy */;
+		};
+		FC27340FD5A3F739EA720599ADCA5911 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SAConfettiView;
+			target = DEF5EC9A82178D0D695682390F2DE2F1 /* SAConfettiView */;
+			targetProxy = 59096593DA79953672E95C92D4808BD2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -460,6 +460,45 @@
 			};
 			name = Release;
 		};
+		449953B0017B7B83C587F552ACA22663 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 196E191E2CA34D6EB5569620E694707F /* Pods-ronarun.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-ronarun/Pods-ronarun-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ronarun/Pods-ronarun.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		5D9C64405A024C3ECE053F60FF52E4D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CFE7D7E07E5D11C35C5375E9A74E38E7 /* SAConfettiView.release.xcconfig */;
@@ -477,7 +516,7 @@
 			};
 			name = Release;
 		};
-		6C61D818ACD3C2C116FED6A9C67E91B4 /* Debug */ = {
+		6410F571BA8C1AEC6A19403F1B61B0B5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -528,7 +567,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -541,7 +580,62 @@
 			};
 			name = Debug;
 		};
-		7DC5F11AFBEAE473E8D3C24A2D11338D /* Release */ = {
+		784A8FDC728BAFF3B81939E982C10216 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C2B2C63E3050F4E13E712A4F6CA8EA17 /* Pods-ronarun.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-ronarun/Pods-ronarun-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ronarun/Pods-ronarun.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		7EDD6DFE7B34E1636C24E44286B1B2EA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 39D86838B59A04A29C83C2C32615DD9C /* SAConfettiView.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SAConfettiView";
+				IBSC_MODULE = SAConfettiView;
+				INFOPLIST_FILE = "Target Support Files/SAConfettiView/ResourceBundle-SAConfettiView-SAConfettiView-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_NAME = SAConfettiView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		A27713CB74E99AF202AADC23200A32F4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -589,7 +683,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -600,100 +694,6 @@
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;
-		};
-		7EDD6DFE7B34E1636C24E44286B1B2EA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 39D86838B59A04A29C83C2C32615DD9C /* SAConfettiView.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SAConfettiView";
-				IBSC_MODULE = SAConfettiView;
-				INFOPLIST_FILE = "Target Support Files/SAConfettiView/ResourceBundle-SAConfettiView-SAConfettiView-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				PRODUCT_NAME = SAConfettiView;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		8E2418AFC7019C211CBD7663B4B7C676 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 684D51852A2B192AB7E5B37CE8E02C1C /* Pods-coronarun.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-coronarun/Pods-coronarun-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-coronarun/Pods-coronarun.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		D048347D5D2B4CB009A5ABF0C43C7F10 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BEF0ED0071A4F304A263B65C9EC64B13 /* Pods-coronarun.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-coronarun/Pods-coronarun-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-coronarun/Pods-coronarun.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -707,20 +707,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+		16B653E0851B4984DE824F514E156BE1 /* Build configuration list for PBXNativeTarget "Pods-ronarun" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				6C61D818ACD3C2C116FED6A9C67E91B4 /* Debug */,
-				7DC5F11AFBEAE473E8D3C24A2D11338D /* Release */,
+				784A8FDC728BAFF3B81939E982C10216 /* Debug */,
+				449953B0017B7B83C587F552ACA22663 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		49D77710797393F88C84A4CC5CC1B966 /* Build configuration list for PBXNativeTarget "Pods-coronarun" */ = {
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D048347D5D2B4CB009A5ABF0C43C7F10 /* Debug */,
-				8E2418AFC7019C211CBD7663B4B7C676 /* Release */,
+				6410F571BA8C1AEC6A19403F1B61B0B5 /* Debug */,
+				A27713CB74E99AF202AADC23200A32F4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

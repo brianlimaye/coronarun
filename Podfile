@@ -1,4 +1,4 @@
-target 'coronarun' do
+target 'ronarun' do
 use_frameworks!
 
 pod 'SAConfettiView'

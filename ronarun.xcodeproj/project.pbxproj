@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0DF3915FF0B284AF08D50911 /* Pods_coronarun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDAE8EDCFDD65001997D9986 /* Pods_coronarun.framework */; };
 		B402FE70248452EB000AB014 /* HomeScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B402FE6F248452EB000AB014 /* HomeScene.sks */; };
 		B402FE722484530B000AB014 /* HomeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B402FE712484530B000AB014 /* HomeScene.swift */; };
 		B402FE782484617F000AB014 /* green-splat.png in Resources */ = {isa = PBXBuildFile; fileRef = B402FE772484617E000AB014 /* green-splat.png */; };
@@ -31,14 +30,12 @@
 		B42BF96C246BC24F00AD9292 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BF96B246BC24F00AD9292 /* GameViewController.swift */; };
 		B42BF96F246BC24F00AD9292 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B42BF96D246BC24F00AD9292 /* Main.storyboard */; };
 		B42BF974246BC25100AD9292 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B42BF972246BC25100AD9292 /* LaunchScreen.storyboard */; };
-		B42BF97F246BC25100AD9292 /* coronarunTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BF97E246BC25100AD9292 /* coronarunTests.swift */; };
-		B42BF98A246BC25100AD9292 /* coronarunUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BF989246BC25100AD9292 /* coronarunUITests.swift */; };
+		B42BF97F246BC25100AD9292 /* ronarunTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BF97E246BC25100AD9292 /* ronarunTests.swift */; };
+		B42BF98A246BC25100AD9292 /* ronarunUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BF989246BC25100AD9292 /* ronarunUITests.swift */; };
 		B42BF99A246BDC5500AD9292 /* resizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BF999246BDC5500AD9292 /* resizer.swift */; };
 		B42BF99E246BDD6D00AD9292 /* resizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BF999246BDC5500AD9292 /* resizer.swift */; };
 		B42BF99F246BDD6E00AD9292 /* resizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42BF999246BDC5500AD9292 /* resizer.swift */; };
 		B42E335B24953D3900AB9C18 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42E335924953D3900AB9C18 /* Assets.xcassets */; };
-		B42E335D24954F5100AB9C18 /* portal.png in Resources */ = {isa = PBXBuildFile; fileRef = B42E335C24954F5100AB9C18 /* portal.png */; };
-		B42E335F2495587400AB9C18 /* cool-portal.png in Resources */ = {isa = PBXBuildFile; fileRef = B42E335E2495587300AB9C18 /* cool-portal.png */; };
 		B4401CC5247EE83800B49192 /* next-level-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B4401CC4247EE83800B49192 /* next-level-icon.png */; };
 		B4401CC7247EEF0F00B49192 /* home-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B4401CC6247EEF0F00B49192 /* home-icon.png */; };
 		B4401CCD24803F5400B49192 /* CarbonBl-Regular.ps in Resources */ = {isa = PBXBuildFile; fileRef = B4401CCC24803F5400B49192 /* CarbonBl-Regular.ps */; };
@@ -55,12 +52,6 @@
 		B45B6BA0249FBF8C005577B6 /* masked-bobby-5.png in Resources */ = {isa = PBXBuildFile; fileRef = B45B6B97249FBF8C005577B6 /* masked-bobby-5.png */; };
 		B45B6BA1249FBF8C005577B6 /* masked-bobby-13.png in Resources */ = {isa = PBXBuildFile; fileRef = B45B6B98249FBF8C005577B6 /* masked-bobby-13.png */; };
 		B45B6BA3249FF67D005577B6 /* mask.png in Resources */ = {isa = PBXBuildFile; fileRef = B45B6BA2249FF67C005577B6 /* mask.png */; };
-		B45D1F3D2477A72900C06C4E /* jessica-3.png in Resources */ = {isa = PBXBuildFile; fileRef = B45D1F372477A72800C06C4E /* jessica-3.png */; };
-		B45D1F3E2477A72900C06C4E /* jessica-6.png in Resources */ = {isa = PBXBuildFile; fileRef = B45D1F382477A72900C06C4E /* jessica-6.png */; };
-		B45D1F3F2477A72900C06C4E /* jessica-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B45D1F392477A72900C06C4E /* jessica-2.png */; };
-		B45D1F402477A72900C06C4E /* jessica-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B45D1F3A2477A72900C06C4E /* jessica-1.png */; };
-		B45D1F412477A72900C06C4E /* jessica-4.png in Resources */ = {isa = PBXBuildFile; fileRef = B45D1F3B2477A72900C06C4E /* jessica-4.png */; };
-		B45D1F422477A72900C06C4E /* jessica-5.png in Resources */ = {isa = PBXBuildFile; fileRef = B45D1F3C2477A72900C06C4E /* jessica-5.png */; };
 		B46304832485AD0D004CC114 /* (b)obby-2 (1).png in Resources */ = {isa = PBXBuildFile; fileRef = B46304802485AD0C004CC114 /* (b)obby-2 (1).png */; };
 		B46304842485AD0D004CC114 /* (b)obby-3 (1).png in Resources */ = {isa = PBXBuildFile; fileRef = B46304812485AD0C004CC114 /* (b)obby-3 (1).png */; };
 		B46304852485AD0D004CC114 /* (b)obby-4 (1).png in Resources */ = {isa = PBXBuildFile; fileRef = B46304822485AD0C004CC114 /* (b)obby-4 (1).png */; };
@@ -76,7 +67,6 @@
 		B46F060E24706F730002CCEB /* bandit-8.png in Resources */ = {isa = PBXBuildFile; fileRef = B46F060324706F730002CCEB /* bandit-8.png */; };
 		B46F060F24706F730002CCEB /* bandit-3.png in Resources */ = {isa = PBXBuildFile; fileRef = B46F060424706F730002CCEB /* bandit-3.png */; };
 		B46F061024706F730002CCEB /* bandit-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B46F060524706F730002CCEB /* bandit-1.png */; };
-		B46F061124706F730002CCEB /* grounds.png in Resources */ = {isa = PBXBuildFile; fileRef = B46F060624706F730002CCEB /* grounds.png */; };
 		B46F061224706F730002CCEB /* bandit-4.png in Resources */ = {isa = PBXBuildFile; fileRef = B46F060724706F730002CCEB /* bandit-4.png */; };
 		B46F061324706F730002CCEB /* bandit-6.png in Resources */ = {isa = PBXBuildFile; fileRef = B46F060824706F730002CCEB /* bandit-6.png */; };
 		B4701F0E24958DD400A3CED8 /* world1.png in Resources */ = {isa = PBXBuildFile; fileRef = B4701F0D24958DD400A3CED8 /* world1.png */; };
@@ -84,9 +74,7 @@
 		B4763B4D2492B5EB00665A99 /* batframe-2.png in Resources */ = {isa = PBXBuildFile; fileRef = B4763B492492B5EB00665A99 /* batframe-2.png */; };
 		B4763B4E2492B5EB00665A99 /* batframe-3.png in Resources */ = {isa = PBXBuildFile; fileRef = B4763B4A2492B5EB00665A99 /* batframe-3.png */; };
 		B4763B4F2492B5EB00665A99 /* batframe-4.png in Resources */ = {isa = PBXBuildFile; fileRef = B4763B4B2492B5EB00665A99 /* batframe-4.png */; };
-		B4763B6324933EDE00665A99 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4763B6124933EDE00665A99 /* Assets.xcassets */; };
 		B4763B6A249347B500665A99 /* shimmer.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4763B68249347B500665A99 /* shimmer.sks */; };
-		B4763B6D2493FB9A00665A99 /* soapbottle.png in Resources */ = {isa = PBXBuildFile; fileRef = B4763B6C2493FB9A00665A99 /* soapbottle.png */; };
 		B4763B6F249418C600665A99 /* hand-sanitizer.png in Resources */ = {isa = PBXBuildFile; fileRef = B4763B6E249418C600665A99 /* hand-sanitizer.png */; };
 		B4763B712494663F00665A99 /* green-germ-1.png in Resources */ = {isa = PBXBuildFile; fileRef = B4763B702494663E00665A99 /* green-germ-1.png */; };
 		B4814786249AE8EA00E74EC7 /* exclamation-mark.png in Resources */ = {isa = PBXBuildFile; fileRef = B4814785249AE8EA00E74EC7 /* exclamation-mark.png */; };
@@ -120,8 +108,6 @@
 		B4B5820A247B660D0043CEEB /* bobby-12.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B581FA247B660D0043CEEB /* bobby-12.png */; };
 		B4B5820C247B660D0043CEEB /* bobby-6.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B581FC247B660D0043CEEB /* bobby-6.png */; };
 		B4B58212247E281F0043CEEB /* replay-button.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B58211247E281F0043CEEB /* replay-button.png */; };
-		B4B73A4B2470FE3B004200E9 /* up-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B73A4A2470FE3B004200E9 /* up-arrow.png */; };
-		B4B73A4F247103E4004200E9 /* down-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B73A4E247103E4004200E9 /* down-arrow.png */; };
 		B4B7DB812472356600D8C129 /* bandit-10.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B7DB7E2472356500D8C129 /* bandit-10.png */; };
 		B4B7DB822472356600D8C129 /* bandit-11.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B7DB7F2472356500D8C129 /* bandit-11.png */; };
 		B4B7DB832472356600D8C129 /* bandit-12.png in Resources */ = {isa = PBXBuildFile; fileRef = B4B7DB802472356500D8C129 /* bandit-12.png */; };
@@ -144,6 +130,7 @@
 		B4FFE531249A79FE00DAC9EE /* blondezombie-6.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE52B249A79FE00DAC9EE /* blondezombie-6.png */; };
 		B4FFE535249A882900DAC9EE /* sneezeblue.sks in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE534249A882900DAC9EE /* sneezeblue.sks */; };
 		B4FFE537249A912400DAC9EE /* exclamation.png in Resources */ = {isa = PBXBuildFile; fileRef = B4FFE536249A912400DAC9EE /* exclamation.png */; };
+		C42CD0485656CFE8C84FA9A8 /* Pods_ronarun.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16508FCF3D13B96AC444861A /* Pods_ronarun.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,7 +151,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		817A43B3177B2AD5BB88106B /* Pods-coronarun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coronarun.release.xcconfig"; path = "Target Support Files/Pods-coronarun/Pods-coronarun.release.xcconfig"; sourceTree = "<group>"; };
+		16508FCF3D13B96AC444861A /* Pods_ronarun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ronarun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B402FE6F248452EB000AB014 /* HomeScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HomeScene.sks; sourceTree = "<group>"; };
 		B402FE712484530B000AB014 /* HomeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScene.swift; sourceTree = "<group>"; };
 		B402FE772484617E000AB014 /* green-splat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "green-splat.png"; path = "animation/green-splat.png"; sourceTree = "<group>"; };
@@ -181,7 +168,7 @@
 		B4114022249A733500358238 /* blondezombie-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-1.png"; path = "animation/blondezombie-1.png"; sourceTree = "<group>"; };
 		B421044224982B99005AC764 /* NightinTokyo-Bold.ps */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NightinTokyo-Bold.ps"; path = "animation/NightinTokyo-Bold.ps"; sourceTree = "<group>"; };
 		B421044424983235005AC764 /* HABESHAPIXELS-Bold.ps */ = {isa = PBXFileReference; lastKnownFileType = file; name = "HABESHAPIXELS-Bold.ps"; path = "animation/HABESHAPIXELS-Bold.ps"; sourceTree = "<group>"; };
-		B42BF960246BC24F00AD9292 /* Corona Rush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Corona Rush.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B42BF960246BC24F00AD9292 /* Rona Run.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Rona Run.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B42BF963246BC24F00AD9292 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B42BF965246BC24F00AD9292 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		B42BF967246BC24F00AD9292 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -190,16 +177,14 @@
 		B42BF96E246BC24F00AD9292 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B42BF973246BC25100AD9292 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B42BF975246BC25100AD9292 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B42BF97A246BC25100AD9292 /* coronarunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = coronarunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B42BF97E246BC25100AD9292 /* coronarunTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coronarunTests.swift; sourceTree = "<group>"; };
+		B42BF97A246BC25100AD9292 /* ronarunTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ronarunTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B42BF97E246BC25100AD9292 /* ronarunTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ronarunTests.swift; sourceTree = "<group>"; };
 		B42BF980246BC25100AD9292 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B42BF985246BC25100AD9292 /* coronarunUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = coronarunUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B42BF989246BC25100AD9292 /* coronarunUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = coronarunUITests.swift; sourceTree = "<group>"; };
+		B42BF985246BC25100AD9292 /* ronarunUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ronarunUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B42BF989246BC25100AD9292 /* ronarunUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ronarunUITests.swift; sourceTree = "<group>"; };
 		B42BF98B246BC25100AD9292 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B42BF999246BDC5500AD9292 /* resizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = resizer.swift; sourceTree = "<group>"; };
 		B42E335924953D3900AB9C18 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B42E335C24954F5100AB9C18 /* portal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = portal.png; path = animation/portal.png; sourceTree = "<group>"; };
-		B42E335E2495587300AB9C18 /* cool-portal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cool-portal.png"; path = "animation/cool-portal.png"; sourceTree = "<group>"; };
 		B4401CC4247EE83800B49192 /* next-level-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "next-level-icon.png"; path = "animation/next-level-icon.png"; sourceTree = "<group>"; };
 		B4401CC6247EEF0F00B49192 /* home-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "home-icon.png"; path = "animation/home-icon.png"; sourceTree = "<group>"; };
 		B4401CCC24803F5400B49192 /* CarbonBl-Regular.ps */ = {isa = PBXFileReference; lastKnownFileType = file; name = "CarbonBl-Regular.ps"; path = "animation/CarbonBl-Regular.ps"; sourceTree = "<group>"; };
@@ -216,12 +201,6 @@
 		B45B6B97249FBF8C005577B6 /* masked-bobby-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "masked-bobby-5.png"; path = "animation/masked-bobby-5.png"; sourceTree = "<group>"; };
 		B45B6B98249FBF8C005577B6 /* masked-bobby-13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "masked-bobby-13.png"; path = "animation/masked-bobby-13.png"; sourceTree = "<group>"; };
 		B45B6BA2249FF67C005577B6 /* mask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mask.png; path = animation/mask.png; sourceTree = "<group>"; };
-		B45D1F372477A72800C06C4E /* jessica-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "jessica-3.png"; path = "animation/jessica-3.png"; sourceTree = "<group>"; };
-		B45D1F382477A72900C06C4E /* jessica-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "jessica-6.png"; path = "animation/jessica-6.png"; sourceTree = "<group>"; };
-		B45D1F392477A72900C06C4E /* jessica-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "jessica-2.png"; path = "animation/jessica-2.png"; sourceTree = "<group>"; };
-		B45D1F3A2477A72900C06C4E /* jessica-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "jessica-1.png"; path = "animation/jessica-1.png"; sourceTree = "<group>"; };
-		B45D1F3B2477A72900C06C4E /* jessica-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "jessica-4.png"; path = "animation/jessica-4.png"; sourceTree = "<group>"; };
-		B45D1F3C2477A72900C06C4E /* jessica-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "jessica-5.png"; path = "animation/jessica-5.png"; sourceTree = "<group>"; };
 		B46304802485AD0C004CC114 /* (b)obby-2 (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "(b)obby-2 (1).png"; path = "animation/(b)obby-2 (1).png"; sourceTree = "<group>"; };
 		B46304812485AD0C004CC114 /* (b)obby-3 (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "(b)obby-3 (1).png"; path = "animation/(b)obby-3 (1).png"; sourceTree = "<group>"; };
 		B46304822485AD0C004CC114 /* (b)obby-4 (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "(b)obby-4 (1).png"; path = "animation/(b)obby-4 (1).png"; sourceTree = "<group>"; };
@@ -237,7 +216,6 @@
 		B46F060324706F730002CCEB /* bandit-8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bandit-8.png"; path = "animation/bandit-8.png"; sourceTree = "<group>"; };
 		B46F060424706F730002CCEB /* bandit-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bandit-3.png"; path = "animation/bandit-3.png"; sourceTree = "<group>"; };
 		B46F060524706F730002CCEB /* bandit-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bandit-1.png"; path = "animation/bandit-1.png"; sourceTree = "<group>"; };
-		B46F060624706F730002CCEB /* grounds.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grounds.png; path = ./animation/grounds.png; sourceTree = "<group>"; };
 		B46F060724706F730002CCEB /* bandit-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bandit-4.png"; path = "animation/bandit-4.png"; sourceTree = "<group>"; };
 		B46F060824706F730002CCEB /* bandit-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bandit-6.png"; path = "animation/bandit-6.png"; sourceTree = "<group>"; };
 		B4701F0D24958DD400A3CED8 /* world1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = world1.png; path = animation/world1.png; sourceTree = "<group>"; };
@@ -247,7 +225,6 @@
 		B4763B4B2492B5EB00665A99 /* batframe-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "batframe-4.png"; path = "animation/batframe-4.png"; sourceTree = "<group>"; };
 		B4763B6124933EDE00665A99 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4763B68249347B500665A99 /* shimmer.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = shimmer.sks; sourceTree = "<group>"; };
-		B4763B6C2493FB9A00665A99 /* soapbottle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = soapbottle.png; path = animation/soapbottle.png; sourceTree = "<group>"; };
 		B4763B6E249418C600665A99 /* hand-sanitizer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "hand-sanitizer.png"; path = "animation/hand-sanitizer.png"; sourceTree = "<group>"; };
 		B4763B702494663E00665A99 /* green-germ-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "green-germ-1.png"; path = "animation/green-germ-1.png"; sourceTree = "<group>"; };
 		B4814785249AE8EA00E74EC7 /* exclamation-mark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "exclamation-mark.png"; path = "animation/exclamation-mark.png"; sourceTree = "<group>"; };
@@ -281,8 +258,6 @@
 		B4B581FA247B660D0043CEEB /* bobby-12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bobby-12.png"; path = "animation/bobby-12.png"; sourceTree = "<group>"; };
 		B4B581FC247B660D0043CEEB /* bobby-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bobby-6.png"; path = "animation/bobby-6.png"; sourceTree = "<group>"; };
 		B4B58211247E281F0043CEEB /* replay-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "replay-button.png"; path = "animation/replay-button.png"; sourceTree = "<group>"; };
-		B4B73A4A2470FE3B004200E9 /* up-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "up-arrow.png"; path = "animation/up-arrow.png"; sourceTree = "<group>"; };
-		B4B73A4E247103E4004200E9 /* down-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "down-arrow.png"; path = "animation/down-arrow.png"; sourceTree = "<group>"; };
 		B4B7DB7E2472356500D8C129 /* bandit-10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bandit-10.png"; path = "animation/bandit-10.png"; sourceTree = "<group>"; };
 		B4B7DB7F2472356500D8C129 /* bandit-11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bandit-11.png"; path = "animation/bandit-11.png"; sourceTree = "<group>"; };
 		B4B7DB802472356500D8C129 /* bandit-12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bandit-12.png"; path = "animation/bandit-12.png"; sourceTree = "<group>"; };
@@ -305,8 +280,8 @@
 		B4FFE52B249A79FE00DAC9EE /* blondezombie-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blondezombie-6.png"; path = "animation/blondezombie-6.png"; sourceTree = "<group>"; };
 		B4FFE534249A882900DAC9EE /* sneezeblue.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = sneezeblue.sks; sourceTree = "<group>"; };
 		B4FFE536249A912400DAC9EE /* exclamation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = exclamation.png; path = animation/exclamation.png; sourceTree = "<group>"; };
-		BDAE8EDCFDD65001997D9986 /* Pods_coronarun.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_coronarun.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEDE1F4654B9B96DCF12C657 /* Pods-coronarun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-coronarun.debug.xcconfig"; path = "Target Support Files/Pods-coronarun/Pods-coronarun.debug.xcconfig"; sourceTree = "<group>"; };
+		C39AE5D916F6B30A08F0AADD /* Pods-ronarun.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ronarun.debug.xcconfig"; path = "Target Support Files/Pods-ronarun/Pods-ronarun.debug.xcconfig"; sourceTree = "<group>"; };
+		FA3029296A997761ACFCCA75 /* Pods-ronarun.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ronarun.release.xcconfig"; path = "Target Support Files/Pods-ronarun/Pods-ronarun.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,7 +289,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0DF3915FF0B284AF08D50911 /* Pods_coronarun.framework in Frameworks */,
+				C42CD0485656CFE8C84FA9A8 /* Pods_ronarun.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,39 +310,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		87FE6837BB7A96380C60429B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BDAE8EDCFDD65001997D9986 /* Pods_coronarun.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		B42BF957246BC24F00AD9292 = {
 			isa = PBXGroup;
 			children = (
 				B49EE9EF24A1A85400AECD41 /* Podfile */,
 				B4763B6124933EDE00665A99 /* Assets.xcassets */,
-				B42BF962246BC24F00AD9292 /* coronarun */,
-				B42BF97D246BC25100AD9292 /* coronarunTests */,
-				B42BF988246BC25100AD9292 /* coronarunUITests */,
+				B42BF962246BC24F00AD9292 /* ronarun */,
+				B42BF97D246BC25100AD9292 /* ronarunTests */,
+				B42BF988246BC25100AD9292 /* ronarunUITests */,
 				B42BF961246BC24F00AD9292 /* Products */,
 				E0C3E1AB7E10D9EBB9356807 /* Pods */,
-				87FE6837BB7A96380C60429B /* Frameworks */,
+				C3553B73D12E5AF7492ADFA3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		B42BF961246BC24F00AD9292 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B42BF960246BC24F00AD9292 /* Corona Rush.app */,
-				B42BF97A246BC25100AD9292 /* coronarunTests.xctest */,
-				B42BF985246BC25100AD9292 /* coronarunUITests.xctest */,
+				B42BF960246BC24F00AD9292 /* Rona Run.app */,
+				B42BF97A246BC25100AD9292 /* ronarunTests.xctest */,
+				B42BF985246BC25100AD9292 /* ronarunUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B42BF962246BC24F00AD9292 /* coronarun */ = {
+		B42BF962246BC24F00AD9292 /* ronarun */ = {
 			isa = PBXGroup;
 			children = (
 				B42BF963246BC24F00AD9292 /* AppDelegate.swift */,
@@ -414,11 +381,8 @@
 				B421044224982B99005AC764 /* NightinTokyo-Bold.ps */,
 				B49EEC042481E8CC001309E2 /* menu-icon.png */,
 				B4701F0D24958DD400A3CED8 /* world1.png */,
-				B42E335E2495587300AB9C18 /* cool-portal.png */,
-				B42E335C24954F5100AB9C18 /* portal.png */,
 				B4763B702494663E00665A99 /* green-germ-1.png */,
 				B4763B6E249418C600665A99 /* hand-sanitizer.png */,
-				B4763B6C2493FB9A00665A99 /* soapbottle.png */,
 				B4EDE0772488703700B33711 /* DKHand-Regular.ps */,
 				B4BAD2F224883BA20008ED87 /* KeyVirtueRegular.ps */,
 				B4BAD2F024870FAF0008ED87 /* MaassslicerItalic.ps */,
@@ -471,17 +435,8 @@
 				B4B581F4247B660D0043CEEB /* bobby-14.png */,
 				B4B581F8247B660D0043CEEB /* bobby-15.png */,
 				B4B581F7247B660D0043CEEB /* bobby-16.png */,
-				B45D1F3A2477A72900C06C4E /* jessica-1.png */,
-				B45D1F392477A72900C06C4E /* jessica-2.png */,
-				B45D1F372477A72800C06C4E /* jessica-3.png */,
-				B45D1F3B2477A72900C06C4E /* jessica-4.png */,
-				B45D1F3C2477A72900C06C4E /* jessica-5.png */,
-				B45D1F382477A72900C06C4E /* jessica-6.png */,
 				B4B7DB86247265D300D8C129 /* banana-peel.png */,
 				B4B7DB84247259A900D8C129 /* blue-germ-1.png */,
-				B46F060624706F730002CCEB /* grounds.png */,
-				B4B73A4A2470FE3B004200E9 /* up-arrow.png */,
-				B4B73A4E247103E4004200E9 /* down-arrow.png */,
 				B46F060524706F730002CCEB /* bandit-1.png */,
 				B46F05FF24706F730002CCEB /* bandit-2.png */,
 				B46F060424706F730002CCEB /* bandit-3.png */,
@@ -502,25 +457,25 @@
 				B42BF975246BC25100AD9292 /* Info.plist */,
 				B495F71624A2E20900BA8EEE /* Music */,
 			);
-			path = coronarun;
+			path = ronarun;
 			sourceTree = "<group>";
 		};
-		B42BF97D246BC25100AD9292 /* coronarunTests */ = {
+		B42BF97D246BC25100AD9292 /* ronarunTests */ = {
 			isa = PBXGroup;
 			children = (
-				B42BF97E246BC25100AD9292 /* coronarunTests.swift */,
+				B42BF97E246BC25100AD9292 /* ronarunTests.swift */,
 				B42BF980246BC25100AD9292 /* Info.plist */,
 			);
-			path = coronarunTests;
+			path = ronarunTests;
 			sourceTree = "<group>";
 		};
-		B42BF988246BC25100AD9292 /* coronarunUITests */ = {
+		B42BF988246BC25100AD9292 /* ronarunUITests */ = {
 			isa = PBXGroup;
 			children = (
-				B42BF989246BC25100AD9292 /* coronarunUITests.swift */,
+				B42BF989246BC25100AD9292 /* ronarunUITests.swift */,
 				B42BF98B246BC25100AD9292 /* Info.plist */,
 			);
-			path = coronarunUITests;
+			path = ronarunUITests;
 			sourceTree = "<group>";
 		};
 		B495F71624A2E20900BA8EEE /* Music */ = {
@@ -531,11 +486,19 @@
 			path = Music;
 			sourceTree = "<group>";
 		};
+		C3553B73D12E5AF7492ADFA3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				16508FCF3D13B96AC444861A /* Pods_ronarun.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E0C3E1AB7E10D9EBB9356807 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				CEDE1F4654B9B96DCF12C657 /* Pods-coronarun.debug.xcconfig */,
-				817A43B3177B2AD5BB88106B /* Pods-coronarun.release.xcconfig */,
+				C39AE5D916F6B30A08F0AADD /* Pods-ronarun.debug.xcconfig */,
+				FA3029296A997761ACFCCA75 /* Pods-ronarun.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -543,28 +506,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B42BF95F246BC24F00AD9292 /* coronarun */ = {
+		B42BF95F246BC24F00AD9292 /* ronarun */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B42BF98E246BC25100AD9292 /* Build configuration list for PBXNativeTarget "coronarun" */;
+			buildConfigurationList = B42BF98E246BC25100AD9292 /* Build configuration list for PBXNativeTarget "ronarun" */;
 			buildPhases = (
-				57C8882A9D3DA656824CBBC8 /* [CP] Check Pods Manifest.lock */,
+				3E6A34B77F1D2B2548ED862D /* [CP] Check Pods Manifest.lock */,
 				B42BF95C246BC24F00AD9292 /* Sources */,
 				B42BF95D246BC24F00AD9292 /* Frameworks */,
 				B42BF95E246BC24F00AD9292 /* Resources */,
-				985D166B5B9A06F4907D3E5B /* [CP] Embed Pods Frameworks */,
+				F351AABE469B694E9B04192E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = coronarun;
+			name = ronarun;
 			productName = coronarun;
-			productReference = B42BF960246BC24F00AD9292 /* Corona Rush.app */;
+			productReference = B42BF960246BC24F00AD9292 /* Rona Run.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B42BF979246BC25100AD9292 /* coronarunTests */ = {
+		B42BF979246BC25100AD9292 /* ronarunTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B42BF991246BC25100AD9292 /* Build configuration list for PBXNativeTarget "coronarunTests" */;
+			buildConfigurationList = B42BF991246BC25100AD9292 /* Build configuration list for PBXNativeTarget "ronarunTests" */;
 			buildPhases = (
 				B42BF976246BC25100AD9292 /* Sources */,
 				B42BF977246BC25100AD9292 /* Frameworks */,
@@ -575,14 +538,14 @@
 			dependencies = (
 				B42BF97C246BC25100AD9292 /* PBXTargetDependency */,
 			);
-			name = coronarunTests;
+			name = ronarunTests;
 			productName = coronarunTests;
-			productReference = B42BF97A246BC25100AD9292 /* coronarunTests.xctest */;
+			productReference = B42BF97A246BC25100AD9292 /* ronarunTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		B42BF984246BC25100AD9292 /* coronarunUITests */ = {
+		B42BF984246BC25100AD9292 /* ronarunUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B42BF994246BC25100AD9292 /* Build configuration list for PBXNativeTarget "coronarunUITests" */;
+			buildConfigurationList = B42BF994246BC25100AD9292 /* Build configuration list for PBXNativeTarget "ronarunUITests" */;
 			buildPhases = (
 				B42BF981246BC25100AD9292 /* Sources */,
 				B42BF982246BC25100AD9292 /* Frameworks */,
@@ -593,9 +556,9 @@
 			dependencies = (
 				B42BF987246BC25100AD9292 /* PBXTargetDependency */,
 			);
-			name = coronarunUITests;
+			name = ronarunUITests;
 			productName = coronarunUITests;
-			productReference = B42BF985246BC25100AD9292 /* coronarunUITests.xctest */;
+			productReference = B42BF985246BC25100AD9292 /* ronarunUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -605,7 +568,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = "Brian Limaye";
 				TargetAttributes = {
 					B42BF95F246BC24F00AD9292 = {
@@ -621,7 +584,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B42BF95B246BC24F00AD9292 /* Build configuration list for PBXProject "coronarun" */;
+			buildConfigurationList = B42BF95B246BC24F00AD9292 /* Build configuration list for PBXProject "ronarun" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -634,9 +597,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B42BF95F246BC24F00AD9292 /* coronarun */,
-				B42BF979246BC25100AD9292 /* coronarunTests */,
-				B42BF984246BC25100AD9292 /* coronarunUITests */,
+				B42BF95F246BC24F00AD9292 /* ronarun */,
+				B42BF979246BC25100AD9292 /* ronarunTests */,
+				B42BF984246BC25100AD9292 /* ronarunUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -657,15 +620,12 @@
 				B4FFE52E249A79FE00DAC9EE /* blondezombie-8.png in Resources */,
 				B495F71824A2E2E800BA8EEE /* chill-background-music.mp3 in Resources */,
 				B46F060A24706F730002CCEB /* bandit-2.png in Resources */,
-				B4B73A4B2470FE3B004200E9 /* up-arrow.png in Resources */,
 				B46F060E24706F730002CCEB /* bandit-8.png in Resources */,
 				B402FE862484BA87000AB014 /* question-mark.png in Resources */,
 				B4763B712494663F00665A99 /* green-germ-1.png in Resources */,
 				B402FE912484C7BA000AB014 /* (b)obby-1.png in Resources */,
-				B4763B6D2493FB9A00665A99 /* soapbottle.png in Resources */,
 				B4814796249C189400E74EC7 /* redzombie-7.png in Resources */,
 				B4B58202247B660D0043CEEB /* bobby-5.png in Resources */,
-				B45D1F3E2477A72900C06C4E /* jessica-6.png in Resources */,
 				B4B58201247B660D0043CEEB /* bobby-13.png in Resources */,
 				B4763B4D2492B5EB00665A99 /* batframe-2.png in Resources */,
 				B46F060D24706F730002CCEB /* bandit-7.png in Resources */,
@@ -690,11 +650,7 @@
 				B46F061024706F730002CCEB /* bandit-1.png in Resources */,
 				B4FFE519249A773800DAC9EE /* blondezombie-2.png in Resources */,
 				B4814786249AE8EA00E74EC7 /* exclamation-mark.png in Resources */,
-				B45D1F3D2477A72900C06C4E /* jessica-3.png in Resources */,
-				B45D1F422477A72900C06C4E /* jessica-5.png in Resources */,
 				B4B7DB832472356600D8C129 /* bandit-12.png in Resources */,
-				B45D1F3F2477A72900C06C4E /* jessica-2.png in Resources */,
-				B4B73A4F247103E4004200E9 /* down-arrow.png in Resources */,
 				B4814792249C189400E74EC7 /* redzombie-4.png in Resources */,
 				B4B581FD247B660D0043CEEB /* bobby-8.png in Resources */,
 				B46F060924706F730002CCEB /* bandit-9.png in Resources */,
@@ -706,7 +662,6 @@
 				B4763B4F2492B5EB00665A99 /* batframe-4.png in Resources */,
 				B4B58204247B660D0043CEEB /* bobby-14.png in Resources */,
 				B42BF966246BC24F00AD9292 /* GameScene.sks in Resources */,
-				B45D1F402477A72900C06C4E /* jessica-1.png in Resources */,
 				B45B6BA0249FBF8C005577B6 /* masked-bobby-5.png in Resources */,
 				B4B5820A247B660D0043CEEB /* bobby-12.png in Resources */,
 				B46F060B24706F730002CCEB /* seamless-background.png in Resources */,
@@ -719,7 +674,6 @@
 				B4401CC7247EEF0F00B49192 /* home-icon.png in Resources */,
 				B402FE8A2484BCD2000AB014 /* volume-on.png in Resources */,
 				B49EE9F024A1A85400AECD41 /* Podfile in Resources */,
-				B42E335F2495587400AB9C18 /* cool-portal.png in Resources */,
 				B4114023249A733500358238 /* blondezombie-1.png in Resources */,
 				B4763B6A249347B500665A99 /* shimmer.sks in Resources */,
 				B4401CCD24803F5400B49192 /* CarbonBl-Regular.ps in Resources */,
@@ -733,7 +687,6 @@
 				B402FE842484AFD5000AB014 /* like-icon.png in Resources */,
 				B48BBF5524A4033D00075EFE /* lock.png in Resources */,
 				B402FE902484C7BA000AB014 /* (b)obby-4.png in Resources */,
-				B46F061124706F730002CCEB /* grounds.png in Resources */,
 				B402FE8224846DCF000AB014 /* BubbleLoveDemo.ps in Resources */,
 				B4814791249C189400E74EC7 /* redzombie-3.png in Resources */,
 				B46F060C24706F730002CCEB /* bandit-5.png in Resources */,
@@ -741,7 +694,6 @@
 				B4FFE52F249A79FE00DAC9EE /* blondezombie-7.png in Resources */,
 				B4FFE52D249A79FE00DAC9EE /* blondezombie-4.png in Resources */,
 				B45B6B9D249FBF8C005577B6 /* masked-bobby-11.png in Resources */,
-				B42E335D24954F5100AB9C18 /* portal.png in Resources */,
 				B4FFE531249A79FE00DAC9EE /* blondezombie-6.png in Resources */,
 				B402FE70248452EB000AB014 /* HomeScene.sks in Resources */,
 				B45B6BA1249FBF8C005577B6 /* masked-bobby-13.png in Resources */,
@@ -751,7 +703,6 @@
 				B402FE8024846BA6000AB014 /* Balibold-Regular.ps in Resources */,
 				B42BF974246BC25100AD9292 /* LaunchScreen.storyboard in Resources */,
 				B46304842485AD0D004CC114 /* (b)obby-3 (1).png in Resources */,
-				B4763B6324933EDE00665A99 /* Assets.xcassets in Resources */,
 				B4814788249C0BA800E74EC7 /* sneezegreen.sks in Resources */,
 				B4BCA8E52486E36F00EE3735 /* orange-menu.png in Resources */,
 				B42BF968246BC24F00AD9292 /* Actions.sks in Resources */,
@@ -767,7 +718,6 @@
 				B4B58207247B660D0043CEEB /* bobby-16.png in Resources */,
 				B402FE8F2484C7BA000AB014 /* (b)obby-2.png in Resources */,
 				B4577EDE24A15144006D3291 /* pause-icon.png in Resources */,
-				B45D1F412477A72900C06C4E /* jessica-4.png in Resources */,
 				B4FFE530249A79FE00DAC9EE /* blondezombie-5.png in Resources */,
 				B4814797249C189400E74EC7 /* redzombie-1.png in Resources */,
 				B402FE922484C7BA000AB014 /* (b)obby-3.png in Resources */,
@@ -791,7 +741,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		57C8882A9D3DA656824CBBC8 /* [CP] Check Pods Manifest.lock */ = {
+		3E6A34B77F1D2B2548ED862D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -806,28 +756,28 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-coronarun-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-ronarun-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		985D166B5B9A06F4907D3E5B /* [CP] Embed Pods Frameworks */ = {
+		F351AABE469B694E9B04192E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-coronarun/Pods-coronarun-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-ronarun/Pods-ronarun-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-coronarun/Pods-coronarun-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-ronarun/Pods-ronarun-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-coronarun/Pods-coronarun-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ronarun/Pods-ronarun-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -852,7 +802,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B42BF99E246BDD6D00AD9292 /* resizer.swift in Sources */,
-				B42BF97F246BC25100AD9292 /* coronarunTests.swift in Sources */,
+				B42BF97F246BC25100AD9292 /* ronarunTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -861,7 +811,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B42BF99F246BDD6E00AD9292 /* resizer.swift in Sources */,
-				B42BF98A246BC25100AD9292 /* coronarunUITests.swift in Sources */,
+				B42BF98A246BC25100AD9292 /* ronarunUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -870,12 +820,12 @@
 /* Begin PBXTargetDependency section */
 		B42BF97C246BC25100AD9292 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B42BF95F246BC24F00AD9292 /* coronarun */;
+			target = B42BF95F246BC24F00AD9292 /* ronarun */;
 			targetProxy = B42BF97B246BC25100AD9292 /* PBXContainerItemProxy */;
 		};
 		B42BF987246BC25100AD9292 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B42BF95F246BC24F00AD9292 /* coronarun */;
+			target = B42BF95F246BC24F00AD9292 /* ronarun */;
 			targetProxy = B42BF986246BC25100AD9292 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1016,21 +966,21 @@
 		};
 		B42BF98F246BC25100AD9292 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CEDE1F4654B9B96DCF12C657 /* Pods-coronarun.debug.xcconfig */;
+			baseConfigurationReference = C39AE5D916F6B30A08F0AADD /* Pods-ronarun.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QEXVU7NBU9;
-				INFOPLIST_FILE = coronarun/Info.plist;
+				INFOPLIST_FILE = ronarun/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ishiba.coronarush;
-				PRODUCT_NAME = "Corona Rush";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ishiba.ronarun;
+				PRODUCT_NAME = "Rona Run";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1039,21 +989,21 @@
 		};
 		B42BF990246BC25100AD9292 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 817A43B3177B2AD5BB88106B /* Pods-coronarun.release.xcconfig */;
+			baseConfigurationReference = FA3029296A997761ACFCCA75 /* Pods-ronarun.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QEXVU7NBU9;
-				INFOPLIST_FILE = coronarun/Info.plist;
+				INFOPLIST_FILE = ronarun/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ishiba.coronarush;
-				PRODUCT_NAME = "Corona Rush";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ishiba.ronarun;
+				PRODUCT_NAME = "Rona Run";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1077,7 +1027,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/coronarun.app/coronarun";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ronarun.app/ronarun";
 			};
 			name = Debug;
 		};
@@ -1098,7 +1048,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/coronarun.app/coronarun";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ronarun.app/ronarun";
 			};
 			name = Release;
 		};
@@ -1143,7 +1093,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B42BF95B246BC24F00AD9292 /* Build configuration list for PBXProject "coronarun" */ = {
+		B42BF95B246BC24F00AD9292 /* Build configuration list for PBXProject "ronarun" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B42BF98C246BC25100AD9292 /* Debug */,
@@ -1152,7 +1102,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B42BF98E246BC25100AD9292 /* Build configuration list for PBXNativeTarget "coronarun" */ = {
+		B42BF98E246BC25100AD9292 /* Build configuration list for PBXNativeTarget "ronarun" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B42BF98F246BC25100AD9292 /* Debug */,
@@ -1161,7 +1111,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B42BF991246BC25100AD9292 /* Build configuration list for PBXNativeTarget "coronarunTests" */ = {
+		B42BF991246BC25100AD9292 /* Build configuration list for PBXNativeTarget "ronarunTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B42BF992246BC25100AD9292 /* Debug */,
@@ -1170,7 +1120,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B42BF994246BC25100AD9292 /* Build configuration list for PBXNativeTarget "coronarunUITests" */ = {
+		B42BF994246BC25100AD9292 /* Build configuration list for PBXNativeTarget "ronarunUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B42BF995246BC25100AD9292 /* Debug */,

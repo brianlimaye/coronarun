@@ -1,6 +1,6 @@
 //
-//  coronarunUITests.swift
-//  coronarunUITests
+//  ronarunUITests.swift
+//  ronarunUITests
 //
 //  Created by Brian Limaye on 5/13/20.
 //  Copyright © 2020 Brian Limaye. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 
-class coronarunUITests: XCTestCase {
+class ronarunUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

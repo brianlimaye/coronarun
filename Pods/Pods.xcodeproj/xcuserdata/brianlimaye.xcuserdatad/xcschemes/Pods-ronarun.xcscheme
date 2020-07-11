@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1100"
+   LastUpgradeVersion = "1150"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6FF700DE1D82B21923E12FDF6572E6EC"
-               BuildableName = "Pods_coronarun.framework"
-               BlueprintName = "Pods-coronarun"
+               BlueprintIdentifier = "D51F86322B94876F42A3A6DA131A206F"
+               BuildableName = "Pods_ronarun.framework"
+               BlueprintName = "Pods-ronarun"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

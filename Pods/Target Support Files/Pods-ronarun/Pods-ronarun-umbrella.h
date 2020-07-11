@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_coronarunVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_coronarunVersionString[];
+FOUNDATION_EXPORT double Pods_ronarunVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_ronarunVersionString[];
 

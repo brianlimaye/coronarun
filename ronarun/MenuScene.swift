@@ -1,6 +1,6 @@
 //
 //  MenuScene.swift
-//  coronarun
+//  ronarun
 //
 //  Created by Brian Limaye on 6/2/20.
 //  Copyright © 2020 Brian Limaye. All rights reserved.
@@ -36,7 +36,7 @@ class MenuScene: SKScene
         
     override func didMove(to view: SKView) {
         
-        //attemptEndAnimation()
+        attemptEndAnimation()
         makeCharVisible()
         showBackground()
         drawWorldDisplay()

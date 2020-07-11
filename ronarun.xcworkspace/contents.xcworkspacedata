@@ -2,9 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:coronarun.xcodeproj">
+      location = "group:/Users/brianlimaye/Desktop/GitHub/brianlimaye/coronarun/ronarun.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:ronarun.xcodeproj">
    </FileRef>
 </Workspace>

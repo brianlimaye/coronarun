@@ -1,13 +1,13 @@
 //
-//  coronarunTests.swift
-//  coronarunTests
+//  ronarunTests.swift
+//  ronarunTests
 //
 //  Created by Brian Limaye on 5/13/20.
 //  Copyright © 2020 Brian Limaye. All rights reserved.
 //
 
 import XCTest
-@testable import coronarun
+@testable import Rona_Run
 
 class coronarunTests: XCTestCase {
 

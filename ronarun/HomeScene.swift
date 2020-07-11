@@ -1,13 +1,10 @@
 //
 //  HomeScene.swift
-//  coronarun
+//  ronarun
 //
 //  Created by Brian Limaye on 5/31/20.
 //  Copyright © 2020 Brian Limaye. All rights reserved.
 //
-//1. Try to add characters that cough/sneeze.
-//2. Pick up facemasks, gloves, faceshield.
-//3. Background from China.
 
 import Foundation
 import SpriteKit
@@ -547,9 +544,9 @@ class HomeScene: SKScene
         }
         
         mainTitleScreen.fontColor = .black
-        mainTitleScreen.fontSize = 95
+        mainTitleScreen.fontSize = 100
         mainTitleScreen.numberOfLines = 1
-        mainTitleScreen.text = "Corona Rush"
+        mainTitleScreen.text = "Rona Run"
         mainTitleScreen.zPosition = 4
         
         self.addChild(mainTitleScreen)
