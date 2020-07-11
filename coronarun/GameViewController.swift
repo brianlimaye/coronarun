@@ -17,8 +17,6 @@ class GameViewController: UIViewController {
     static var menuScene: MenuScene?
     static var gameScene: GameScene?
     
-    static var audioPlayer: AVAudioPlayer?
-
     let isDebug: Bool = {
            
            var isDebug = false
@@ -38,14 +36,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        do
-        {
-            GameViewController.audioPlayer = try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "chill-background-music", ofType: "mp3")!))
-            GameViewController.audioPlayer?.prepareToPlay()
-        }
-        catch {
-            print(error)
-        }
+        MusicHelper.sharedHelper.prepareToPlay()
         
         if let view = self.view as! SKView? {
             
@@ -66,15 +57,14 @@ class GameViewController: UIViewController {
     
     func playBackgroundMusic() -> Void {
         
-        GameViewController.audioPlayer?.numberOfLoops = -1
-        GameViewController.audioPlayer?.play()
+        MusicHelper.sharedHelper.audioPlayer?.play()
     }
     
     func pause() -> Void {
         
-        if((GameViewController.audioPlayer?.isPlaying) != nil)
+        if((MusicHelper.sharedHelper.audioPlayer?.isPlaying) != nil)
         {
-            GameViewController.audioPlayer?.stop()
+            MusicHelper.sharedHelper.audioPlayer?.stop()
         }
         else
         {
@@ -84,19 +74,20 @@ class GameViewController: UIViewController {
     
     func restart() -> Void {
         
-        if((GameViewController.audioPlayer?.isPlaying) != nil)
+        if((MusicHelper.sharedHelper.audioPlayer) != nil)
         {
-            GameViewController.audioPlayer?.currentTime = 0
-            GameViewController.audioPlayer?.numberOfLoops = -1
-            GameViewController.audioPlayer?.play()
+            MusicHelper.sharedHelper.audioPlayer?.currentTime = 0
+            MusicHelper.sharedHelper.audioPlayer?.numberOfLoops = -1
+            MusicHelper.sharedHelper.audioPlayer?.play()
         }
         else
         {
-            GameViewController.audioPlayer?.numberOfLoops = -1
-            GameViewController.audioPlayer?.play()
+            MusicHelper.sharedHelper.audioPlayer?.numberOfLoops = -1
+            MusicHelper.sharedHelper.audioPlayer?.play()
         }
     }
 
+    /*
     override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
 
            guard let key = presses.first?.key else { return }
@@ -186,6 +177,7 @@ class GameViewController: UIViewController {
         }
 
     }
+ */
 
     override var shouldAutorotate: Bool {
         return false
@@ -220,6 +212,9 @@ class GameViewController: UIViewController {
         GameViewController.gameScene?.isPaused = false
         GameViewController.gameScene?.timer.invalidate()
         GameViewController.gameScene?.startLevel(level: String(levelData.currentLevel))
-        playBackgroundMusic()
+        if(MusicHelper.sharedHelper.audioPlayer != nil)
+        {
+            playBackgroundMusic()
+        }
     }
 }

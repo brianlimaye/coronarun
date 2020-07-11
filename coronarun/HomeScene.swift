@@ -11,6 +11,7 @@
 
 import Foundation
 import SpriteKit
+import StoreKit
 
 var cameraNode: SKCameraNode = SKCameraNode()
 
@@ -429,6 +430,10 @@ class HomeScene: SKScene
                 menuScene?.scaleMode = .aspectFill
                 self.view?.presentScene(menuScene)
             }
+            else if((node?.name == "ratebutton") || (node?.name == "rateshape"))
+            {
+                rateApp()
+            }
             else if((node?.name == "soundbutton") || (node?.name == "soundshape"))
             {
                 levelData.isMusicPlaying = !levelData.isMusicPlaying
@@ -436,13 +441,13 @@ class HomeScene: SKScene
                 if(levelData.isMusicPlaying)
                 {
                     soundButton.texture = SKTexture(imageNamed: "volume-off")
-                    GameViewController.audioPlayer?.currentTime = 0
-                    GameViewController.audioPlayer?.play()
+                    MusicHelper.sharedHelper.audioPlayer?.currentTime = 0
+                    MusicHelper.sharedHelper.audioPlayer?.play()
                 }
                 else
                 {
                     soundButton.texture = SKTexture(imageNamed: "volume-on")
-                    GameViewController.audioPlayer?.pause()
+                    MusicHelper.sharedHelper.audioPlayer?.pause()
                 }
             }
             else if((node?.name == "tutorialbutton") || (node?.name == "tutorialshape"))
@@ -520,9 +525,9 @@ class HomeScene: SKScene
         }
         
         mainTitleScreen.fontColor = .black
-        mainTitleScreen.fontSize = 100
+        mainTitleScreen.fontSize = 95
         mainTitleScreen.numberOfLines = 1
-        mainTitleScreen.text = "Corona Run"
+        mainTitleScreen.text = "Corona Rush"
         mainTitleScreen.zPosition = 4
         
         self.addChild(mainTitleScreen)
@@ -543,10 +548,14 @@ class HomeScene: SKScene
     func drawLikeButton() {
         
         rateButton = SKSpriteNode(imageNamed: "like-icon.png")
+        rateButton.name = "ratebutton"
+        rateButton.isUserInteractionEnabled = false
         rateButton.size = CGSize(width: rateButton.size.width / 19, height: rateButton.size.height / 19)
         rateButton.position = CGPoint(x: 0, y: 0)
         
         rateButtonShape = SKShapeNode(circleOfRadius: 55)
+        rateButtonShape.name = "rateshape"
+        rateButtonShape.isUserInteractionEnabled = false
         rateButtonShape.fillColor = .white
         rateButtonShape.isAntialiased = true
         rateButtonShape.isUserInteractionEnabled = false
@@ -658,6 +667,20 @@ class HomeScene: SKScene
             }
         }
         self.removeAllChildren()
+    }
+    
+    func rateApp() {
+        if #available(iOS 10.3, *) {
+            SKStoreReviewController.requestReview()
+
+        } else if let url = URL(string: "itms-apps://itunes.apple.com/app/" + "id1522925506") {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
     }
 
     func getBackground() -> SKSpriteNode {
